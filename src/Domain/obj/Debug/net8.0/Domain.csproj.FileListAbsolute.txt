@@ -1,0 +1,11 @@
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/bin/Debug/net8.0/Domain.deps.json
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/bin/Debug/net8.0/Domain.dll
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/bin/Debug/net8.0/Domain.pdb
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/Domain.AssemblyInfoInputs.cache
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/Domain.AssemblyInfo.cs
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/Domain.csproj.CoreCompileInputs.cache
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/Domain.dll
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/refint/Domain.dll
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/Domain.pdb
+/home/abdulrosheed/Documents/Tajneed-API/src/Domain/obj/Debug/net8.0/ref/Domain.dll

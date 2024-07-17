@@ -1,7 +1,7 @@
 using Api.Extensions;
-using Serilog;
-using Infrastructure.Extensions;
 using Application.Extensions;
+using Infrastructure.Extensions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

@@ -34,8 +34,23 @@ bld/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+.vscode/
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
+
+# Ignore build directories
+src/Api/bin/
+src/Api/obj/
+src/Application/bin/
+src/Application/obj/
+src/Domain/bin/
+src/Domain/obj/
+src/Infrastructure/bin/
+src/Infrastructure/obj/
+src/Infrastructure/bin/
+src/Infrastructure/obj/
+test/UnitTests/bin/
+test/UnitTests/obj
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/

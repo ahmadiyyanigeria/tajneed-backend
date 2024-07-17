@@ -13,8 +13,5 @@ public static class ServiceCollectionExtensions
         return serviceCollection
             .AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(connectionString, action => action.MigrationsAssembly("Infrastructure")));
-            
     }
-
-    
 }

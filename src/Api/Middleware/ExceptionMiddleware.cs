@@ -1,9 +1,9 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Domain.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Sentry;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Api.Middleware;
 

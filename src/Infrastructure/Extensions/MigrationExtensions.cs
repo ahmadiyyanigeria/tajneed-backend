@@ -1,9 +1,9 @@
-using System.Globalization;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Serilog;
+using System.Globalization;
 
 namespace Infrastructure.Extensions;
 

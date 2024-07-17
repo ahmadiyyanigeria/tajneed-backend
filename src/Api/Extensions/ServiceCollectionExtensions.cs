@@ -1,5 +1,3 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Api.Filters;
 using Mapster;
 using MapsterMapper;
@@ -7,6 +5,8 @@ using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Api.Extensions;
 
@@ -83,5 +83,5 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMapper, ServiceMapper>();
         return services;
     }
-    
+
 }

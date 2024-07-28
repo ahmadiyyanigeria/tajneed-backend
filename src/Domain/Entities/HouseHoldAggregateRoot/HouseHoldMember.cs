@@ -1,5 +1,4 @@
 namespace Domain.Entities;
-
 public class HouseHoldMember(string houseHoldId, string memberId, string positionId, string createdBy) : BaseEntity(createdBy)
 {
     public string HouseHoldId { get; private set; } = houseHoldId;

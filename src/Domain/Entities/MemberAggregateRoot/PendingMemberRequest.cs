@@ -1,4 +1,5 @@
 namespace Domain.Entities;
+
 public class PendingMemberRequest(IReadOnlyList<MemberRequest> requests, string createdBy) : BaseEntity(createdBy)
 {
     
@@ -8,6 +9,4 @@ public class PendingMemberRequest(IReadOnlyList<MemberRequest> requests, string 
         get => _requests.AsReadOnly();
         private set => _requests.AddRange(value);
     }
-
-
 }

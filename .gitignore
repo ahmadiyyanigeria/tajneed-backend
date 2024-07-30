@@ -51,8 +51,6 @@ src/Domain/obj/
 src/Infrastructure/bin/
 src/Infrastructure/obj/
 
-
-
 test/UnitTests/bin/
 test/UnitTests/obj
 

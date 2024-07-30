@@ -26,6 +26,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<MembershipStatus> MembershipStatus => Set<MembershipStatus>();    
     public DbSet<Nationality> Nationalities => Set<Nationality>();    
     public DbSet<Position> Positions => Set<Position>();    
-    public DbSet<RelocationCase> RelocationCases => Set<RelocationCase>();    
-
+    public DbSet<RelocationCase> RelocationCases => Set<RelocationCase>();
 }

@@ -2,10 +2,9 @@ using Domain.Enums;
 
 namespace Domain.Entities;
 
-public class MemberRequest(string chandaNo, string surname, string firstName, string auxillaryBodyId, string middleName, DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, Status status, EmploymentStatus employmentStatus, string createdBy, string? wasiyatNo = null) : BaseEntity(createdBy)
+public class MemberRequest(string surname, string firstName, string auxillaryBodyId, string middleName, DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, Status status, EmploymentStatus employmentStatus, string createdBy) : BaseEntity(createdBy)
 {
-    public string ChandaNo { get; private set; } = chandaNo;
-    public string? WasiyatNo { get; private set; } = wasiyatNo;
+   
     public string Surname { get; private set; } = surname;
     public string FirstName { get; private set; } = firstName;
     public string AuxillaryBodyId { get; private set; } = auxillaryBodyId;

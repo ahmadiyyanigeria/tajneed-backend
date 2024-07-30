@@ -1,12 +1,13 @@
 using Domain.Enums;
 
 namespace Domain.Entities;
+
 public class BiodataUpdateCase(
 string caseId, string surname, string firstName, string middlename, DateTime dob, string address, string email, string phoneNumber,
 EmploymentStatus employmentStatus, string jamaatId, MaritalStatus maritalStatus, string membershipStatusId, string title,
-bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string createdBy, string? notes = null, 
-string? spouseNo= null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null, 
-string? occupation = null, DateTime? biatDate = null):BaseEntity(createdBy)
+bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string createdBy, string? notes = null,
+string? spouseNo = null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null,
+string? occupation = null, DateTime? biatDate = null) : BaseEntity(createdBy)
 {
     public string CaseId { get; private set; } = caseId;
     public Case Case { get; private set; } = default!;
@@ -39,6 +40,4 @@ string? occupation = null, DateTime? biatDate = null):BaseEntity(createdBy)
     public Nationality Nationality { get; private set; } = default!;
     public string HouseholdMemberId { get; private set; } = householdMemberId;
     public HouseHoldMember HouseholdMember { get; private set; } = default!;
-   
-
 }

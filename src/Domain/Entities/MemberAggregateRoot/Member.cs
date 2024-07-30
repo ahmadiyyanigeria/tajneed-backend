@@ -4,7 +4,7 @@ namespace Domain.Entities;
 
 public class Member
 (
-    string nationalityId, string aIMSNo, string membershipStatusId, string nextOfKinName, 
+    string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName, 
     bool isBornMember, string chandaNo, string surname, string firstName, string auxillaryBodyId, string middleName, 
     DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, 
     Status status, EmploymentStatus employmentStatus, string createdBy, string? wasiyatNo = null, string? spouseNo= null, 
@@ -13,15 +13,16 @@ public class Member
 ) 
 : MemberRequest
 (
-    chandaNo, surname, firstName, auxillaryBodyId, middleName, dob, email, 
-    phoneNo, jamaatId, sex, maritalStatus, address, status, employmentStatus, createdBy, wasiyatNo
+    surname, firstName, auxillaryBodyId, middleName, dob, email, 
+    phoneNo, jamaatId, sex, maritalStatus, address, status, employmentStatus, createdBy
 )
-
 {
+    public string ChandaNo { get; private set; } = chandaNo;
+    public string? WasiyatNo { get; private set; } = wasiyatNo;
     public string? SpouseNo { get; set; } = spouseNo;
     public string? FatherNo { get; set; } = fatherNo;
     public string? ChildrenNos { get; set; } = childrenNos;
-    public string? AIMSNo { get; set; } = aIMSNo;
+    public string? AIMSNo { get; set; } = aimsNo;
     public string? RecordFlag { get; set; } = recordFlag;
     public string MembershipStatusId { get; set; } = membershipStatusId;
     public string? NextOfKinPhoneNo { get; set; } = nextOfKinPhoneNo;

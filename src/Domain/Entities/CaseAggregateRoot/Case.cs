@@ -1,4 +1,5 @@
 namespace Domain.Entities;
+
 public class Case(string caseTypeId, string memberId, string status, string referenceCode, string details,  string createdBy) : BaseEntity(createdBy)
 {
     public string ReferenceCode { get; private set; } = referenceCode;
@@ -8,5 +9,4 @@ public class Case(string caseTypeId, string memberId, string status, string refe
     public Member Member { get; private set; } = default!;
     public string Status { get; private set; } = status;
     public string Details { get; private set; } = details;
-  
 }

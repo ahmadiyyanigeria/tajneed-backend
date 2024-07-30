@@ -7,5 +7,4 @@ public class DuplicateAccountCase(string caseId, string primaryAccount, string o
     public string PrimaryAccount { get; private set; } = primaryAccount;
     public string OtherAccounts { get; private set; } = otherAccounts;
     public string? Notes { get; private set; } = notes;
-
 }

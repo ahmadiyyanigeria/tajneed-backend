@@ -1,11 +1,8 @@
-namespace Domain.Enums
+namespace Domain.Enums;
+
+public enum Status
 {
-    public enum Status
-    {
-        Active,
-        Inactive,
-        Suspended
-    }
-
-
+    Active,
+    Inactive,
+    Suspended
 }

@@ -1,14 +1,11 @@
-namespace Domain.Enums
+namespace Domain.Enums;
+
+public enum MaritalStatus
 {
-    public enum MaritalStatus
-    {
-        Single,
-        Married,
-        Widowed,
-        Separated,
-        Divorced
-
-    }
-
+    Single,
+    Married,
+    Widowed,
+    Separated,
+    Divorced
 
 }

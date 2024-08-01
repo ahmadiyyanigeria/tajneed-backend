@@ -22,9 +22,10 @@ public class Member
     public string? SpouseNo { get; set; } = spouseNo;
     public string? FatherNo { get; set; } = fatherNo;
     public string? ChildrenNos { get; set; } = childrenNos;
-    public string? AIMSNo { get; set; } = aimsNo;
+    public string? AimsNo { get; set; } = aimsNo;
     public string? RecordFlag { get; set; } = recordFlag;
     public string MembershipStatusId { get; set; } = membershipStatusId;
+    public MembershipStatus MembershipStatus { get; private set; } = default!;
     public string? NextOfKinPhoneNo { get; set; } = nextOfKinPhoneNo;
     public string NextOfKinName { get; set; } = nextOfKinName;
     public string? NextOfKinAddress { get; set; } = nextOfKinAddress;
@@ -32,5 +33,7 @@ public class Member
     public string? Occupation { get; set; } = occupation;
     public DateTime? BiatDate { get; set; } = biatDate;
     public string NationalityId { get; set; } = nationalityId;
+    public Nationality Nationality { get; private set; } = default!;
+
 
 }

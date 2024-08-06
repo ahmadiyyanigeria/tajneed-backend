@@ -3,7 +3,7 @@ using Domain.Enums;
 namespace Domain.Entities;
 
 public class BiodataUpdateCase(
-string caseId, string surname, string firstName, string middlename, DateTime dob, string address, string email, string phoneNumber,
+string caseId, string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,
 EmploymentStatus employmentStatus, string jamaatId, MaritalStatus maritalStatus, string membershipStatusId, string title,
 bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string createdBy, string? notes = null,
 string? spouseNo = null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null,
@@ -11,9 +11,9 @@ string? occupation = null, DateTime? biatDate = null) : BaseEntity(createdBy)
 {
     public string CaseId { get; private set; } = caseId;
     public Case Case { get; private set; } = default!;
-    public string Surname { get; private set; } = surname;
-    public string Firstname { get; private set; } = firstName;
-    public string Middlename { get; private set; } = middlename;
+    public string SurName { get; private set; } = surName;
+    public string FirstName { get; private set; } = firstName;
+    public string MiddleName { get; private set; } = middleName;
     public string Title { get; private set; } = title;
     public DateTime Dob { get; private set; } = dob;
     public Sex Sex { get; private set; } = sex;

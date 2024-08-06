@@ -1,8 +1,8 @@
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Infrastructure.Persistence.Repositories;
-
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -27,4 +27,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Nationality> Nationalities => Set<Nationality>();    
     public DbSet<Position> Positions => Set<Position>();    
     public DbSet<RelocationCase> RelocationCases => Set<RelocationCase>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }

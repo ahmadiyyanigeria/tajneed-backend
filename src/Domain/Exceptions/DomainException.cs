@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace Domain.Exceptions;
 
 public class DomainException : Exception

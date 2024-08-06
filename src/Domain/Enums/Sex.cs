@@ -1,11 +1,8 @@
-namespace Domain.Enums
+namespace Domain.Enums;
+
+public enum Sex
 {
-    public enum Sex
-    {
-        Male,
-        Female,
-        Other
-    }
-
-
+    Male,
+    Female,
+    Other
 }

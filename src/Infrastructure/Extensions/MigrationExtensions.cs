@@ -1,49 +1,32 @@
 using Infrastructure.Implementations.Persistence.Repositories;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Npgsql;
 using Serilog;
+using System;
 using System.Globalization;
 
 namespace Infrastructure.Extensions;
 
 public static class MigrationExtensions
 {
-    public static void ApplyMigration(IServiceProvider serviceProvider, bool ensureDbCreated = false)
+    public static async void ApplyMigration(this IApplicationBuilder applicationBuilder)
     {
         try
         {
-            using var scope = serviceProvider.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            if (ensureDbCreated)
-            {
-                EnsureDbCreation(context);
-            }
-            context.Database.Migrate();
+            using var serviceScope = applicationBuilder.ApplicationServices.CreateScope();
+            var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+            Log.Logger.Information("Checking for pending migration.");
+            await context.Database.MigrateAsync();
+            //Add any data seeding method after migration 
         }
         catch (Exception ex)
         {
             Log.Logger.Error(ex, "Error occurred while migrating");
             throw;
         }
-    }
 
-    private static void EnsureDbCreation(ApplicationDbContext context)
-    {
-        if (context.Database.CanConnect())
-        {
-            return;
-        }
-        var databaseName = context.Database.GetDbConnection().Database;
-        var connectionString = context.Database.GetConnectionString()!.Replace($"Database={databaseName};", "", true, CultureInfo.InvariantCulture);
-
-        using var connection = new NpgsqlConnection(connectionString);
-        connection.Open();
-        var cmd = connection.CreateCommand();
-#pragma warning disable SCS0002
-        cmd.CommandText = $"CREATE DATABASE \"{databaseName}\"";
-        cmd.ExecuteScalar();
-        connection.Close();
-#pragma warning restore SCS0002
     }
 }

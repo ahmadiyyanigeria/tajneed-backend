@@ -26,11 +26,11 @@ builder.Services.AddMediatR();
 
 
 var app = builder.Build();
+app.ApplyMigration();
 // Configure the HTTP request pipeline.
 app.ConfigureExceptionHandler();
 app.ConfigureCors();
 app.ConfigureSwagger(configuration);
-
 
 app.UseHttpsRedirection();
 app.UseRouting();

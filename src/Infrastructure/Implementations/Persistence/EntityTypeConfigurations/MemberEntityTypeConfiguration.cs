@@ -49,9 +49,9 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
             .IsRequired()
             .HasColumnName("first_name");
 
-        builder.Property(m => m.AuxillaryBodyId)
+        builder.Property(m => m.AuxiliaryBodyId)
             .IsRequired()
-            .HasColumnName("auxillary_body_id");
+            .HasColumnName("auxiliary_body_id");
 
         builder.Property(m => m.MiddleName)
             .IsRequired()
@@ -134,9 +134,9 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         .HasForeignKey(m => m.MembershipStatusId)
         .OnDelete(DeleteBehavior.Restrict);
 
-    builder.HasOne(m => m.AuxillaryBody)
+    builder.HasOne(m => m.AuxiliaryBody)
         .WithMany()
-        .HasForeignKey(m => m.AuxillaryBodyId)
+        .HasForeignKey(m => m.AuxiliaryBodyId)
         .OnDelete(DeleteBehavior.Restrict);
 
     builder.HasOne(m => m.Jamaat)

@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;
 
-public class AuxillaryBodyEntityTypeConfiguration : IEntityTypeConfiguration<AuxillaryBody>
+public class AuxiliaryBodyEntityTypeConfiguration : IEntityTypeConfiguration<AuxiliaryBody>
 {
-    public void Configure(EntityTypeBuilder<AuxillaryBody> builder)
+    public void Configure(EntityTypeBuilder<AuxiliaryBody> builder)
     {
-        builder.ToTable("auxillary_bodies");
+        builder.ToTable("auxiliary_bodies");
 
         builder.HasKey(ab => ab.Id);
 
@@ -18,9 +18,9 @@ public class AuxillaryBodyEntityTypeConfiguration : IEntityTypeConfiguration<Aux
             .IsRequired()
             .HasColumnName("id");
 
-        builder.Property(ab => ab.AuxillaryBodyName)
+        builder.Property(ab => ab.AuxiliaryBodyName)
             .IsRequired()
-            .HasColumnName("auxillary_body_name");
+            .HasColumnName("auxiliary_body_name");
 
         builder.Property(ab => ab.GroupGender)
             .IsRequired()

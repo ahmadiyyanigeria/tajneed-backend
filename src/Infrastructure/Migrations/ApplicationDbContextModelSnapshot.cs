@@ -57,16 +57,16 @@ namespace Infrastructure.Migrations
                     b.ToTable("audit_trails", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.AuxillaryBody", b =>
+            modelBuilder.Entity("Domain.Entities.AuxiliaryBody", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
                         .HasColumnName("id");
 
-                    b.Property<string>("AuxillaryBodyName")
+                    b.Property<string>("AuxiliaryBodyName")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("auxillary_body_name");
+                        .HasColumnName("auxiliary_body_name");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -96,7 +96,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("auxillary_bodies", (string)null);
+                    b.ToTable("auxiliary_bodies", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.BiodataUpdateCase", b =>
@@ -706,10 +706,10 @@ namespace Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("aims_no");
 
-                    b.Property<string>("AuxillaryBodyId")
+                    b.Property<string>("AuxiliaryBodyId")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("auxillary_body_id");
+                        .HasColumnName("auxiliary_body_id");
 
                     b.Property<DateTime?>("BiatDate")
                         .HasColumnType("timestamp with time zone")
@@ -848,7 +848,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AuxillaryBodyId");
+                    b.HasIndex("AuxiliaryBodyId");
 
                     b.HasIndex("JamaatId");
 
@@ -1248,9 +1248,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Entities.Member", b =>
                 {
-                    b.HasOne("Domain.Entities.AuxillaryBody", "AuxillaryBody")
+                    b.HasOne("Domain.Entities.AuxiliaryBody", "AuxiliaryBody")
                         .WithMany()
-                        .HasForeignKey("AuxillaryBodyId")
+                        .HasForeignKey("AuxiliaryBodyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1272,7 +1272,7 @@ namespace Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("AuxillaryBody");
+                    b.Navigation("AuxiliaryBody");
 
                     b.Navigation("Jamaat");
 

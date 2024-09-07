@@ -5,7 +5,7 @@ namespace Domain.Entities;
 public class Member
 (
     string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName, 
-    bool isBornMember, string chandaNo, string surname, string firstName, string auxillaryBodyId, string middleName, 
+    bool isBornMember, string chandaNo, string surname, string firstName, string auxiliaryBodyId, string middleName, 
     DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, 
     Status status, EmploymentStatus employmentStatus, string createdBy, string? wasiyatNo = null, string? spouseNo= null, 
     string? recordFlag = null,string? fatherNo = null, string? childrenNos = null, string? occupation = null, 
@@ -13,7 +13,7 @@ public class Member
 ) 
 : MemberRequest
 (
-    surname, firstName, auxillaryBodyId, middleName, dob, email, 
+    surname, firstName, auxiliaryBodyId, middleName, dob, email, 
     phoneNo, jamaatId, sex, maritalStatus, address, status, employmentStatus, createdBy
 )
 {

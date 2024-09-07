@@ -10,7 +10,7 @@ public class ApplicationDbContext : DbContext
     { }
 
     public DbSet<AuditTrail> AuditTrails => Set<AuditTrail>();
-    public DbSet<AuxillaryBody> AuxillaryBodies => Set<AuxillaryBody>();
+    public DbSet<AuxiliaryBody> AuxiliaryBodies => Set<AuxiliaryBody>();
     public DbSet<BiodataUpdateCase> BiodataUpdateCases => Set<BiodataUpdateCase>();
     public DbSet<Case> Cases => Set<Case>();
     public DbSet<CaseType> CaseTypes => Set<CaseType>();

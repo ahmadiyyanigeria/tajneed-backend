@@ -18,7 +18,7 @@ public static class MigrationExtensions
         {
             using var serviceScope = applicationBuilder.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-            Log.Logger.Information("Checking for pending migration.");
+            Log.Logger.Information("Checking and Applying any pending migration.");
             await context.Database.MigrateAsync();
             //Add any data seeding method after migration 
         }

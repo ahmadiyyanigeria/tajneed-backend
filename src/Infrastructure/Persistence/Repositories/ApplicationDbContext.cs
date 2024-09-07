@@ -7,13 +7,9 @@ using Domain.Entities.MemberAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace Infrastructure.Implementations.Persistence.Repositories;
-public class ApplicationDbContext : DbContext
+namespace Infrastructure.Persistence.Repositories;
+public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    { }
-
     public DbSet<AuditTrail> AuditTrails => Set<AuditTrail>();
     public DbSet<AuxiliaryBody> AuxiliaryBodies => Set<AuxiliaryBody>();
     public DbSet<BiodataUpdateCase> BiodataUpdateCases => Set<BiodataUpdateCase>();

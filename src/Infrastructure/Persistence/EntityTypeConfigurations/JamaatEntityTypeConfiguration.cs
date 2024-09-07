@@ -2,7 +2,7 @@ using Domain.Entities.JamaatAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;
+namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class JamaatEntityTypeConfiguration : IEntityTypeConfiguration<Jamaat>
 {

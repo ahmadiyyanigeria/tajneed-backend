@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Domain.Entities.MemberAggregateRoot;
-using Infrastructure.Implementations.Persistence.Repositories;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

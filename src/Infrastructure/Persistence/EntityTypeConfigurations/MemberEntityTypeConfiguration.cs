@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;
+namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
 {
@@ -129,21 +129,21 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         .HasForeignKey(m => m.NationalityId)
         .OnDelete(DeleteBehavior.Restrict);
 
-    builder.HasOne(m => m.MembershipStatus)
-        .WithMany()
-        .HasForeignKey(m => m.MembershipStatusId)
-        .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(m => m.MembershipStatus)
+            .WithMany()
+            .HasForeignKey(m => m.MembershipStatusId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-    builder.HasOne(m => m.AuxiliaryBody)
-        .WithMany()
-        .HasForeignKey(m => m.AuxiliaryBodyId)
-        .OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(m => m.AuxiliaryBody)
+            .WithMany()
+            .HasForeignKey(m => m.AuxiliaryBodyId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-    builder.HasOne(m => m.Jamaat)
-        .WithMany()
-        .HasForeignKey(m => m.JamaatId)
-        .OnDelete(DeleteBehavior.Restrict);
-    
+        builder.HasOne(m => m.Jamaat)
+            .WithMany()
+            .HasForeignKey(m => m.JamaatId)
+            .OnDelete(DeleteBehavior.Restrict);
+
         builder.Property(m => m.CreatedOn)
             .IsRequired()
             .HasColumnName("created_on");

@@ -1,14 +1,14 @@
-using Domain.Entities.MemberAggregateRoot;
+using Domain.Entities.JamaatAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;
+namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
-public class PendingMemberRequestEntityTypeConfiguration : IEntityTypeConfiguration<PendingMemberRequest>
+public class PositionEntityTypeConfiguration : IEntityTypeConfiguration<Position>
 {
-    public void Configure(EntityTypeBuilder<PendingMemberRequest> builder)
+    public void Configure(EntityTypeBuilder<Position> builder)
     {
-        builder.ToTable("pending_member_requests");
+        builder.ToTable("positions");
 
         builder.HasKey(p => p.Id);
 
@@ -16,23 +16,26 @@ public class PendingMemberRequestEntityTypeConfiguration : IEntityTypeConfigurat
             .IsRequired()
             .HasColumnName("id");
 
+        builder.Property(p => p.Name)
+            .IsRequired()
+            .HasColumnName("name");
+
         builder.Property(p => p.CreatedOn)
+            .IsRequired()
             .HasColumnName("created_on");
 
         builder.Property(p => p.CreatedBy)
+            .IsRequired()
             .HasColumnName("created_by");
 
         builder.Property(p => p.LastModifiedOn)
             .HasColumnName("last_modified_on");
 
-        builder.Property(p => p.IsDeleted)
-            .HasColumnName("is_deleted");
-
         builder.Property(p => p.LastModifiedBy)
             .HasColumnName("last_modified_by");
 
-        builder.Property(p => p.Requests)
-            .HasColumnName("requests")
-            .HasColumnType("jsonb");
+        builder.Property(p => p.IsDeleted)
+            .IsRequired()
+            .HasColumnName("is_deleted");
     }
 }

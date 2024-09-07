@@ -1,7 +1,7 @@
 using Domain.Entities.CaseAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;
+namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class RelocationCaseEntityTypeConfiguration : IEntityTypeConfiguration<RelocationCase>
 {

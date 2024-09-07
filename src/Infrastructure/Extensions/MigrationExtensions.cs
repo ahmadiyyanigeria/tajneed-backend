@@ -1,12 +1,8 @@
-using Infrastructure.Implementations.Persistence.Repositories;
+using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Npgsql;
 using Serilog;
-using System;
-using System.Globalization;
 
 namespace Infrastructure.Extensions;
 

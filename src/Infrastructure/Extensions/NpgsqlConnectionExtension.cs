@@ -9,14 +9,14 @@ public static class NpgsqlConnectionExtension
     {
         return new NpgsqlConnectionStringBuilder
         {
-            Host = configuration.GetValue<string>("DB_HOST"),
-            Database = configuration.GetValue<string>("DB_NAME"),
-            Password = configuration.GetValue<string>("DB_PASSWORD"),
-            Username = configuration.GetValue<string>("DB_USERNAME"),
+            Host = configuration.GetValue<string>("DatabaseSettings:Host"),
+            Database = configuration.GetValue<string>("DatabaseSettings:Name"),
+            Password = configuration.GetValue<string>("DatabaseSettings:Password"),
+            Username = configuration.GetValue<string>("DatabaseSettings:Username"),
             IncludeErrorDetail = true,
             Pooling = true,
             IntegratedSecurity = true,
-            Port = configuration.GetValue<int?>("DB_PORT") ?? 5432
+            Port = configuration.GetValue<int?>("DatabaseSettings:Port") ?? 5432
         };
     }
 }

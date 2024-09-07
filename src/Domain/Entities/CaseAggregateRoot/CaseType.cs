@@ -1,4 +1,6 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+
+namespace Domain.Entities.CaseAggregateRoot;
 
 public class CaseType(string code, string createdBy, string? description = null) : BaseEntity(createdBy)
 {

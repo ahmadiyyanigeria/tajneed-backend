@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Entities;
+using Domain.Entities.MemberAggregateRoot;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable

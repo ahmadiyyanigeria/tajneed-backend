@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Domain.Entities.CaseAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;

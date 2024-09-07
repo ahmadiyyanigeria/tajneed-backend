@@ -1,4 +1,6 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+
+namespace Domain.Entities.CodeAggregateRoot;
 
 public class CodeValue(string codeId, string @value, string createdBy, string? description = null) : BaseEntity(createdBy)
 {

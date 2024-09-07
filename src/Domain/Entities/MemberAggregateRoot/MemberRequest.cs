@@ -1,10 +1,12 @@
+using Domain.Entities.AuditTrailAggregateRoot;
+using Domain.Entities.JamaatAggregateRoot;
 using Domain.Enums;
 
-namespace Domain.Entities;
+namespace Domain.Entities.MemberAggregateRoot;
 
 public class MemberRequest(string surname, string firstName, string auxiliaryBodyId, string middleName, DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, Status status, EmploymentStatus employmentStatus, string createdBy) : BaseEntity(createdBy)
 {
-   
+
     public string Surname { get; private set; } = surname;
     public string FirstName { get; private set; } = firstName;
     public string AuxiliaryBodyId { get; private set; } = auxiliaryBodyId;

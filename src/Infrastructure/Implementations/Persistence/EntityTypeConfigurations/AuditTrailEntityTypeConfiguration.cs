@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace Infrastructure.Implementations.Persistence.EntityTypeConfigurations;

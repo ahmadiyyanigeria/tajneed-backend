@@ -1,7 +1,7 @@
 using FluentValidation;
 using MediatR;
 
-namespace Application.Commands;
+namespace Application.Commands.User;
 
 public class CreateUser
 {

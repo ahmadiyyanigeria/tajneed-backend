@@ -1,4 +1,8 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+using Domain.Entities.JamaatAggregateRoot;
+using Domain.Entities.MemberAggregateRoot;
+
+namespace Domain.Entities.HouseHoldAggregateRoot;
 public class HouseHoldMember(string houseHoldId, string memberId, string positionId, string createdBy) : BaseEntity(createdBy)
 {
     public string HouseHoldId { get; private set; } = houseHoldId;
@@ -7,6 +11,6 @@ public class HouseHoldMember(string houseHoldId, string memberId, string positio
     public Member Member { get; private set; } = default!;
     public string PositionId { get; private set; } = positionId;
     public Position Position { get; private set; } = default!;
- 
+
 
 }

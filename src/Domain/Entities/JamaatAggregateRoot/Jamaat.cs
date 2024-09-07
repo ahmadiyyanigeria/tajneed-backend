@@ -1,4 +1,6 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+
+namespace Domain.Entities.JamaatAggregateRoot;
 
 public class Jamaat(string jamaatName, string jamaatCode, string circuitId, string createdBy) : BaseEntity(createdBy)
 {

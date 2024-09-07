@@ -1,4 +1,6 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+
+namespace Domain.Entities.MemberAggregateRoot;
 
 public class MembershipStatus(string name, string createdBy) : BaseEntity(createdBy)
 {

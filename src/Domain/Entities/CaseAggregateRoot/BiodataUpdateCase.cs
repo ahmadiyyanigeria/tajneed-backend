@@ -1,6 +1,10 @@
+using Domain.Entities.AuditTrailAggregateRoot;
+using Domain.Entities.HouseHoldAggregateRoot;
+using Domain.Entities.JamaatAggregateRoot;
+using Domain.Entities.MemberAggregateRoot;
 using Domain.Enums;
 
-namespace Domain.Entities;
+namespace Domain.Entities.CaseAggregateRoot;
 
 public class BiodataUpdateCase(
 string caseId, string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,

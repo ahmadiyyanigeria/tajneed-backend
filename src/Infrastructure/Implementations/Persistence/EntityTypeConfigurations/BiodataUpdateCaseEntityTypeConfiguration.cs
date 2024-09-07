@@ -1,4 +1,4 @@
-using Domain.Entities;
+using Domain.Entities.CaseAggregateRoot;
 using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

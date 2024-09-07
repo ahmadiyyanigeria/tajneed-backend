@@ -1,4 +1,4 @@
-namespace Domain.Entities;
+namespace Domain.Entities.AuditTrailAggregateRoot;
 
 public class BaseEntity(string createdBy)
 {

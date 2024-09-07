@@ -1,4 +1,6 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+
+namespace Domain.Entities.CaseAggregateRoot;
 
 public class DuplicateAccountCase(string caseId, string primaryAccount, string otherAccounts, string createdBy, string? notes = null) : BaseEntity(createdBy)
 {

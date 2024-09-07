@@ -1,6 +1,9 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+using Domain.Entities.MemberAggregateRoot;
 
-public class Case(string caseTypeId, string memberId, string status, string referenceCode, string details,  string createdBy) : BaseEntity(createdBy)
+namespace Domain.Entities.CaseAggregateRoot;
+
+public class Case(string caseTypeId, string memberId, string status, string referenceCode, string details, string createdBy) : BaseEntity(createdBy)
 {
     public string ReferenceCode { get; private set; } = referenceCode;
     public string CaseTypeId { get; private set; } = caseTypeId;

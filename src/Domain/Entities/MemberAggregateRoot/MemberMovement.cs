@@ -1,4 +1,7 @@
-namespace Domain.Entities;
+using Domain.Entities.AuditTrailAggregateRoot;
+using Domain.Entities.JamaatAggregateRoot;
+
+namespace Domain.Entities.MemberAggregateRoot;
 
 public class MemberMovement(string memberId, string fromJamaatId, string toJamaatId, string createdBy) : BaseEntity(createdBy)
 {

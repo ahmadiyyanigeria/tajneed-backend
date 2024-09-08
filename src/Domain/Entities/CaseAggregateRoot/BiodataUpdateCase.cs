@@ -9,9 +9,9 @@ namespace Domain.Entities.CaseAggregateRoot;
 public class BiodataUpdateCase(
 string caseId, string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,
 EmploymentStatus employmentStatus, string jamaatId, MaritalStatus maritalStatus, string membershipStatusId, string title,
-bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string createdBy, string? notes = null,
+bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string? notes = null,
 string? spouseNo = null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null,
-string? occupation = null, DateTime? biatDate = null) : BaseEntity(createdBy)
+string? occupation = null, DateTime? biatDate = null) : BaseEntity
 {
     public string CaseId { get; private set; } = caseId;
     public Case Case { get; private set; } = default!;

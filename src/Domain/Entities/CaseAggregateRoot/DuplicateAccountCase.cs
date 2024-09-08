@@ -2,7 +2,7 @@ using Domain.Entities.AuditTrailAggregateRoot;
 
 namespace Domain.Entities.CaseAggregateRoot;
 
-public class DuplicateAccountCase(string caseId, string primaryAccount, string otherAccounts, string createdBy, string? notes = null) : BaseEntity(createdBy)
+public class DuplicateAccountCase(string caseId, string primaryAccount, string otherAccounts, string? notes = null) : BaseEntity
 {
     public string CaseId { get; private set; } = caseId;
     public Case Case { get; private set; } = default!;

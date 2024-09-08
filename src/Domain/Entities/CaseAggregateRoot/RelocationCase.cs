@@ -3,7 +3,7 @@ using Domain.Entities.JamaatAggregateRoot;
 
 namespace Domain.Entities.CaseAggregateRoot;
 
-public class RelocationCase(string caseId, string oldJamaatId, string newJamaatId, string createdBy, string? notes = null) : BaseEntity(createdBy)
+public class RelocationCase(string caseId, string oldJamaatId, string newJamaatId, string? notes = null) : BaseEntity
 {
     public string CaseId { get; private set; } = caseId;
     public Case Case { get; private set; } = default!;

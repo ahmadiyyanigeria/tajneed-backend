@@ -37,7 +37,7 @@ public class CreateMemberRequest
 
         public async Task<MemberRequestResponse> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
         {
-            var memberRequest = new MemberRequest(request.Surname,request.FirstName,"AuxiliaryBody",request.MiddleName,request.Dob,request.Email,request.PhoneNo,request.JamaatId,request.Sex,request.MaritalStatus,request.Address,request.Status,request.EmploymentStatus,"CreatedBy");
+            var memberRequest = new MemberRequest(request.Surname,request.FirstName,"AuxiliaryBody",request.MiddleName,request.Dob,request.Email,request.PhoneNo,request.JamaatId,request.Sex,request.MaritalStatus,request.Address,request.Status,request.EmploymentStatus);
              var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(memberRequest);
             if (memberRequestResponse is null)
             {

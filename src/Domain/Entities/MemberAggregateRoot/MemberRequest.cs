@@ -4,7 +4,7 @@ using Domain.Enums;
 
 namespace Domain.Entities.MemberAggregateRoot;
 
-public class MemberRequest(string surname, string firstName, string auxiliaryBodyId, string middleName, DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, Status status, EmploymentStatus employmentStatus, string createdBy) : BaseEntity(createdBy)
+public class MemberRequest(string surname, string firstName, string auxiliaryBodyId, string middleName, DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, Status status, EmploymentStatus employmentStatus) : BaseEntity
 {
 
     public string Surname { get; private set; } = surname;

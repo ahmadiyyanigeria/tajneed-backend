@@ -8,14 +8,14 @@ public class Member
     string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName,
     bool isBornMember, string chandaNo, string surname, string firstName, string auxiliaryBodyId, string middleName,
     DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address,
-    Status status, EmploymentStatus employmentStatus, string createdBy, string? wasiyatNo = null, string? spouseNo = null,
+    Status status, EmploymentStatus employmentStatus, string? wasiyatNo = null, string? spouseNo = null,
     string? recordFlag = null, string? fatherNo = null, string? childrenNos = null, string? occupation = null,
     string? nextOfKinPhoneNo = null, string? nextOfKinAddress = null, DateTime? biatDate = null
 )
 : MemberRequest
 (
     surname, firstName, auxiliaryBodyId, middleName, dob, email,
-    phoneNo, jamaatId, sex, maritalStatus, address, status, employmentStatus, createdBy
+    phoneNo, jamaatId, sex, maritalStatus, address, status, employmentStatus
 )
 {
     public string ChandaNo { get; private set; } = chandaNo;

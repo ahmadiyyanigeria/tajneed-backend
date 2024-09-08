@@ -2,7 +2,7 @@ using Domain.Entities.AuditTrailAggregateRoot;
 
 namespace Domain.Entities.MemberAggregateRoot;
 
-public class PendingMemberRequest(IReadOnlyList<MemberRequest> requests, string createdBy) : BaseEntity(createdBy)
+public class PendingMemberRequest(IReadOnlyList<MemberRequest> requests) : BaseEntity
 {
     private readonly List<MemberRequest> _requests = new(requests);
 

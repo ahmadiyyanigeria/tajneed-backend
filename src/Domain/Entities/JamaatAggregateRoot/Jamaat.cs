@@ -2,7 +2,7 @@ using Domain.Entities.AuditTrailAggregateRoot;
 
 namespace Domain.Entities.JamaatAggregateRoot;
 
-public class Jamaat(string jamaatName, string jamaatCode, string circuitId, string createdBy) : BaseEntity(createdBy)
+public class Jamaat(string jamaatName, string jamaatCode, string circuitId) : BaseEntity
 {
     public string JamaatName { get; private set; } = jamaatName;
     public string JamaatCode { get; private set; } = jamaatCode;

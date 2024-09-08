@@ -3,8 +3,9 @@ using Domain.Entities.JamaatAggregateRoot;
 
 namespace Domain.Entities.CaseAggregateRoot;
 
-public class RelocationCase(string caseId, string oldJamaatId, string newJamaatId, string? notes = null) : BaseEntity
+public class RelocationCase(string caseId, string oldJamaatId, string newJamaatId, string? notes = null) : BaseEntity, IEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string CaseId { get; private set; } = caseId;
     public Case Case { get; private set; } = default!;
     public string OldJamaatId { get; private set; } = oldJamaatId;

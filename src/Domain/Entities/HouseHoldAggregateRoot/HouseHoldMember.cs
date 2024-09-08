@@ -3,8 +3,9 @@ using Domain.Entities.JamaatAggregateRoot;
 using Domain.Entities.MemberAggregateRoot;
 
 namespace Domain.Entities.HouseHoldAggregateRoot;
-public class HouseHoldMember(string houseHoldId, string memberId, string positionId) : BaseEntity
+public class HouseHoldMember(string houseHoldId, string memberId, string positionId) : BaseEntity, IEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string HouseHoldId { get; private set; } = houseHoldId;
     public HouseHold HouseHold { get; private set; } = default!;
     public string MemberId { get; private set; } = memberId;

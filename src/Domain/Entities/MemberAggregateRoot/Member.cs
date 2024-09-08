@@ -1,3 +1,4 @@
+using Domain.Entities.AuditTrailAggregateRoot;
 using Domain.Entities.JamaatAggregateRoot;
 using Domain.Enums;
 
@@ -12,8 +13,9 @@ public class Member
 (
     surname, firstName, auxiliaryBodyId, middleName, dob, email,
     phoneNo, jamaatId, sex, maritalStatus, address, employmentStatus
-)
+), IEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string ChandaNo { get; private set; } = chandaNo;
     public string? WasiyatNo { get; private set; } = wasiyatNo;
     public string? SpouseNo { get; set; } = spouseNo;

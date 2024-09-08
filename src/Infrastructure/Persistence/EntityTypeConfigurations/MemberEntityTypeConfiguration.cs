@@ -3,6 +3,7 @@ using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Reflection.Emit;
 
 namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
@@ -11,6 +12,8 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
     public void Configure(EntityTypeBuilder<Member> builder)
     {
         builder.ToTable("members");
+
+        builder.HasBaseType<MemberRequest>();
 
         builder.HasKey(m => m.Id);
 

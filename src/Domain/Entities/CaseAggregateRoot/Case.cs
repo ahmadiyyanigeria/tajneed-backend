@@ -3,8 +3,9 @@ using Domain.Entities.MemberAggregateRoot;
 
 namespace Domain.Entities.CaseAggregateRoot;
 
-public class Case(string caseTypeId, string memberId, string status, string referenceCode, string details) : BaseEntity
+public class Case(string caseTypeId, string memberId, string status, string referenceCode, string details) : BaseEntity, IEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string ReferenceCode { get; private set; } = referenceCode;
     public string CaseTypeId { get; private set; } = caseTypeId;
     public CaseType CaseType { get; private set; } = default!;

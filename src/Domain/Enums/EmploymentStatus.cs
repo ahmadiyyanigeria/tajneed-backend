@@ -2,7 +2,7 @@ namespace Domain.Enums;
 
 public enum EmploymentStatus
 {
-    Unemployed,
+    Unemployed = 1,
     Employed,
     SelfEmployed,
     Student,

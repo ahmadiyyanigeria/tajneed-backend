@@ -2,7 +2,7 @@ namespace Domain.Enums;
 
 public enum Status
 {
-    Active,
+    Active = 1,
     Inactive,
     Suspended
 }

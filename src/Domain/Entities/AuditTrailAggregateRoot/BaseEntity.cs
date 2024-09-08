@@ -6,7 +6,7 @@ public class BaseEntity(string createdBy)
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     public string CreatedBy { get; set; } = createdBy;
     public DateTime? LastModifiedOn { get; set; }
-    public bool IsDeleted { get; private set; } = default;
-    public string? LastModifiedBy { get; private set; }
+    public bool IsDeleted { get; set; }
+    public string? LastModifiedBy { get; set; }
 
 }

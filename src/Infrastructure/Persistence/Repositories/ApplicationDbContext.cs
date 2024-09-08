@@ -1,3 +1,4 @@
+using Application.Repositories;
 using Domain.Entities.AuditTrailAggregateRoot;
 using Domain.Entities.CaseAggregateRoot;
 using Domain.Entities.CodeAggregateRoot;
@@ -8,8 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 namespace Infrastructure.Persistence.Repositories;
-public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
+public class ApplicationDbContext(
+    ICurrentUser currentUser,
+    DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
+    protected readonly ICurrentUser _currentUser = currentUser;
+
     public DbSet<AuditTrail> AuditTrails => Set<AuditTrail>();
     public DbSet<AuxiliaryBody> AuxiliaryBodies => Set<AuxiliaryBody>();
     public DbSet<BiodataUpdateCase> BiodataUpdateCases => Set<BiodataUpdateCase>();
@@ -33,5 +38,39 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        HandleAuditingBeforeSaveChanges(_currentUser.GetUserDetails().UserId);
+        int result = await base.SaveChangesAsync(cancellationToken);
+        return result;
+    }
+
+    private void HandleAuditingBeforeSaveChanges(string userId)
+    {
+        foreach (var entry in ChangeTracker.Entries<BaseEntity>().ToList())
+        {
+            switch (entry.State)
+            {
+                case EntityState.Added:
+                    entry.Entity.CreatedBy = userId;
+                    entry.Entity.CreatedOn = DateTime.UtcNow;
+                    break;
+
+                case EntityState.Modified:
+                    entry.Entity.LastModifiedOn = DateTime.UtcNow;
+                    entry.Entity.LastModifiedBy = userId;
+                    break;
+
+                case EntityState.Deleted:
+                    entry.Entity.LastModifiedOn = DateTime.UtcNow;
+                    entry.Entity.LastModifiedBy = userId;
+                    entry.Entity.IsDeleted = true;
+                    entry.State = EntityState.Modified;
+                    break;
+            }
+        }
+        ChangeTracker.DetectChanges();
     }
 }

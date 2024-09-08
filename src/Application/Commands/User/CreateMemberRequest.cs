@@ -31,9 +31,9 @@ public class CreateMemberRequest
 
     public record MemberRequestResponse(string Email, string FirstName, string MiddleName, string Surname, string PhoneNo, string JamaatId, string Address, DateTime Dob, Sex Sex, MaritalStatus MaritalStatus, Status Status, EmploymentStatus EmploymentStatus);
 
-    public class Handler : IRequestHandler<CreateMemberRequestCommand, MemberRequestResponse>
+    public class Handler(IMemberRequestRepository memberRequestRepository) : IRequestHandler<CreateMemberRequestCommand, MemberRequestResponse>
     {
-        private readonly IMemberRequestRepository _memberRequestRepository;
+        private readonly IMemberRequestRepository _memberRequestRepository = memberRequestRepository;
 
         public async Task<MemberRequestResponse> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
         {

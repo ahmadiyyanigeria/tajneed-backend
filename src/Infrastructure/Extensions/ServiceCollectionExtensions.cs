@@ -1,3 +1,4 @@
+using Application.Repositories;
 using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +13,14 @@ public static class ServiceCollectionExtensions
         var connectionString = configuration.GetDbConnectionStringBuilder().ConnectionString;
         return serviceCollection
             .AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString, action => action.MigrationsAssembly("Infrastructure")));
+                options.UseNpgsql(connectionString, action => action.MigrationsAssembly("Infrastructure")))
+            .AddApplicationServices();
+    }
+
+    public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection
+            .AddScoped<ICurrentUser, CurrentUser>()
+            .AddScoped<IMemberRequestRepository, MemberRequestRepository>();
     }
 }

@@ -1,5 +1,6 @@
 using Application.Behaviours;
 using Application.Commands.User;
+using Application.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +17,8 @@ public static class ServiceCollectionExtensions
         return serviceCollection
             .AddValidatorsFromAssemblyContaining<CreateUser.CommandValidator>()
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-    }
+    } 
+
     public static IServiceCollection AddMediatR(this IServiceCollection serviceCollection)
     {
         return serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StringExtensions).Assembly));

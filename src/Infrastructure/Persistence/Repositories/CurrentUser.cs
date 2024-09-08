@@ -29,5 +29,3 @@ public class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICurrentUse
 
     private string GetClaimValue(string claimType) => User?.FindFirst(claimType)?.Value ?? string.Empty;
 }
-
-

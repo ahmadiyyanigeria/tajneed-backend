@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers;
+namespace Api.Controllers.v1;
 
 public class MemberController : ControllerBase
 {

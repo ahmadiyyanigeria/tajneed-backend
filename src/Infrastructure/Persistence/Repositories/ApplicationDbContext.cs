@@ -29,6 +29,7 @@ public class ApplicationDbContext(
     public DbSet<Jamaat> Jamaats => Set<Jamaat>();
     public DbSet<Member> Members => Set<Member>();
     public DbSet<MemberMovement> MemberMovements => Set<MemberMovement>();
+    public DbSet<PendingMemberRequest> PendingMemberRequests => Set<PendingMemberRequest>();
     public DbSet<MembershipStatus> MembershipStatus => Set<MembershipStatus>();
     public DbSet<Nationality> Nationalities => Set<Nationality>();
     public DbSet<Position> Positions => Set<Position>();

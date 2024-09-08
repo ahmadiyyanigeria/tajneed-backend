@@ -4,5 +4,5 @@ namespace Application.Repositories;
 
 public interface IMemberRequestRepository
 {
-    Task<MemberRequest> CreateMemberRequestAsync(MemberRequest memberRequest);
+    Task<PendingMemberRequest> CreateMemberRequestAsync(PendingMemberRequest memberRequest);
 }

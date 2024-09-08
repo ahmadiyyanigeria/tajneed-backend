@@ -7,10 +7,9 @@ public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequ
 {
     private readonly ApplicationDbContext _context = context;
 
-    public async Task<MemberRequest> CreateMemberRequestAsync(MemberRequest memberRequest)
+    public async Task<PendingMemberRequest> CreateMemberRequestAsync(PendingMemberRequest memberRequest)
     {
         await _context.AddAsync(memberRequest);
         return memberRequest;
     }
 }
-

@@ -7,15 +7,12 @@ using Domain.Enums;
 namespace Domain.Entities.CaseAggregateRoot;
 
 public class BiodataUpdateCase(
-string caseId, string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,
+string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,
 EmploymentStatus employmentStatus, string jamaatId, MaritalStatus maritalStatus, string membershipStatusId, string title,
 bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string? notes = null,
 string? spouseNo = null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null,
-string? occupation = null, DateTime? biatDate = null) : BaseEntity, IEntity
+string? occupation = null, DateTime? biatDate = null) : BaseEntity
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string CaseId { get; private set; } = caseId;
-    public Case Case { get; private set; } = default!;
     public string SurName { get; private set; } = surName;
     public string FirstName { get; private set; } = firstName;
     public string MiddleName { get; private set; } = middleName;

@@ -2,7 +2,7 @@ using Domain.Entities.AuditTrailAggregateRoot;
 
 namespace Domain.Entities.JamaatAggregateRoot;
 
-public class Jamaat(string jamaatName, string jamaatCode, string circuitId) : BaseEntity, IEntity
+public class Jamaat(string jamaatName, string jamaatCode, string circuitId) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public string JamaatName { get; private set; } = jamaatName;

@@ -13,8 +13,6 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
     {
         builder.ToTable("members");
 
-        builder.HasBaseType<MemberRequest>();
-
         builder.HasKey(m => m.Id);
 
         builder.Property(m => m.Id)
@@ -44,62 +42,6 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
             .IsRequired()
             .HasColumnName("chanda_no");
 
-        builder.Property(m => m.Surname)
-            .IsRequired()
-            .HasColumnName("surname");
-
-        builder.Property(m => m.FirstName)
-            .IsRequired()
-            .HasColumnName("first_name");
-
-        builder.Property(m => m.AuxiliaryBodyId)
-            .IsRequired()
-            .HasColumnName("auxiliary_body_id");
-
-        builder.Property(m => m.MiddleName)
-            .IsRequired()
-            .HasColumnName("middle_name");
-
-        builder.Property(m => m.Dob)
-            .IsRequired()
-            .HasColumnName("dob");
-
-        builder.Property(m => m.Email)
-            .IsRequired()
-            .HasColumnName("email");
-
-        builder.Property(m => m.PhoneNo)
-            .IsRequired()
-            .HasColumnName("phone_no");
-
-        builder.Property(m => m.JamaatId)
-            .IsRequired()
-            .HasColumnName("jamaat_id");
-
-        builder.Property(m => m.Sex)
-            .IsRequired()
-            .HasConversion<EnumToStringConverter<Sex>>()
-            .HasColumnName("sex");
-
-        builder.Property(m => m.MaritalStatus)
-            .IsRequired()
-            .HasConversion<EnumToStringConverter<MaritalStatus>>()
-            .HasColumnName("marital_status");
-
-        builder.Property(m => m.Address)
-            .IsRequired()
-            .HasColumnName("address");
-
-        builder.Property(m => m.Status)
-            .IsRequired()
-            .HasConversion<EnumToStringConverter<Status>>()
-            .HasColumnName("status");
-
-        builder.Property(m => m.EmploymentStatus)
-            .IsRequired()
-            .HasConversion<EnumToStringConverter<EmploymentStatus>>()
-            .HasColumnName("employment_status");
-
         builder.Property(m => m.WasiyatNo)
             .HasColumnName("wasiyat_no");
 
@@ -127,6 +69,10 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.BiatDate)
             .HasColumnName("biat_date");
 
+        builder.Property(u => u.MembershipInfo)
+                .HasColumnName("membership_info")
+                .HasColumnType("jsonb");
+
         builder.HasOne(m => m.Nationality)
         .WithMany()
         .HasForeignKey(m => m.NationalityId)
@@ -137,18 +83,8 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
             .HasForeignKey(m => m.MembershipStatusId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasOne(m => m.AuxiliaryBody)
-            .WithMany()
-            .HasForeignKey(m => m.AuxiliaryBodyId)
-            .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(m => m.Jamaat)
-            .WithMany()
-            .HasForeignKey(m => m.JamaatId)
-            .OnDelete(DeleteBehavior.Restrict);
 
         builder.Property(m => m.CreatedOn)
-            .IsRequired()
             .HasColumnName("created_on");
 
         builder.Property(m => m.CreatedBy)
@@ -164,5 +100,6 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.IsDeleted)
             .IsRequired()
             .HasColumnName("is_deleted");
+
     }
 }

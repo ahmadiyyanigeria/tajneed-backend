@@ -1,6 +1,8 @@
 using Domain.Entities.CaseAggregateRoot;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Persistence.EntityTypeConfigurations;
 
@@ -16,9 +18,6 @@ public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
             .IsRequired()
             .HasColumnName("id");
 
-        builder.Property(c => c.CaseTypeId)
-            .IsRequired()
-            .HasColumnName("case_type_id");
 
         builder.Property(c => c.MemberId)
             .IsRequired()
@@ -32,9 +31,15 @@ public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
             .IsRequired()
             .HasColumnName("reference_code");
 
-        builder.Property(c => c.Details)
+        builder.Property(c => c.Status)
             .IsRequired()
-            .HasColumnName("details");
+            .HasConversion<EnumToStringConverter<Status>>()
+            .HasColumnName("status");
+
+        builder.Property(c => c.CaseType)
+            .IsRequired()
+            .HasConversion<EnumToStringConverter<CaseType>>()
+            .HasColumnName("case_type");
 
         builder.Property(c => c.CreatedOn)
             .IsRequired()
@@ -54,10 +59,17 @@ public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
             .IsRequired()
             .HasColumnName("is_deleted");
 
-        builder.HasOne(c => c.CaseType)
-            .WithMany()
-            .HasForeignKey(c => c.CaseTypeId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.Property(p => p.BiodataUpdateCase)
+            .HasColumnName("bio_data_update_case")
+            .HasColumnType("jsonb");
+
+        builder.Property(p => p.DuplicateAccountCase)
+            .HasColumnName("duplicate_account_case")
+            .HasColumnType("jsonb");
+
+        builder.Property(p => p.RelocationCase)
+            .HasColumnName("relocation_case")
+            .HasColumnType("jsonb");
 
         builder.HasOne(c => c.Member)
             .WithMany()

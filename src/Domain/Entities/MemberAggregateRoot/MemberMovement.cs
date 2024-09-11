@@ -3,7 +3,7 @@ using Domain.Entities.JamaatAggregateRoot;
 
 namespace Domain.Entities.MemberAggregateRoot;
 
-public class MemberMovement(string memberId, string fromJamaatId, string toJamaatId) : BaseEntity,IEntity
+public class MemberMovement(string memberId, string fromJamaatId, string toJamaatId) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public string MemberId { get; private set; } = memberId;

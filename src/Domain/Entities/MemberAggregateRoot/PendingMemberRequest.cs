@@ -3,12 +3,12 @@ using System.ComponentModel;
 
 namespace Domain.Entities.MemberAggregateRoot;
 
-public class PendingMemberRequest(IReadOnlyList<MemberRequest> requests) : BaseEntity, IEntity
+public class PendingMemberRequest(IReadOnlyList<MembershipInfo> requests) : BaseEntity
 {
-    private readonly List<MemberRequest> _requests = new(requests);
+    private readonly List<MembershipInfo> _requests = new(requests);
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
-    public IReadOnlyList<MemberRequest> Requests
+    public IReadOnlyList<MembershipInfo> Requests
     {
         get => _requests.AsReadOnly();
         private set => _requests.AddRange(value);

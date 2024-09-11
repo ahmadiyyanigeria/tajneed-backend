@@ -28,7 +28,7 @@ public class CreateMemberRequest
         {
             //TODO: Check if data already exist. How're we confirming if a record already exist
 
-            var memberRequests = request.MemberRequests.Select(x => new MemberRequest(x.Surname, x.FirstName, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.JamaatId, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus)).ToList();
+            var memberRequests = request.MemberRequests.Select(x => new MembershipInfo(x.Surname, x.FirstName, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.JamaatId, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus)).ToList();
 
             var pendingMemberRequest = new PendingMemberRequest(memberRequests);
             var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(pendingMemberRequest);

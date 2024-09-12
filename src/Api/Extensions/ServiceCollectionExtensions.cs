@@ -1,4 +1,3 @@
-using Api.Filters;
 using Mapster;
 using MapsterMapper;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
@@ -7,8 +6,9 @@ using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TajneedApi.Api.Filters;
 
-namespace Api.Extensions;
+namespace TajneedApi.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {

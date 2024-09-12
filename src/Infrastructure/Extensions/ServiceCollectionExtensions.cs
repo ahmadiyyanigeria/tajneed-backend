@@ -1,10 +1,10 @@
-using Application.Repositories;
-using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TajneedApi.Application.Repositories;
+using TajneedApi.Infrastructure.Persistence.Repositories;
 
-namespace Infrastructure.Extensions;
+namespace TajneedApi.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {

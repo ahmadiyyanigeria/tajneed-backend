@@ -1,6 +1,6 @@
-using Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-namespace Domain.Entities.HouseHoldAggregateRoot;
+namespace TajneedApi.Domain.Entities.HouseHoldAggregateRoot;
 
 public class HouseHold(string address, string name) : BaseEntity
 {

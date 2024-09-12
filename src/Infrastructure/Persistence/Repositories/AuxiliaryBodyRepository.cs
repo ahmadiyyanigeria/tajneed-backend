@@ -1,8 +1,8 @@
-﻿using Application.Repositories;
-using Domain.Entities.JamaatAggregateRoot;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using TajneedApi.Application.Repositories;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace TajneedApi.Infrastructure.Persistence.Repositories;
 
 public class AuxiliaryBodyRepository(ApplicationDbContext context) : IAuxiliaryBodyRepository
 {

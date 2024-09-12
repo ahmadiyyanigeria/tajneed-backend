@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+	  <RootNamespace>TajneedApi.UnitTests</RootNamespace>
+	  <AssemblyName>TajneedApi.UnitTests</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 

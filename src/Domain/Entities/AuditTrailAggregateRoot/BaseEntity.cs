@@ -1,4 +1,4 @@
-namespace Domain.Entities.AuditTrailAggregateRoot;
+namespace TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
 public class BaseEntity
 {

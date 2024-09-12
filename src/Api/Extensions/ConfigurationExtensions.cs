@@ -1,6 +1,6 @@
-using Api.Middleware;
+using TajneedApi.Api.Middleware;
 
-namespace Api.Extensions;
+namespace TajneedApi.Api.Extensions;
 
 public static class ConfigurationExtensions
 {

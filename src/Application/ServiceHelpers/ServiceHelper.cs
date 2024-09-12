@@ -1,7 +1,7 @@
-﻿using Domain.Constants;
-using Domain.Enums;
+﻿using TajneedApi.Domain.Constants;
+using TajneedApi.Domain.Enums;
 
-namespace Application.ServiceHelpers;
+namespace TajneedApi.Application.ServiceHelpers;
 
 public static class ServiceHelper
 {

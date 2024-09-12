@@ -1,13 +1,13 @@
-﻿using Application.Repositories;
-using Application.ServiceHelpers;
-using Domain.Entities.JamaatAggregateRoot;
+﻿using Domain.Entities.JamaatAggregateRoot;
 using Domain.Entities.MemberAggregateRoot;
-using Domain.Enums;
 using FluentValidation;
 using Mapster;
 using MediatR;
+using TajneedApi.Application.Repositories;
+using TajneedApi.Application.ServiceHelpers;
+using TajneedApi.Domain.Enums;
 
-namespace Application.Commands.User;
+namespace TajneedApi.Application.Commands.User;
 
 public class CreateMemberRequest
 {

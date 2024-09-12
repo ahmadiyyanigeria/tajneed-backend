@@ -1,10 +1,10 @@
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.HouseHoldAggregateRoot;
-using Domain.Entities.JamaatAggregateRoot;
-using Domain.Entities.MemberAggregateRoot;
-using Domain.Enums;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.HouseHoldAggregateRoot;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.Enums;
 
-namespace Domain.Entities.CaseAggregateRoot;
+namespace TajneedApi.Domain.ValueObjects;
 
 public class BiodataUpdateCase(
 string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,

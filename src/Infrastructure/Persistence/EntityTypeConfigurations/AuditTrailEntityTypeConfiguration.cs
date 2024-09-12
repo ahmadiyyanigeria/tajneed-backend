@@ -1,7 +1,7 @@
-using Domain.Entities.AuditTrailAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-namespace Infrastructure.Persistence.EntityTypeConfigurations;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class AuditTrailEntityTypeConfiguration : IEntityTypeConfiguration<AuditTrail>
 {

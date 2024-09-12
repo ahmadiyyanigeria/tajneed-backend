@@ -1,7 +1,7 @@
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Enums;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Enums;
 
-namespace Domain.Entities.JamaatAggregateRoot;
+namespace TajneedApi.Domain.Entities.JamaatAggregateRoot;
 public class AuxiliaryBody(string auxiliaryBodyName, Sex groupGender) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();

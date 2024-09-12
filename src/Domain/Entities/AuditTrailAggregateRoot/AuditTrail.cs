@@ -1,4 +1,4 @@
-namespace Domain.Entities.AuditTrailAggregateRoot;
+namespace TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 public class AuditTrail(string userId, string activityId, string details, DateTime dateOccurred)
 {
     public string Id { get; private set; } = Guid.NewGuid().ToString();

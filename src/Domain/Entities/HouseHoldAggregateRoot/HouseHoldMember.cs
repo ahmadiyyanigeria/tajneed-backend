@@ -1,8 +1,8 @@
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.JamaatAggregateRoot;
-using Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
 
-namespace Domain.Entities.HouseHoldAggregateRoot;
+namespace TajneedApi.Domain.Entities.HouseHoldAggregateRoot;
 public class HouseHoldMember(string houseHoldId, string memberId, string positionId) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();

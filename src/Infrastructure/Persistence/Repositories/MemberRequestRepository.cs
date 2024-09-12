@@ -1,7 +1,7 @@
-﻿using Application.Repositories;
-using Domain.Entities.MemberAggregateRoot;
+﻿using TajneedApi.Application.Repositories;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace TajneedApi.Infrastructure.Persistence.Repositories;
 
 public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequestRepository
 {

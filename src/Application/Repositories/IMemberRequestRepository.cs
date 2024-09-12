@@ -1,6 +1,6 @@
-﻿using Domain.Entities.MemberAggregateRoot;
+﻿using TajneedApi.Domain.Entities.MemberAggregateRoot;
 
-namespace Application.Repositories;
+namespace TajneedApi.Application.Repositories;
 
 public interface IMemberRequestRepository
 {

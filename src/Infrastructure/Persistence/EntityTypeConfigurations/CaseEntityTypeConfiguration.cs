@@ -1,10 +1,10 @@
-using Domain.Entities.CaseAggregateRoot;
-using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using TajneedApi.Domain.Entities.CaseAggregateRoot;
+using TajneedApi.Domain.Enums;
 
-namespace Infrastructure.Persistence.EntityTypeConfigurations;
+namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
 {

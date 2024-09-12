@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TajneedApi.Api.Controllers.Common;
 
-namespace Api.Controllers.v1;
+namespace TajneedApi.Api.Controllers.v1;
 
-public class MemberController : ControllerBase
+public class MemberController : VersionedApiController
 {
     public IActionResult Index()
     {

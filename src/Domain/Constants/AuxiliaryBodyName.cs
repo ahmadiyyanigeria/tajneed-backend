@@ -1,4 +1,4 @@
-﻿namespace Domain.Constants;
+﻿namespace TajneedApi.Domain.Constants;
 
 public class AuxiliaryBodyName
 {

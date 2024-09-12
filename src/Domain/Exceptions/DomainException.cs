@@ -1,4 +1,4 @@
-namespace Domain.Exceptions;
+namespace TajneedApi.Domain.Exceptions;
 
 public class DomainException : Exception
 {

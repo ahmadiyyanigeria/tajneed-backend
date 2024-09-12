@@ -1,10 +1,10 @@
-using Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using TajneedApi.Infrastructure.Persistence.Repositories;
 
-namespace Infrastructure.Extensions;
+namespace TajneedApi.Infrastructure.Extensions;
 
 public static class MigrationExtensions
 {

@@ -1,10 +1,11 @@
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.MemberAggregateRoot;
-using Domain.Enums;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.Enums;
+using TajneedApi.Domain.ValueObjects;
 
-namespace Domain.Entities.CaseAggregateRoot;
+namespace TajneedApi.Domain.Entities.CaseAggregateRoot;
 
-public class Case(string memberId, Status status, string referenceCode, BiodataUpdateCase? biodataUpdateCase,DuplicateAccountCase? duplicateAccountCase,RelocationCase? relocationCase) : BaseEntity
+public class Case(string memberId, Status status, string referenceCode, BiodataUpdateCase? biodataUpdateCase, DuplicateAccountCase? duplicateAccountCase, RelocationCase? relocationCase) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public string ReferenceCode { get; private set; } = referenceCode;

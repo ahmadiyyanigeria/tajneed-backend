@@ -1,7 +1,8 @@
-using Domain.Entities.AuditTrailAggregateRoot;
 using System.ComponentModel;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.ValueObjects;
 
-namespace Domain.Entities.MemberAggregateRoot;
+namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 
 public class PendingMemberRequest(IReadOnlyList<MembershipInfo> requests) : BaseEntity
 {

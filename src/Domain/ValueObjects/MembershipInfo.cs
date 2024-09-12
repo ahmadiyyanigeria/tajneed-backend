@@ -1,8 +1,8 @@
 using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.JamaatAggregateRoot;
-using Domain.Enums;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.Enums;
 
-namespace Domain.Entities.MemberAggregateRoot;
+namespace TajneedApi.Domain.ValueObjects;
 
 public class MembershipInfo(string surname, string firstName, string auxiliaryBodyId, string middleName, DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, EmploymentStatus employmentStatus)
 {

@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 
-namespace Infrastructure.Extensions;
+namespace TajneedApi.Infrastructure.Extensions;
 
 public static class NpgsqlConnectionExtension
 {

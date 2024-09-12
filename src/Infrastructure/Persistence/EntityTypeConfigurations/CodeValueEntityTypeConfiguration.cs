@@ -1,8 +1,8 @@
-using Domain.Entities.CodeAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TajneedApi.Domain.Entities.CodeAggregateRoot;
 
-namespace Infrastructure.Persistence.EntityTypeConfigurations;
+namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class CodeValueEntityTypeConfiguration : IEntityTypeConfiguration<CodeValue>
 {

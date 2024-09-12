@@ -1,6 +1,6 @@
-using Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-namespace Domain.Entities.CodeAggregateRoot;
+namespace TajneedApi.Domain.Entities.CodeAggregateRoot;
 
 public class CodeValue(string codeId, string @value, string? description = null) : BaseEntity
 {

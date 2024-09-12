@@ -1,6 +1,6 @@
-using Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-namespace Domain.Entities.MemberAggregateRoot;
+namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 
 public class MembershipStatus(string name) : BaseEntity
 {

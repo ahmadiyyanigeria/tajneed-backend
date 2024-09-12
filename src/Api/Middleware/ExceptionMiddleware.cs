@@ -1,11 +1,11 @@
-using Domain.Exceptions;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Sentry;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TajneedApi.Domain.Exceptions;
 
-namespace Api.Middleware;
+namespace TajneedApi.Api.Middleware;
 
 public class ExceptionMiddleware
 {

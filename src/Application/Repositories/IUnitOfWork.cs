@@ -1,4 +1,4 @@
-﻿namespace Application.Repositories;
+﻿namespace TajneedApi.Application.Repositories;
 
 public interface IUnitOfWork
 {

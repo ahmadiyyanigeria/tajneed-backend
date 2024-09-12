@@ -1,11 +1,13 @@
-using Application.Behaviours;
-using Application.Commands.User;
+using Application.Extensions;
 using Application.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using TajneedApi.Application.Behaviours;
+using TajneedApi.Application.Commands.User;
+using TajneedApi.Application.Extensions;
 
-namespace Application.Extensions;
+namespace TajneedApi.Application.Extensions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddValidators(this IServiceCollection serviceCollection)
@@ -17,7 +19,7 @@ public static class ServiceCollectionExtensions
         return serviceCollection
             .AddValidatorsFromAssemblyContaining<CreateUser.CommandValidator>()
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-    } 
+    }
 
     public static IServiceCollection AddMediatR(this IServiceCollection serviceCollection)
     {

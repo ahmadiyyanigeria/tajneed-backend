@@ -1,6 +1,6 @@
-using Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-namespace Domain.Entities.JamaatAggregateRoot;
+namespace TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
 public class Nationality(string code, string name) : BaseEntity
 {

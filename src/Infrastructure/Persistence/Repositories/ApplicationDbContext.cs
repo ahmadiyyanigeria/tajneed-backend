@@ -1,14 +1,14 @@
-using Application.Repositories;
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.CaseAggregateRoot;
-using Domain.Entities.CodeAggregateRoot;
-using Domain.Entities.HouseHoldAggregateRoot;
-using Domain.Entities.JamaatAggregateRoot;
-using Domain.Entities.MemberAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using TajneedApi.Application.Repositories;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.CaseAggregateRoot;
+using TajneedApi.Domain.Entities.CodeAggregateRoot;
+using TajneedApi.Domain.Entities.HouseHoldAggregateRoot;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace TajneedApi.Infrastructure.Persistence.Repositories;
 public class ApplicationDbContext(
     ICurrentUser currentUser,
     DbContextOptions<ApplicationDbContext> options) : DbContext(options)

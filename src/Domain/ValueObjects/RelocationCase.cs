@@ -1,7 +1,7 @@
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
-namespace Domain.Entities.CaseAggregateRoot;
+namespace TajneedApi.Domain.ValueObjects;
 
 public class RelocationCase(string oldJamaatId, string newJamaatId, string? notes = null) : BaseEntity
 {

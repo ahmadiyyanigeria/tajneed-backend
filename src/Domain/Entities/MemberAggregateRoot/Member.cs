@@ -1,14 +1,15 @@
-using Domain.Entities.AuditTrailAggregateRoot;
-using Domain.Entities.JamaatAggregateRoot;
 using Domain.Enums;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.ValueObjects;
 
-namespace Domain.Entities.MemberAggregateRoot;
+namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 
 public class Member
 (
     string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName,
     bool isBornMember, string chandaNo, MembershipInfo membershipInfo, string? wasiyatNo = null, string? spouseNo = null, string? recordFlag = null, string? fatherNo = null, string? childrenNos = null, string? occupation = null, string? nextOfKinPhoneNo = null, string? nextOfKinAddress = null, DateTime? biatDate = null
-):BaseEntity
+) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
     public string ChandaNo { get; private set; } = chandaNo;

@@ -1,9 +1,8 @@
-﻿using Api.Controllers.Common;
-using Application.Commands.User;
-using Microsoft.AspNetCore.Mvc;
-using static Application.Commands.User.CreateMemberRequest;
+﻿using Microsoft.AspNetCore.Mvc;
+using TajneedApi.Api.Controllers.Common;
+using static TajneedApi.Application.Commands.User.CreateMemberRequest;
 
-namespace Api.Controllers.v1;
+namespace TajneedApi.Api.Controllers.v1;
 
 public class MemberRequestController : VersionedApiController
 {

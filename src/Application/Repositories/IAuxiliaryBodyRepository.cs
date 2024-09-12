@@ -1,6 +1,6 @@
-﻿using Domain.Entities.JamaatAggregateRoot;
+﻿using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
-namespace Application.Repositories;
+namespace TajneedApi.Application.Repositories;
 
 public interface IAuxiliaryBodyRepository
 {

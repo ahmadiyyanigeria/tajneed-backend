@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Domain.Entities.CaseAggregateRoot;
-using Domain.Entities.MemberAggregateRoot;
 using Microsoft.EntityFrameworkCore.Migrations;
+using TajneedApi.Domain.ValueObjects;
 
 #nullable disable
 

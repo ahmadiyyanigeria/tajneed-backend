@@ -1,8 +1,8 @@
-using Domain.Entities.MemberAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
 
-namespace Infrastructure.Persistence.EntityTypeConfigurations;
+namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class PendingMemberRequestEntityTypeConfiguration : IEntityTypeConfiguration<PendingMemberRequest>
 {

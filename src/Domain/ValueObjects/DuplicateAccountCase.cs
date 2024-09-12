@@ -1,6 +1,6 @@
-using Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-namespace Domain.Entities.CaseAggregateRoot;
+namespace TajneedApi.Domain.ValueObjects;
 
 public class DuplicateAccountCase(string primaryAccount, string otherAccounts, string? notes = null) : BaseEntity
 {

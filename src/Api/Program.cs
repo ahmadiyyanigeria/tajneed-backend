@@ -1,7 +1,7 @@
-using Api.Extensions;
-using Application.Extensions;
-using Infrastructure.Extensions;
 using Serilog;
+using TajneedApi.Api.Extensions;
+using TajneedApi.Application.Extensions;
+using TajneedApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

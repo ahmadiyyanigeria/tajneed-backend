@@ -1,4 +1,4 @@
-namespace UnitTests;
+namespace TajneedApi.UnitTests;
 
 public class UnitTest1
 {

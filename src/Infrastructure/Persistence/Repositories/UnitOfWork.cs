@@ -1,6 +1,6 @@
-﻿using Application.Repositories;
+﻿using TajneedApi.Application.Repositories;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace TajneedApi.Infrastructure.Persistence.Repositories;
 
 public class UnitOfWork(ApplicationDbContext context) : IUnitOfWork
 {

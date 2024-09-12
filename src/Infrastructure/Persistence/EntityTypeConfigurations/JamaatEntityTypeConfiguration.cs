@@ -1,8 +1,8 @@
-using Domain.Entities.JamaatAggregateRoot;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
-namespace Infrastructure.Persistence.EntityTypeConfigurations;
+namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
 public class JamaatEntityTypeConfiguration : IEntityTypeConfiguration<Jamaat>
 {

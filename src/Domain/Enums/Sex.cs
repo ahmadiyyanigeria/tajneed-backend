@@ -1,8 +1,8 @@
-namespace Domain.Enums;
+namespace TajneedApi.Domain.Enums;
 
 public enum Sex
 {
-    Male =1,
+    Male = 1,
     Female,
     Other
 }

@@ -1,9 +1,9 @@
-﻿using Application.Repositories;
-using Infrastructure.Extensions;
+﻿using Infrastructure.Extensions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
+using TajneedApi.Application.Repositories;
 
-namespace Infrastructure.Persistence.Repositories;
+namespace TajneedApi.Infrastructure.Persistence.Repositories;
 
 public class CurrentUser(IHttpContextAccessor httpContextAccessor) : ICurrentUser
 {

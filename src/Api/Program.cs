@@ -1,6 +1,8 @@
 using Serilog;
+using System.Reflection;
 using TajneedApi.Api.Extensions;
 using TajneedApi.Application.Extensions;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using TajneedApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +16,8 @@ builder.Services.AddDatabase(configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddHttpContextAccessor();
 builder.Services.AddSwagger();
+builder.Services.AddHttpContextAccessor();
 builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureMvc();
 builder.Services.AddHealthChecks();
@@ -31,7 +32,6 @@ app.ApplyMigration();
 app.ConfigureExceptionHandler();
 app.ConfigureCors();
 app.ConfigureSwagger(configuration);
-
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();

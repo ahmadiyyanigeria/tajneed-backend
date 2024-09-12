@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using TajneedApi.Application.Repositories;
 using TajneedApi.Infrastructure.Persistence.Repositories;
 
 namespace TajneedApi.Infrastructure.Extensions;
@@ -15,8 +16,12 @@ public static class MigrationExtensions
             using var serviceScope = applicationBuilder.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
             Log.Logger.Information("Checking and Applying any pending migration.");
+           
             await context.Database.MigrateAsync();
-            //Add any data seeding method after migration 
+            if (!context.Jamaats.Any())
+            {
+                await serviceScope.ServiceProvider.GetRequiredService<IDatabaseInitializer>().SeedDatas();
+            }
         }
         catch (Exception ex)
         {

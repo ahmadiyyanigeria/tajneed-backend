@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Mapster;
 using MediatR;
+using System.ComponentModel;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.ServiceHelpers;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
@@ -15,8 +16,6 @@ public class CreateMemberRequest
     {
         public IReadOnlyList<CreateMemberRequestDto> MemberRequests { get; init; } = default!;
     }
-
-    public record MemberRequestResponse(string Email, string FirstName, string MiddleName, string Surname, string PhoneNo, string JamaatId, string Address, string Id, DateTime Dob, Sex Sex, MaritalStatus MaritalStatus, Status Status, EmploymentStatus EmploymentStatus);
 
     public class Handler(IMemberRequestRepository memberRequestRepository, IAuxiliaryBodyRepository auxiliaryBodyRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMemberRequestCommand, MemberRequestResponse>
     {
@@ -60,7 +59,22 @@ public class CreateMemberRequest
         public MaritalStatus MaritalStatus { get; init; }
         public EmploymentStatus EmploymentStatus { get; init; }
     }
-
+    public record MemberRequestResponse
+    {
+        public string Email { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string Surname { get; set; }
+        public string PhoneNo { get; set; }
+        public string JamaatId { get; set; }
+        public string Address { get; set; }
+        public string Id { get; set; }
+        public DateTime Dob { get; set; }
+        public Sex Sex { get; set; }
+        public MaritalStatus MaritalStatus { get; set; }
+        public Status Status { get; set; }
+        public EmploymentStatus EmploymentStatus { get; set; }
+    }
     public class CreateMemberRequestCommandValidator : AbstractValidator<CreateMemberRequestCommand>
     {
         public CreateMemberRequestCommandValidator()

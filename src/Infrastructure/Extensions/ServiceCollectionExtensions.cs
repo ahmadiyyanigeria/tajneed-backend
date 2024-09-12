@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
         var connectionString = configuration.GetDbConnectionStringBuilder().ConnectionString;
         return serviceCollection
             .AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString, action => action.MigrationsAssembly("Infrastructure")))
+                options.UseNpgsql(connectionString, action => action.MigrationsAssembly("TajneedApi.Infrastructure")))
             .AddApplicationServices();
     }
 

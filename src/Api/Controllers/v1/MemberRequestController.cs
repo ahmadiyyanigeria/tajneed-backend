@@ -14,7 +14,7 @@ public class MemberRequestController : VersionedApiController
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetMemberRequest(string id)
+    public IActionResult GetMemberRequest(string id)
     {
         return Ok(id);
     }

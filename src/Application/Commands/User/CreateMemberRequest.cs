@@ -108,7 +108,8 @@ public class CreateMemberRequest
                     .NotEmpty().WithMessage("Address is required");
 
                     p.RuleFor(x => x.Dob)
-                    .NotEmpty().WithMessage("Date of birth is required");
+                    .NotEmpty().WithMessage("Date of birth is required")
+                    .Must(x => x >= DateTime.Today).WithMessage("Date of birth cannot be earlier than today.");
                 });
             });
         }

@@ -1,4 +1,3 @@
-using Domain.Enums;
 using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 using TajneedApi.Domain.ValueObjects;

@@ -1,5 +1,4 @@
-﻿using Infrastructure.Extensions;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using TajneedApi.Application.Repositories;
 

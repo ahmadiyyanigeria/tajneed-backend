@@ -1,11 +1,11 @@
-﻿using Domain.Entities.JamaatAggregateRoot;
-using Domain.Entities.MemberAggregateRoot;
-using FluentValidation;
+﻿using FluentValidation;
 using Mapster;
 using MediatR;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.ServiceHelpers;
+using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Domain.Enums;
+using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Application.Commands.User;
 

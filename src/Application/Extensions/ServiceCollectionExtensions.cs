@@ -1,5 +1,4 @@
 using Application.Extensions;
-using Application.Repositories;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;

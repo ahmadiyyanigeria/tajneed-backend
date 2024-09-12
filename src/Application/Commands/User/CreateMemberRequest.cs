@@ -47,34 +47,28 @@ public class CreateMemberRequest
 
     public record CreateMemberRequestDto
     {
+        [DefaultValue("aabdulsalam@gmail.com")]
         public string Email { get; init; } = default!;
+        [DefaultValue("Ahmad")]
         public string FirstName { get; init; } = default!;
+        [DefaultValue("Abdulsalam")]
         public string MiddleName { get; init; } = default!;
+        [DefaultValue("Adnan")]
         public string Surname { get; init; } = default!;
+        [DefaultValue("+2348164671994")]
         public string PhoneNo { get; init; } = default!;
+        [DefaultValue("8027038c-5d2e-4368-b0a9-49609dc80a80")]
         public string JamaatId { get; init; } = default!;
+        [DefaultValue("6b Zone 2, Lagos Ibadan express way.")]
         public string Address { get; init; } = default!;
         public DateTime Dob { get; init; }
         public Sex Sex { get; init; }
         public MaritalStatus MaritalStatus { get; init; }
         public EmploymentStatus EmploymentStatus { get; init; }
     }
-    public record MemberRequestResponse
-    {
-        public string Email { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string Surname { get; set; }
-        public string PhoneNo { get; set; }
-        public string JamaatId { get; set; }
-        public string Address { get; set; }
-        public string Id { get; set; }
-        public DateTime Dob { get; set; }
-        public Sex Sex { get; set; }
-        public MaritalStatus MaritalStatus { get; set; }
-        public Status Status { get; set; }
-        public EmploymentStatus EmploymentStatus { get; set; }
-    }
+
+    public record MemberRequestResponse(string Email, string FirstName, string MiddleName, string Surname, string PhoneNo, string JamaatId, string Address, string Id, DateTime Dob, Sex Sex, MaritalStatus MaritalStatus, Status Status, EmploymentStatus EmploymentStatus);
+
     public class CreateMemberRequestCommandValidator : AbstractValidator<CreateMemberRequestCommand>
     {
         public CreateMemberRequestCommandValidator()

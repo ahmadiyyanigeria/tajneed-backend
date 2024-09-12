@@ -1,12 +1,12 @@
-namespace Domain.Entities;
+namespace TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class BaseEntity(string createdBy)
+public class BaseEntity
 {
-    public string Id { get; private set; } = Guid.NewGuid().ToString();
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
-    public string CreatedBy { get; set; } = createdBy;
+    public string CreatedBy { get; set; } = default!;
     public DateTime? LastModifiedOn { get; set; }
-    public bool IsDeleted { get; private set; } = default;
-    public string? LastModifiedBy { get; private set; }
-
+    public bool IsDeleted { get; set; }
+    public string? LastModifiedBy { get; set; }
 }
+
+

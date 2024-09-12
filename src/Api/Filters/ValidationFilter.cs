@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Api.Filters;
+namespace TajneedApi.Api.Filters;
 
 public class ValidationFilter : IAsyncActionFilter
 {

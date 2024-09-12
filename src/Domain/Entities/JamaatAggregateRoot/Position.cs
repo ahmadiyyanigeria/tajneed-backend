@@ -1,6 +1,9 @@
-namespace Domain.Entities;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class Position(string name, string createdBy) : BaseEntity(createdBy)
+namespace TajneedApi.Domain.Entities.JamaatAggregateRoot;
+
+public class Position(string name) : BaseEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string Name { get; private set; } = name;
 }

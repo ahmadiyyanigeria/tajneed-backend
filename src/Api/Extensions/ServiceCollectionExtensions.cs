@@ -1,14 +1,15 @@
-using Api.Filters;
 using Mapster;
 using MapsterMapper;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using TajneedApi.Api.Filters;
 
-namespace Api.Extensions;
+namespace TajneedApi.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -72,6 +73,10 @@ public static class ServiceCollectionExtensions
                     new List<string>()
                 }
            });
+            string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            c.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
+            c.EnableAnnotations();
         });
         services.AddFluentValidationRulesToSwagger();
     }

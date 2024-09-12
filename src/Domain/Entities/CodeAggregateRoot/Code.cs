@@ -1,9 +1,12 @@
-namespace Domain.Entities;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class Code(string name, string createdBy, string? description = null) : BaseEntity(createdBy)
+namespace TajneedApi.Domain.Entities.CodeAggregateRoot;
+
+public class Code(string name, string? description = null) : BaseEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string Name { get; private set; } = name;
-    
+
     public string? Description { get; private set; } = description;
 
 }

@@ -1,9 +1,10 @@
-using Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TajneedApi.Application.Repositories;
+using TajneedApi.Infrastructure.Persistence.Repositories;
 
-namespace Infrastructure.Extensions;
+namespace TajneedApi.Infrastructure.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -12,6 +13,17 @@ public static class ServiceCollectionExtensions
         var connectionString = configuration.GetDbConnectionStringBuilder().ConnectionString;
         return serviceCollection
             .AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString, action => action.MigrationsAssembly("Infrastructure")));
+                options.UseNpgsql(connectionString, action => action.MigrationsAssembly("TajneedApi.Infrastructure")))
+            .AddApplicationServices();
+    }
+
+    public static IServiceCollection AddApplicationServices(this IServiceCollection serviceCollection)
+    {
+        return serviceCollection
+            .AddScoped<ICurrentUser, CurrentUser>()
+            .AddScoped<IUnitOfWork, UnitOfWork>()
+            .AddScoped<IMemberRequestRepository, MemberRequestRepository>()
+            .AddScoped<IDatabaseInitializer, DatabaseInitializer>()
+            .AddScoped<IAuxiliaryBodyRepository, AuxiliaryBodyRepository>();
     }
 }

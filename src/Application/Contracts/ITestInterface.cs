@@ -1,4 +1,4 @@
-﻿namespace Application.Contracts;
+﻿namespace TajneedApi.Application.Contracts;
 
 public interface ITestInterface
 {

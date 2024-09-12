@@ -1,8 +1,11 @@
-namespace Domain.Entities;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class HouseHold(string address, string name, string createdBy) : BaseEntity(createdBy)
+namespace TajneedApi.Domain.Entities.HouseHoldAggregateRoot;
+
+public class HouseHold(string address, string name) : BaseEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string Name { get; private set; } = name;
     public string Address { get; private set; } = address;
-  
+
 }

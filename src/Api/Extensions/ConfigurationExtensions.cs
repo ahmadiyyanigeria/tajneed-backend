@@ -1,6 +1,7 @@
-using Api.Middleware;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using TajneedApi.Api.Middleware;
 
-namespace Api.Extensions;
+namespace TajneedApi.Api.Extensions;
 
 public static class ConfigurationExtensions
 {
@@ -23,6 +24,9 @@ public static class ConfigurationExtensions
             options.OAuthClientId(configuration.GetValue<string>("Jwt:Audience"));
             options.OAuthUsePkce();
             options.EnablePersistAuthorization();
+            options.DefaultModelsExpandDepth(1);
+            options.DocExpansion(DocExpansion.None);
+            options.EnableTryItOutByDefault();
         });
     }
 }

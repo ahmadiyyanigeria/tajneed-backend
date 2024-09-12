@@ -1,22 +1,16 @@
-using Domain.Enums;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.Entities.JamaatAggregateRoot;
+using TajneedApi.Domain.ValueObjects;
 
-namespace Domain.Entities;
+namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 
 public class Member
 (
-    string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName, 
-    bool isBornMember, string chandaNo, string surname, string firstName, string auxillaryBodyId, string middleName, 
-    DateTime dob, string email, string phoneNo, string jamaatId, Sex sex, MaritalStatus maritalStatus, string address, 
-    Status status, EmploymentStatus employmentStatus, string createdBy, string? wasiyatNo = null, string? spouseNo= null, 
-    string? recordFlag = null,string? fatherNo = null, string? childrenNos = null, string? occupation = null, 
-    string? nextOfKinPhoneNo = null, string? nextOfKinAddress = null, DateTime? biatDate = null
-) 
-: MemberRequest
-(
-    surname, firstName, auxillaryBodyId, middleName, dob, email, 
-    phoneNo, jamaatId, sex, maritalStatus, address, status, employmentStatus, createdBy
-)
+    string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName,
+    bool isBornMember, string chandaNo, MembershipInfo membershipInfo, string? wasiyatNo = null, string? spouseNo = null, string? recordFlag = null, string? fatherNo = null, string? childrenNos = null, string? occupation = null, string? nextOfKinPhoneNo = null, string? nextOfKinAddress = null, DateTime? biatDate = null
+) : BaseEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string ChandaNo { get; private set; } = chandaNo;
     public string? WasiyatNo { get; private set; } = wasiyatNo;
     public string? SpouseNo { get; set; } = spouseNo;
@@ -24,6 +18,7 @@ public class Member
     public string? ChildrenNos { get; set; } = childrenNos;
     public string? AimsNo { get; set; } = aimsNo;
     public string? RecordFlag { get; set; } = recordFlag;
+    public MembershipInfo MembershipInfo { get; private set; } = membershipInfo;
     public string MembershipStatusId { get; set; } = membershipStatusId;
     public MembershipStatus MembershipStatus { get; private set; } = default!;
     public string? NextOfKinPhoneNo { get; set; } = nextOfKinPhoneNo;

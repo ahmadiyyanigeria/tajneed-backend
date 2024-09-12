@@ -1,6 +1,9 @@
-namespace Domain.Entities;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class MembershipStatus(string name, string createdBy) : BaseEntity(createdBy)
+namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
+
+public class MembershipStatus(string name) : BaseEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string Name { get; private set; } = name;
 }

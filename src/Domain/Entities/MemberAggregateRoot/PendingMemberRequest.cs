@@ -1,10 +1,14 @@
-namespace Domain.Entities;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.ValueObjects;
 
-public class PendingMemberRequest(IReadOnlyList<MemberRequest> requests, string createdBy) : BaseEntity(createdBy)
+namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
+
+public class PendingMemberRequest(IReadOnlyList<MembershipInfo> requests) : BaseEntity
 {
-    private readonly List<MemberRequest> _requests = new(requests);
+    private readonly List<MembershipInfo> _requests = new(requests);
+    public string Id { get; set; } = Guid.NewGuid().ToString();
 
-    public IReadOnlyList<MemberRequest> Requests
+    public IReadOnlyList<MembershipInfo> Requests
     {
         get => _requests.AsReadOnly();
         private set => _requests.AddRange(value);

@@ -1,8 +1,8 @@
-namespace Domain.Enums;
+namespace TajneedApi.Domain.Enums;
 
 public enum Status
 {
-    Active,
+    Active = 1,
     Inactive,
     Suspended
 }

@@ -1,7 +1,10 @@
-namespace Domain.Entities;
+using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class Jamaat(string jamaatName, string jamaatCode, string circuitId, string createdBy) : BaseEntity(createdBy)
+namespace TajneedApi.Domain.Entities.JamaatAggregateRoot;
+
+public class Jamaat(string jamaatName, string jamaatCode, string circuitId) : BaseEntity
 {
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public string JamaatName { get; private set; } = jamaatName;
     public string JamaatCode { get; private set; } = jamaatCode;
     public string CircuitId { get; private set; } = circuitId;

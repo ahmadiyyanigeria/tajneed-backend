@@ -109,7 +109,7 @@ public class CreateMemberRequest
 
                     p.RuleFor(x => x.Dob)
                     .NotEmpty().WithMessage("Date of birth is required")
-                    .Must(x => x >= DateTime.Today).WithMessage("Date of birth cannot be earlier than today.");
+                    .Must(x => x <= DateTime.Today).WithMessage("Date of birth cannot be earlier than today.");
                 });
             });
         }

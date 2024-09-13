@@ -5,6 +5,7 @@ namespace TajneedApi.Api.Controllers.v1;
 
 public class MemberController : VersionedApiController
 {
+    [HttpPost]
     public IActionResult Index()
     {
         throw new NotImplementedException();

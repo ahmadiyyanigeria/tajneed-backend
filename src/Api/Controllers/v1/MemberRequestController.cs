@@ -7,7 +7,7 @@ namespace TajneedApi.Api.Controllers.v1;
 
 public class MemberRequestController : VersionedApiController
 {
-    [HttpPost("CreateMemberRequest")]
+    [HttpPost]
     [SwaggerOperation("Create member requests.")]
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestCommand command)
     {

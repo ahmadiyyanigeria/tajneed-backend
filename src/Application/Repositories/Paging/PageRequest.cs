@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
-namespace TajneedApi.Application.Wrappers.Paging;
+namespace TajneedApi.Application.Repositories.Paging;
 /// <summary>
 /// Represents the request parameters for pagination, sorting, and searching in data retrieval operations.
 /// </summary>

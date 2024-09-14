@@ -1,4 +1,4 @@
-﻿namespace TajneedApi.Application.Wrappers.Paging;
+﻿namespace TajneedApi.Application.Repositories.Paging;
 
 public record PaginatedList<T> where T : notnull
 {

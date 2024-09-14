@@ -12,7 +12,7 @@ public class MemberRequestController : VersionedApiController
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestCommand command)
     {
         var memberRequest = await Mediator.Send(command);
-        return CreatedAtAction(nameof(GetMemberRequest), new { id = memberRequest.Id }, memberRequest);
+        return CreatedAtAction(nameof(GetMemberRequest), new { id = memberRequest.Data.Id }, memberRequest);
     }
 
     [HttpGet("{id}")]

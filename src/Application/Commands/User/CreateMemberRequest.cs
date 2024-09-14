@@ -4,6 +4,7 @@ using MediatR;
 using System.ComponentModel;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.ServiceHelpers;
+using TajneedApi.Application.Wrappers;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Domain.Enums;
 using TajneedApi.Domain.ValueObjects;
@@ -12,18 +13,18 @@ namespace TajneedApi.Application.Commands.User;
 
 public class CreateMemberRequest
 {
-    public record CreateMemberRequestCommand : IRequest<MemberRequestResponse>
+    public record CreateMemberRequestCommand : IRequest<IResult<MemberRequestResponse>>
     {
         public IReadOnlyList<CreateMemberRequestDto> MemberRequests { get; init; } = default!;
     }
 
-    public class Handler(IMemberRequestRepository memberRequestRepository, IAuxiliaryBodyRepository auxiliaryBodyRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMemberRequestCommand, MemberRequestResponse>
+    public class Handler(IMemberRequestRepository memberRequestRepository, IAuxiliaryBodyRepository auxiliaryBodyRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMemberRequestCommand, IResult<MemberRequestResponse>>
     {
         private readonly IMemberRequestRepository _memberRequestRepository = memberRequestRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAuxiliaryBodyRepository _auxiliaryBodyRepository = auxiliaryBodyRepository;
 
-        public async Task<MemberRequestResponse> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
+        public async Task<IResult<MemberRequestResponse>> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
         {
             //TODO: Check if data already exist. How're we confirming if a record already exist
 
@@ -32,16 +33,15 @@ public class CreateMemberRequest
             var pendingMemberRequest = new PendingMemberRequest(memberRequests);
             var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(pendingMemberRequest);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-
             var response = memberRequestResponse.Adapt<MemberRequestResponse>();
-            return response;
+            return await Result<MemberRequestResponse>.SuccessAsync(response, "Member registration request submitted! Awaiting approval from Tajneed office.");
         }
 
         private string GetAuxiliaryBodyId(DateTime dob, Sex sex)
         {
             var auxiliaryBodyName = ServiceHelper.GetAuxiliaryBody(dob, sex);
             var auxiliaryBody = _auxiliaryBodyRepository.FIndAuxiliaryBodyByNameAsync(auxiliaryBodyName)?.Result;
-            return auxiliaryBody.Id;
+            return auxiliaryBody?.Id;
         }
     }
 

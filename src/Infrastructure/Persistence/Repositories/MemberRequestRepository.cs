@@ -1,4 +1,5 @@
-﻿using TajneedApi.Application.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Infrastructure.Extensions;
@@ -26,6 +27,10 @@ public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequ
         }
 
         query = query.OrderByDescending(r => r.LastModifiedOn);
-        return await  query.ToPaginatedList(pageRequest.Page, pageRequest.PageSize, pageRequest.UsePaging);
+        return await query.ToPaginatedList(pageRequest.Page, pageRequest.PageSize, pageRequest.UsePaging);
     }
+
+    public async Task<PendingMemberRequest?> GetMemberRequestAsync(string id) => await _context.PendingMemberRequests
+                        .Where(x => x.Id.Equals(id))
+                        .FirstOrDefaultAsync();
 }

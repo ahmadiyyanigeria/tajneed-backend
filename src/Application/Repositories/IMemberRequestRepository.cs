@@ -6,5 +6,6 @@ namespace TajneedApi.Application.Repositories;
 public interface IMemberRequestRepository
 {
     Task<PendingMemberRequest> CreateMemberRequestAsync(PendingMemberRequest memberRequest);
+    Task<PendingMemberRequest?> GetMemberRequestAsync(string id);
     Task<PaginatedList<PendingMemberRequest>> GetMemberRequestsAsync(PageRequest pageRequest);
 }

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Annotations;
-using TajneedApi.Api.Controllers.Common;
+﻿
 using static TajneedApi.Application.Commands.User.CreateMemberRequest;
 using static TajneedApi.Application.Queries.GetMemberPendingRequests;
+using static TajneedApi.Application.Queries.GetPendingMemberRequest;
 
 namespace TajneedApi.Api.Controllers.v1;
 
@@ -16,10 +15,14 @@ public class MemberRequestController : VersionedApiController
         return CreatedAtAction(nameof(GetMemberRequest), new { id = memberRequest.Data.Id }, memberRequest);
     }
 
-    [HttpGet("{id}")]
-    public IActionResult GetMemberRequest(string id)
+    [HttpGet]
+    public async Task<IActionResult> GetMemberRequest([FromQuery] GetMemberRequestQuery query)
     {
-        return Ok(id);
+        var memberRequest = await Mediator.Send(query);
+        if (!memberRequest.Succeeded)
+            return NotFound(memberRequest);
+
+        return Ok(memberRequest);
     }
 
     [HttpGet("MemberRequests")]

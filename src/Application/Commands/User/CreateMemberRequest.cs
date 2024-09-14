@@ -1,12 +1,6 @@
-﻿using FluentValidation;
-using Mapster;
-using MediatR;
-using System.ComponentModel;
-using TajneedApi.Application.Repositories;
+﻿using System.ComponentModel;
 using TajneedApi.Application.ServiceHelpers;
-using TajneedApi.Application.Wrappers;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.Enums;
 using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Application.Commands.User;

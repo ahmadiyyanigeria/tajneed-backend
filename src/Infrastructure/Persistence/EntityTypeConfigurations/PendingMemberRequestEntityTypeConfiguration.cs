@@ -16,6 +16,15 @@ public class PendingMemberRequestEntityTypeConfiguration : IEntityTypeConfigurat
             .IsRequired()
             .HasColumnName("id");
 
+        builder.Property(m => m.JamaatId)
+            .IsRequired()
+            .HasColumnName("jamaat_id");
+
+        builder.HasOne(m => m.Jamaat)
+        .WithMany()
+        .HasForeignKey(m => m.JamaatId)
+        .OnDelete(DeleteBehavior.Restrict);
+
         builder.Property(p => p.CreatedOn)
             .HasColumnName("created_on");
 

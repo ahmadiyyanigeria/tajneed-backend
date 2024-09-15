@@ -19,6 +19,10 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.NationalityId)
             .IsRequired()
             .HasColumnName("nationality_id");
+        
+        builder.Property(m => m.JamaatId)
+            .IsRequired()
+            .HasColumnName("jamaat_id");
 
         builder.Property(m => m.AimsNo)
             .HasColumnName("aims_no");
@@ -73,6 +77,11 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.HasOne(m => m.Nationality)
         .WithMany()
         .HasForeignKey(m => m.NationalityId)
+        .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.HasOne(m => m.Jamaat)
+        .WithMany()
+        .HasForeignKey(m => m.JamaatId)
         .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasOne(m => m.MembershipStatus)

@@ -16,9 +16,17 @@ public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequ
         await _context.AddAsync(memberRequest);
         return memberRequest;
     }
-    public async Task<PaginatedList<PendingMemberRequest>> GetMemberRequestsAsync(PageRequest pageRequest)
+    public async Task<PaginatedList<PendingMemberRequest>> GetMemberRequestsAsync(PageRequest pageRequest, string? jamaatId = null, string? circuitId = null)
     {
-        var query = _context.PendingMemberRequests.AsQueryable();
+        var query = _context.PendingMemberRequests.AsQueryable().AsNoTracking();
+        if (!string.IsNullOrWhiteSpace(circuitId))
+        {
+            query = query.Where(x => x.Jamaat.CircuitId.Equals(circuitId));
+        }
+        else if (!string.IsNullOrWhiteSpace(jamaatId))
+        {
+            query = query.Where(x => x.JamaatId.Equals(jamaatId));
+        }
 
         if (!string.IsNullOrEmpty(pageRequest?.Keyword))
         {

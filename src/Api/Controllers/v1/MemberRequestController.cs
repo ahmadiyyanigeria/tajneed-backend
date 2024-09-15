@@ -12,21 +12,21 @@ public class MemberRequestController : VersionedApiController
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestCommand command)
     {
         var memberRequest = await Mediator.Send(command);
-        return CreatedAtAction(nameof(GetMemberRequest), new { id = memberRequest.Data.Id }, memberRequest);
+        return CreatedAtAction(nameof(CreateMemberRequest), new { requestId = memberRequest.Data.Id }, memberRequest);
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetMemberRequest([FromQuery] GetMemberRequestQuery query)
+    [HttpGet("{requestId}")]
+    public async Task<IActionResult> GetMemberRequest(string requestId)
     {
-        var memberRequest = await Mediator.Send(query);
+        var memberRequest = await Mediator.Send(new GetMemberRequestQuery { Id = requestId });
         if (!memberRequest.Succeeded)
             return NotFound(memberRequest);
 
         return Ok(memberRequest);
     }
 
-    [HttpGet("MemberRequests")]
-    [SwaggerOperation("Create member requests.")]
+    [HttpGet]
+    [SwaggerOperation("get paginated list of member requests.")]
     public async Task<IActionResult> GetMemberRequests([FromQuery] GetMemberRequestsQuery query)
     {
         var memberRequest = await Mediator.Send(query);

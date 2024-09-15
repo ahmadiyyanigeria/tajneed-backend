@@ -7,5 +7,5 @@ public interface IMemberRequestRepository
 {
     Task<PendingMemberRequest> CreateMemberRequestAsync(PendingMemberRequest memberRequest);
     Task<PendingMemberRequest?> GetMemberRequestAsync(string id);
-    Task<PaginatedList<PendingMemberRequest>> GetMemberRequestsAsync(PageRequest pageRequest);
+    Task<PaginatedList<PendingMemberRequest>> GetMemberRequestsAsync(PageRequest pageRequest, string? jamaatId = null, string? circuitId = null);
 }

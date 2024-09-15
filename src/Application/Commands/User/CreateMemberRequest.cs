@@ -52,8 +52,8 @@ public class CreateMemberRequest
         public string Surname { get; init; } = default!;
         [DefaultValue("+2348164671994")]
         public string PhoneNo { get; init; } = default!;
-        [DefaultValue("8027038c-5d2e-4368-b0a9-49609dc80a80")]
-        public string JamaatId { get; init; } = default!;
+        //[DefaultValue("8027038c-5d2e-4368-b0a9-49609dc80a80")]
+        //public string JamaatId { get; init; } = default!;
         [DefaultValue("6b Zone 2, Lagos Ibadan express way.")]
         public string Address { get; init; } = default!;
         public DateTime Dob { get; init; }
@@ -70,6 +70,9 @@ public class CreateMemberRequest
         {
             RuleFor(x => x.MemberRequests).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("At least one member request is required.");
+
+            RuleFor(x => x.JamaatId)
+            .NotEmpty().WithMessage("Jamaat Id must be selected");
 
             When(p => p.MemberRequests is not null, () =>
             {
@@ -89,9 +92,6 @@ public class CreateMemberRequest
                     p.RuleFor(x => x.PhoneNo)
                     .NotEmpty().WithMessage("Phone number is required")
                     .MaximumLength(14);
-
-                    p.RuleFor(x => x.JamaatId)
-                    .NotEmpty().WithMessage("Jamaat Id must be selected");
 
                     p.RuleFor(x => x.Address)
                     .NotEmpty().WithMessage("Address is required");

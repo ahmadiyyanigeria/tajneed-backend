@@ -6,6 +6,7 @@ public class GetMemberPendingRequests
     public record GetMemberRequestsQuery : PageRequest, IRequest<PaginatedList<MemberRequestResponse>>
     {
         public string? JamaatId { get; set; } = default;
+        public string? CircuitId { get; set; } = default;
         //status
     }
 
@@ -15,7 +16,7 @@ public class GetMemberPendingRequests
 
         public async Task<PaginatedList<MemberRequestResponse>> Handle(GetMemberRequestsQuery request, CancellationToken cancellationToken)
         {
-            var memberRequests = await _memberRequestRepository.GetMemberRequestsAsync(request);
+            var memberRequests = await _memberRequestRepository.GetMemberRequestsAsync(request, request.JamaatId, request.CircuitId);
             //TODO: investigate why the response does not contian LastModifiedBy 
             return memberRequests.Adapt<PaginatedList<MemberRequestResponse>>();
         }

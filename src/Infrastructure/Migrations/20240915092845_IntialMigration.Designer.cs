@@ -11,11 +11,11 @@ using TajneedApi.Infrastructure.Persistence.Repositories;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace TajneedApi.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240911112359_initial")]
-    partial class initial
+    [Migration("20240915092845_IntialMigration")]
+    partial class IntialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,7 +27,7 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.AuditTrailAggregateRoot.AuditTrail", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.AuditTrailAggregateRoot.AuditTrail", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -60,7 +60,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("audit_trails", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.CaseAggregateRoot.Case", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.CaseAggregateRoot.Case", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -126,7 +126,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("cases", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.CodeAggregateRoot.Code", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.CodeAggregateRoot.Code", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -167,7 +167,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("codes", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.CodeAggregateRoot.CodeValue", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.CodeAggregateRoot.CodeValue", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -215,7 +215,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("code_values", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.HouseHoldAggregateRoot.HouseHold", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.HouseHoldAggregateRoot.HouseHold", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -257,7 +257,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("households", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.HouseHoldAggregateRoot.HouseHoldMember", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.HouseHoldAggregateRoot.HouseHoldMember", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -310,7 +310,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("household_members", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.JamaatAggregateRoot.AuxiliaryBody", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.JamaatAggregateRoot.AuxiliaryBody", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -352,7 +352,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("auxiliary_bodies", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.JamaatAggregateRoot.Circuit", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.JamaatAggregateRoot.Circuit", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -394,7 +394,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("circuits", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.JamaatAggregateRoot.Jamaat", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -443,7 +443,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("jamaats", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.JamaatAggregateRoot.Nationality", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.JamaatAggregateRoot.Nationality", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -485,7 +485,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("nationalities", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.JamaatAggregateRoot.Position", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.JamaatAggregateRoot.Position", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -522,7 +522,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("positions", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.MemberAggregateRoot.Member", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.Member", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -565,6 +565,11 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted");
+
+                    b.Property<string>("JamaatId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("jamaat_id");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text")
@@ -620,6 +625,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("JamaatId");
+
                     b.HasIndex("MembershipStatusId");
 
                     b.HasIndex("NationalityId");
@@ -627,7 +634,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("members", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.MemberAggregateRoot.MemberMovement", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MemberMovement", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -682,7 +689,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("member_movements", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.MemberAggregateRoot.MembershipStatus", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipStatus", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -719,7 +726,7 @@ namespace Infrastructure.Migrations
                     b.ToTable("membership_statuses", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.MemberAggregateRoot.PendingMemberRequest", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.PendingMemberRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
@@ -738,6 +745,11 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted");
 
+                    b.Property<string>("JamaatId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("jamaat_id");
+
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text")
                         .HasColumnName("last_modified_by");
@@ -753,12 +765,14 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("JamaatId");
+
                     b.ToTable("pending_member_requests", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.CaseAggregateRoot.Case", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.CaseAggregateRoot.Case", b =>
                 {
-                    b.HasOne("Domain.Entities.MemberAggregateRoot.Member", "Member")
+                    b.HasOne("TajneedApi.Domain.Entities.MemberAggregateRoot.Member", "Member")
                         .WithMany()
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -767,9 +781,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Member");
                 });
 
-            modelBuilder.Entity("Domain.Entities.CodeAggregateRoot.CodeValue", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.CodeAggregateRoot.CodeValue", b =>
                 {
-                    b.HasOne("Domain.Entities.CodeAggregateRoot.Code", "Code")
+                    b.HasOne("TajneedApi.Domain.Entities.CodeAggregateRoot.Code", "Code")
                         .WithMany()
                         .HasForeignKey("CodeId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -778,21 +792,21 @@ namespace Infrastructure.Migrations
                     b.Navigation("Code");
                 });
 
-            modelBuilder.Entity("Domain.Entities.HouseHoldAggregateRoot.HouseHoldMember", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.HouseHoldAggregateRoot.HouseHoldMember", b =>
                 {
-                    b.HasOne("Domain.Entities.HouseHoldAggregateRoot.HouseHold", "HouseHold")
+                    b.HasOne("TajneedApi.Domain.Entities.HouseHoldAggregateRoot.HouseHold", "HouseHold")
                         .WithMany()
                         .HasForeignKey("HouseHoldId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.MemberAggregateRoot.Member", "Member")
+                    b.HasOne("TajneedApi.Domain.Entities.MemberAggregateRoot.Member", "Member")
                         .WithMany()
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.JamaatAggregateRoot.Position", "Position")
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Position", "Position")
                         .WithMany()
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -805,9 +819,9 @@ namespace Infrastructure.Migrations
                     b.Navigation("Position");
                 });
 
-            modelBuilder.Entity("Domain.Entities.JamaatAggregateRoot.Jamaat", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", b =>
                 {
-                    b.HasOne("Domain.Entities.JamaatAggregateRoot.Circuit", "Circuit")
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Circuit", "Circuit")
                         .WithMany()
                         .HasForeignKey("CircuitId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -816,34 +830,42 @@ namespace Infrastructure.Migrations
                     b.Navigation("Circuit");
                 });
 
-            modelBuilder.Entity("Domain.Entities.MemberAggregateRoot.Member", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.Member", b =>
                 {
-                    b.HasOne("Domain.Entities.MemberAggregateRoot.MembershipStatus", "MembershipStatus")
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", "Jamaat")
+                        .WithMany()
+                        .HasForeignKey("JamaatId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipStatus", "MembershipStatus")
                         .WithMany()
                         .HasForeignKey("MembershipStatusId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.JamaatAggregateRoot.Nationality", "Nationality")
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Nationality", "Nationality")
                         .WithMany()
                         .HasForeignKey("NationalityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Jamaat");
 
                     b.Navigation("MembershipStatus");
 
                     b.Navigation("Nationality");
                 });
 
-            modelBuilder.Entity("Domain.Entities.MemberAggregateRoot.MemberMovement", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MemberMovement", b =>
                 {
-                    b.HasOne("Domain.Entities.JamaatAggregateRoot.Jamaat", "FromJamaat")
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", "FromJamaat")
                         .WithMany()
                         .HasForeignKey("FromJamaatId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Entities.JamaatAggregateRoot.Jamaat", "ToJamaat")
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", "ToJamaat")
                         .WithMany()
                         .HasForeignKey("ToJamaatId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -852,6 +874,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("FromJamaat");
 
                     b.Navigation("ToJamaat");
+                });
+
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.PendingMemberRequest", b =>
+                {
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", "Jamaat")
+                        .WithMany()
+                        .HasForeignKey("JamaatId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Jamaat");
                 });
 #pragma warning restore 612, 618
         }

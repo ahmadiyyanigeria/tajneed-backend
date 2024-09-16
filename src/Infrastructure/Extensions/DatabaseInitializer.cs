@@ -18,6 +18,7 @@ public class DatabaseInitializer(ApplicationDbContext context) : IDatabaseInitia
         {
             await AddAuxiliaries();
             await AddMockJamaat();//should be remove later
+            await _context.SaveChangesAsync();
 
         }
     }
@@ -31,7 +32,6 @@ public class DatabaseInitializer(ApplicationDbContext context) : IDatabaseInitia
         var nasirat = new AuxiliaryBody(AuxiliaryBodyName.Nasirat, Sex.Female);
         var auxiliaryBodies = new List<AuxiliaryBody> { ansarullah, atfal, khuddam, lajna, nasirat };
         await _context.AuxiliaryBodies.AddRangeAsync(auxiliaryBodies);
-        await _context.SaveChangesAsync();
     }
 
     private async Task AddMockJamaat()
@@ -40,6 +40,5 @@ public class DatabaseInitializer(ApplicationDbContext context) : IDatabaseInitia
         var jamaat = new Jamaat("Test Jamat", "0", circuit.Id);
         await _context.Circuits.AddAsync(circuit);
         await _context.Jamaats.AddAsync(jamaat);
-        await _context.SaveChangesAsync();
     }
 }

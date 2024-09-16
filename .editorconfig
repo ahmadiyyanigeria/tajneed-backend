@@ -143,6 +143,9 @@ csharp_style_allow_embedded_statements_on_same_line_experimental = true
 
 #### C# Formatting Rules ####
 
+# Suppress missing XML comment warnings for publicly visible types or members (CS1591)
+dotnet_diagnostic.CS1591.severity = none
+
 # New line preferences
 csharp_new_line_before_catch = true
 csharp_new_line_before_else = true

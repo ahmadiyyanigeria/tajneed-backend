@@ -1,8 +1,6 @@
 using Serilog;
-using System.Reflection;
 using TajneedApi.Api.Extensions;
 using TajneedApi.Application.Extensions;
-using Swashbuckle.AspNetCore.SwaggerUI;
 using TajneedApi.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);

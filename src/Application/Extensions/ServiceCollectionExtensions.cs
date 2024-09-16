@@ -1,6 +1,5 @@
 using Application.Extensions;
 using FluentValidation;
-using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using TajneedApi.Application.Behaviours;
 using TajneedApi.Application.Commands.User;

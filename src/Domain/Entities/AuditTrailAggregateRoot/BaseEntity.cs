@@ -1,6 +1,6 @@
 namespace TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 
-public class BaseEntity
+public class BaseEntity : ISoftDelete
 {
     public DateTime CreatedOn { get; set; } = DateTime.UtcNow;
     public string CreatedBy { get; set; } = default!;
@@ -9,4 +9,7 @@ public class BaseEntity
     public string? LastModifiedBy { get; set; }
 }
 
-
+public interface ISoftDelete
+{
+    bool IsDeleted { get; set; }
+}

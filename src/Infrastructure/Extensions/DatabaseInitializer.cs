@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using TajneedApi.Application.Repositories;
-using TajneedApi.Application.ServiceHelpers;
 using TajneedApi.Domain.Constants;
 using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 using TajneedApi.Domain.Enums;

@@ -1,5 +1,4 @@
 using FluentValidation;
-using MediatR;
 
 namespace TajneedApi.Application.Behaviours;
 

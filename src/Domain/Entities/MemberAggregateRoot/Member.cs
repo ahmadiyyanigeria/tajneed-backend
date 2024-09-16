@@ -7,7 +7,7 @@ namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 public class Member
 (
     string nationalityId, string aimsNo, string membershipStatusId, string nextOfKinName,
-    bool isBornMember, string chandaNo, MembershipInfo membershipInfo, string? wasiyatNo = null, string? spouseNo = null, string? recordFlag = null, string? fatherNo = null, string? childrenNos = null, string? occupation = null, string? nextOfKinPhoneNo = null, string? nextOfKinAddress = null, DateTime? biatDate = null
+    bool isBornMember, string chandaNo, string jamaatId, MembershipInfo membershipInfo, string? wasiyatNo = null, string? spouseNo = null, string? recordFlag = null, string? fatherNo = null, string? childrenNos = null, string? occupation = null, string? nextOfKinPhoneNo = null, string? nextOfKinAddress = null, DateTime? biatDate = null
 ) : BaseEntity
 {
     public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -18,6 +18,8 @@ public class Member
     public string? ChildrenNos { get; set; } = childrenNos;
     public string? AimsNo { get; set; } = aimsNo;
     public string? RecordFlag { get; set; } = recordFlag;
+    public string JamaatId { get; private set; } = jamaatId;
+    public Jamaat Jamaat { get; private set; } = default!;
     public MembershipInfo MembershipInfo { get; private set; } = membershipInfo;
     public string MembershipStatusId { get; set; } = membershipStatusId;
     public MembershipStatus MembershipStatus { get; private set; } = default!;

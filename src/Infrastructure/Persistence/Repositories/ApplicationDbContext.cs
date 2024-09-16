@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System.Linq.Expressions;
 using System.Reflection;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
@@ -7,6 +9,7 @@ using TajneedApi.Domain.Entities.CodeAggregateRoot;
 using TajneedApi.Domain.Entities.HouseHoldAggregateRoot;
 using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Infrastructure.Persistence.Repositories;
 public class ApplicationDbContext(
@@ -33,7 +36,12 @@ public class ApplicationDbContext(
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.AppendGlobalQueryFilter<ISoftDelete>(s => !s.IsDeleted);
         base.OnModelCreating(modelBuilder);
+        modelBuilder.Ignore<BiodataUpdateCase>();
+        modelBuilder.Ignore<DuplicateAccountCase>();
+        modelBuilder.Ignore<RelocationCase>();
+
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
@@ -53,6 +61,7 @@ public class ApplicationDbContext(
                 case EntityState.Added:
                     entry.Entity.CreatedBy = userId;
                     entry.Entity.CreatedOn = DateTime.UtcNow;
+                    entry.Entity.LastModifiedOn = DateTime.UtcNow;
                     break;
 
                 case EntityState.Modified:
@@ -69,5 +78,37 @@ public class ApplicationDbContext(
             }
         }
         ChangeTracker.DetectChanges();
+    }
+}
+
+
+internal static class ModelBuilderExtensions
+{
+    public static ModelBuilder AppendGlobalQueryFilter<TInterface>(this ModelBuilder modelBuilder, Expression<Func<TInterface, bool>> filter)
+    {
+        // get a list of entities without a baseType that implement the interface TInterface
+        var entities = modelBuilder.Model.GetEntityTypes()
+            .Where(e => e.BaseType is null && e.ClrType.GetInterface(typeof(TInterface).Name) is not null)
+            .Select(e => e.ClrType);
+
+        foreach (var entity in entities)
+        {
+            var parameterType = Expression.Parameter(modelBuilder.Entity(entity).Metadata.ClrType);
+            var filterBody = ReplacingExpressionVisitor.Replace(filter.Parameters.Single(), parameterType, filter.Body);
+
+            // get the existing query filter
+            if (modelBuilder.Entity(entity).Metadata.GetQueryFilter() is { } existingFilter)
+            {
+                var existingFilterBody = ReplacingExpressionVisitor.Replace(existingFilter.Parameters.Single(), parameterType, existingFilter.Body);
+
+                // combine the existing query filter with the new query filter
+                filterBody = Expression.AndAlso(existingFilterBody, filterBody);
+            }
+
+            // apply the new query filter
+            modelBuilder.Entity(entity).HasQueryFilter(Expression.Lambda(filterBody, parameterType));
+        }
+
+        return modelBuilder;
     }
 }

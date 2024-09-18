@@ -4,15 +4,10 @@ using System.Text;
 
 namespace TajneedApi.Infrastructure.Persistence.Helpers;
 
-public class EntitySearchHelper<T>
+public class EntitySearchHelper<T>(DbContext context)
     where T : class
 {
-    private readonly DbContext _context;
-
-    public EntitySearchHelper(DbContext context)
-    {
-        _context = context;
-    }
+    private readonly DbContext _context = context;
 
     public IQueryable<T> SearchEntity(string keyword)
     {

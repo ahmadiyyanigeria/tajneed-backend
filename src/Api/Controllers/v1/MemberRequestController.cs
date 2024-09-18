@@ -12,6 +12,9 @@ public class MemberRequestController : VersionedApiController
     public async Task<IActionResult> CreateMemberRequest([FromBody] CreateMemberRequestCommand command)
     {
         var memberRequest = await Mediator.Send(command);
+        if (!memberRequest.Succeeded)
+            return NotFound(memberRequest);
+
         return CreatedAtAction(nameof(CreateMemberRequest), new { requestId = memberRequest.Data.Id }, memberRequest);
     }
 

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.Enums;
 
 namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
@@ -43,5 +45,11 @@ public class PendingMemberRequestEntityTypeConfiguration : IEntityTypeConfigurat
         builder.Property(p => p.Requests)
             .HasColumnName("requests")
             .HasColumnType("jsonb");
+
+        builder.Property(ab => ab.RequestStatus)
+            .IsRequired()
+            .HasConversion<EnumToStringConverter<RequestStatus>>()
+            .HasColumnName("request_status");
+
     }
 }

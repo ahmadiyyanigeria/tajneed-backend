@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.Enums;
 using TajneedApi.Infrastructure.Extensions;
 using TajneedApi.Infrastructure.Persistence.Helpers;
 using static TajneedApi.Application.Commands.User.CreateMemberRequest;
@@ -18,6 +19,7 @@ public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequ
         await _context.AddAsync(memberRequest);
         return memberRequest;
     }
+
     public async Task<PaginatedList<PendingMemberRequest>> GetMemberRequestsAsync(PageRequest pageRequest, string? jamaatId = null, string? circuitId = null)
     {
         var query = _context.PendingMemberRequests.AsQueryable().AsNoTracking();
@@ -47,7 +49,6 @@ public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequ
     public async Task<bool> IsDuplicateMemberRequestAsync(CreateMemberRequestCommand memberRequest)
     {
 
-        //TODO: we need to add filter where request is not yet approved
         var membersToCheck = memberRequest.Requests.Select(r => new
         {
             r.FirstName,
@@ -57,55 +58,21 @@ public class MemberRequestRepository(ApplicationDbContext context) : IMemberRequ
             memberRequest.JamaatId
         }).ToList();
 
-        var isDuplicate = await _context.PendingMemberRequests
-            .Where(p => p.JamaatId == memberRequest.JamaatId)
-            .AnyAsync(p => p.Requests.Any(existingRequest =>
-                membersToCheck.Any(newRequest =>
-                    existingRequest.FirstName == newRequest.FirstName &&
-                    existingRequest.MiddleName == newRequest.MiddleName &&
-                    existingRequest.Surname == newRequest.Surname &&
-                    existingRequest.Dob.Year == newRequest.Dob.Year &&
-                    p.JamaatId == newRequest.JamaatId)));
+        //TODO: Need to refactor this to use batch query and remove the ToListAsync
+        var circuitPendingRequest = await _context.PendingMemberRequests
+            .Where(p => p.JamaatId == memberRequest.JamaatId && p.RequestStatus == RequestStatus.Pending)
+            .ToListAsync();
+
+        var isDuplicate = circuitPendingRequest.Any(p => p.Requests.Any(existingRequest =>
+                 membersToCheck.Any(newRequest =>
+                     existingRequest.FirstName == newRequest.FirstName &&
+                     existingRequest.MiddleName == newRequest.MiddleName &&
+                     existingRequest.Surname == newRequest.Surname &&
+                     existingRequest.Dob.Year == newRequest.Dob.Year &&
+                     p.JamaatId == newRequest.JamaatId)));
 
         return isDuplicate;
 
-        /*  var membersToCheck = memberRequest.Requests.Select(r => new
-    {
-        r.FirstName,
-        r.MiddleName,
-        r.Surname,
-        DobYear = r.Dob.Year,
-        memberRequest.JamaatId
-    }).ToList();
-
-    var pendingMemberRequests = await _context.PendingMemberRequests
-        .Where(p => p.JamaatId == memberRequest.JamaatId)
-        .ToListAsync();
-
-    var isDuplicate = pendingMemberRequests.Any(p => p.Requests.Any(existingRequest =>
-        membersToCheck.Any(newRequest =>
-            existingRequest.FirstName == newRequest.FirstName &&
-            existingRequest.MiddleName == newRequest.MiddleName &&
-            existingRequest.Surname == newRequest.Surname &&
-            existingRequest.Dob.Year == newRequest.DobYear &&
-            p.JamaatId == newRequest.JamaatId)));
-
-    return isDuplicate;
-*/
     }
-
-
-    /*public async Task<bool> IsDuplicateMemberRequestAsync(PendingMemberRequest newMember)
-    {
-        var isDuplicate = await _context.PendingMemberRequests
-      .Where(p => p.JamaatId == newMember.JamaatId)
-      .AnyAsync(p => p.Requests.Any(r =>
-          r.FirstName == newMember.Requests.First().FirstName &&
-          r.MiddleName == newMember.Requests.First().MiddleName &&
-          r.Surname == newMember.Requests.First().Surname &&
-          r.Dob.Year == newMember.Requests.First().Dob.Year));
-
-        return isDuplicate;
-    }*/
 
 }

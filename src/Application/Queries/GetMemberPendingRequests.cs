@@ -22,7 +22,7 @@ public class GetMemberPendingRequests
         }
     }
 
-    public record MemberRequestResponse(string Id, IReadOnlyList<MembershipInfoResponse> Requests, DateTime CreatedOn, string CreatedBy, string LastModifiedBy, DateTime LastModifiedOn);
+    public record MemberRequestResponse(string Id, string JamaatId, IReadOnlyList<MembershipInfoResponse> Requests, DateTime CreatedOn, string CreatedBy, string LastModifiedBy, DateTime LastModifiedOn);
 
-    public record MembershipInfoResponse(string Surname, string FirstName, string AuxiliaryBodyId, string MiddleName, DateTime Dob, string Email, string PhoneNo, string JamaatId, Sex Sex, MaritalStatus MaritalStatus, string Address, EmploymentStatus EmploymentStatus, Status Status);
+    public record MembershipInfoResponse(string Surname, string FirstName, string AuxiliaryBodyId, string MiddleName, DateTime Dob, string Email, string PhoneNo, Sex Sex, MaritalStatus MaritalStatus, string Address, EmploymentStatus EmploymentStatus, Status Status);
 }

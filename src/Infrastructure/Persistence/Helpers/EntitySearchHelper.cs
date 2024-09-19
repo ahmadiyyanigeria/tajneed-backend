@@ -4,15 +4,10 @@ using System.Text;
 
 namespace TajneedApi.Infrastructure.Persistence.Helpers;
 
-public class EntitySearchHelper<T>
+public class EntitySearchHelper<T>(DbContext context)
     where T : class
 {
-    private readonly DbContext _context;
-
-    public EntitySearchHelper(DbContext context)
-    {
-        _context = context;
-    }
+    private readonly DbContext _context = context;
 
     public IQueryable<T> SearchEntity(string keyword)
     {
@@ -25,12 +20,11 @@ public class EntitySearchHelper<T>
             if (columnToPropertyMap.TryGetValue(col, out var propertyName))
             {
                 var property = entityType.FindProperty(propertyName);
-                return property != null && property.ClrType == typeof(string);
+                return property != null &&
+                       (property.ClrType == typeof(string) ||
+                        property.GetColumnType() == "jsonb");
             }
-            else
-            {
-                return false;
-            }
+            return false;
         });
 
         var searchTermLower = keyword.ToLower();
@@ -39,9 +33,18 @@ public class EntitySearchHelper<T>
 
         foreach (var column in stringColumns)
         {
-            queryBuilder.Append($"LOWER({column}) COLLATE \"C\" ILIKE '%' || @searchKeyword || '%' OR ");
+            if (columnToPropertyMap.TryGetValue(column, out var propertyName) &&
+                entityType.FindProperty(propertyName)?.GetColumnType() == "jsonb")
+            {
+                queryBuilder.Append($"LOWER({column}::text) COLLATE \"C\" ILIKE '%' || @searchKeyword || '%' OR ");
+            }
+            else
+            {
+                queryBuilder.Append($"LOWER({column}) COLLATE \"C\" ILIKE '%' || @searchKeyword || '%' OR ");
+            }
         }
-        queryBuilder.Remove(queryBuilder.Length - 4, 4);
+
+        queryBuilder.Remove(queryBuilder.Length - 4, 4); // Remove the last " OR "
 
         return _context.Set<T>().FromSqlRaw(queryBuilder.ToString(), new NpgsqlParameter("@searchKeyword", searchTermLower));
     }

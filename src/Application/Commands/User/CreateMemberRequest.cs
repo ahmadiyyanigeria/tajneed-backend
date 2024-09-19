@@ -10,7 +10,7 @@ public class CreateMemberRequest
     public record CreateMemberRequestCommand : IRequest<IResult<MemberRequestResponse>>
     {
         public string JamaatId { get; init; } = default!;
-        public IReadOnlyList<CreateMemberRequestDto> MemberRequests { get; init; } = default!;
+        public IReadOnlyList<CreateMemberRequestDto> Requests { get; init; } = default!;
     }
 
     public class Handler(IMemberRequestRepository memberRequestRepository, IAuxiliaryBodyRepository auxiliaryBodyRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMemberRequestCommand, IResult<MemberRequestResponse>>
@@ -22,8 +22,11 @@ public class CreateMemberRequest
         public async Task<IResult<MemberRequestResponse>> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
         {
             //TODO: Check if data already exist. How're we confirming if a record already exist
+            var requestExist = await _memberRequestRepository.IsDuplicateMemberRequestAsync(request);
+            if (requestExist)
+                return await Result<MemberRequestResponse>.FailAsync("There is already a pending request from a member with similar information.");
 
-            var memberRequests = request.MemberRequests.Select(x => new MembershipInfo(x.Surname, x.FirstName, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus)).ToList();
+            var memberRequests = request.Requests.Select(x => new MembershipInfo(x.Surname, x.FirstName, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus)).ToList();
 
             var pendingMemberRequest = new PendingMemberRequest(request.JamaatId, memberRequests);
             var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(pendingMemberRequest);
@@ -62,21 +65,21 @@ public class CreateMemberRequest
         public EmploymentStatus EmploymentStatus { get; init; }
     }
 
-    public record MemberRequestResponse(string Email, string FirstName, string MiddleName, string Surname, string PhoneNo, string JamaatId, string Address, string Id, DateTime Dob, Sex Sex, MaritalStatus MaritalStatus, Status Status, EmploymentStatus EmploymentStatus);
+    public record MemberRequestResponse(string Id, string JamaatId, RequestStatus RequestStatus);
 
     public class CreateMemberRequestCommandValidator : AbstractValidator<CreateMemberRequestCommand>
     {
         public CreateMemberRequestCommandValidator()
         {
-            RuleFor(x => x.MemberRequests).Cascade(CascadeMode.Stop)
+            RuleFor(x => x.Requests).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("At least one member request is required.");
 
             RuleFor(x => x.JamaatId)
             .NotEmpty().WithMessage("Jamaat Id must be selected");
 
-            When(p => p.MemberRequests is not null, () =>
+            When(p => p.Requests is not null, () =>
             {
-                RuleForEach(x => x.MemberRequests)
+                RuleForEach(x => x.Requests)
                 .ChildRules(p =>
                 {
                     p.RuleFor(x => x.FirstName)

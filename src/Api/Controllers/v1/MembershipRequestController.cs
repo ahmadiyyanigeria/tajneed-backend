@@ -2,9 +2,8 @@
 using static TajneedApi.Application.Commands.CreateMemberRequest;
 using static TajneedApi.Application.Queries.GetMembershipRequest;
 using static TajneedApi.Application.Queries.GetMembershipRequests;
-using static TajneedApi.Application.Commands.ApproveMembershipRequest;
-using static TajneedApi.Application.Commands.RejectMemberRequest;
 using TajneedApi.Application.Queries;
+using static TajneedApi.Application.Commands.ManageMembershipRequest;
 namespace TajneedApi.Api.Controllers.v1;
 
 public class MembershipRequestController : VersionedApiController
@@ -19,9 +18,9 @@ public class MembershipRequestController : VersionedApiController
 
         return Ok(memberRequest);
     }
-    [HttpPost("approve-request")]
-    [SwaggerOperation("approve member requests.")]
-    public async Task<IActionResult> ApproveMemberRequest([FromBody] ApproveMembershipRequestCommand command)
+    [HttpPost("manage-request")]
+    [SwaggerOperation("manage member requests.")]
+    public async Task<IActionResult> ManageMembershipRequests([FromBody] ManageMembershipRequestCommand command)
     {
         var memberRequest = await Mediator.Send(command);
         if (!memberRequest.Succeeded)
@@ -52,13 +51,5 @@ public class MembershipRequestController : VersionedApiController
         var memberRequest = await Mediator.Send(query);
         return Ok(memberRequest);
     }
-    [HttpPut]
-    [SwaggerOperation("reject member requests.")]
-    public async Task<IActionResult> RejectMemberRequest([FromBody] RejectMembershipRequestCommand command)
-    {
-        var memberRequest = await Mediator.Send(command);
-        if (!memberRequest.Succeeded)
-            return BadRequest(memberRequest);
-        return Ok(memberRequest);
-    }
+    
 }

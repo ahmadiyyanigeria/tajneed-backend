@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
+using TajneedApi.Domain.Enums;
 
 namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
@@ -16,28 +18,19 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
             .IsRequired()
             .HasColumnName("id");
 
-        builder.Property(m => m.NationalityId)
-            .IsRequired()
-            .HasColumnName("nationality_id");
-        
-        builder.Property(m => m.JamaatId)
-            .IsRequired()
-            .HasColumnName("jamaat_id");
 
         builder.Property(m => m.AimsNo)
             .HasColumnName("aims_no");
 
-        builder.Property(m => m.MembershipStatusId)
+        builder.Property(m => m.MembershipStatus)
             .IsRequired()
-            .HasColumnName("membership_status_id");
+            .HasConversion<EnumToStringConverter<MembershipStatus>>()
+            .HasColumnName("membership_status");
 
         builder.Property(m => m.NextOfKinName)
             .IsRequired()
             .HasColumnName("next_of_kin_name");
 
-        builder.Property(m => m.IsBornMember)
-            .IsRequired()
-            .HasColumnName("is_born_member");
 
         builder.Property(m => m.ChandaNo)
             .IsRequired()
@@ -58,8 +51,6 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.ChildrenNos)
             .HasColumnName("children_nos");
 
-        builder.Property(m => m.Occupation)
-            .HasColumnName("occupation");
 
         builder.Property(m => m.NextOfKinPhoneNo)
             .HasColumnName("next_of_kin_phone_no");
@@ -67,27 +58,6 @@ public class MemberEntityTypeConfiguration : IEntityTypeConfiguration<Member>
         builder.Property(m => m.NextOfKinAddress)
             .HasColumnName("next_of_kin_address");
 
-        builder.Property(m => m.BiatDate)
-            .HasColumnName("biat_date");
-
-        builder.Property(u => u.MembershipInfo)
-                .HasColumnName("membership_info")
-                .HasColumnType("jsonb");
-
-        builder.HasOne(m => m.Nationality)
-        .WithMany()
-        .HasForeignKey(m => m.NationalityId)
-        .OnDelete(DeleteBehavior.Restrict);
-        
-        builder.HasOne(m => m.Jamaat)
-        .WithMany()
-        .HasForeignKey(m => m.JamaatId)
-        .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasOne(m => m.MembershipStatus)
-            .WithMany()
-            .HasForeignKey(m => m.MembershipStatusId)
-            .OnDelete(DeleteBehavior.Restrict);
 
 
         builder.Property(m => m.CreatedOn)

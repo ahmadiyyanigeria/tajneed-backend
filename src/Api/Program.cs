@@ -22,6 +22,7 @@ builder.Services.AddHealthChecks();
 builder.Services.AddMapster();
 builder.Services.AddValidators();
 builder.Services.AddMediatR();
+builder.Services.AddConfigurations(builder.Configuration);
 
 
 var app = builder.Build();

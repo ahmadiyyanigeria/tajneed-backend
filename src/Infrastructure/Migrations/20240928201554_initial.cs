@@ -8,7 +8,7 @@ using TajneedApi.Domain.ValueObjects;
 namespace TajneedApi.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class IntialMigration : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -98,23 +98,6 @@ namespace TajneedApi.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_households", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "membership_statuses",
-                columns: table => new
-                {
-                    id = table.Column<string>(type: "text", nullable: false),
-                    name = table.Column<string>(type: "text", nullable: false),
-                    created_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    created_by = table.Column<string>(type: "text", nullable: false),
-                    last_modified_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
-                    last_modified_by = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_membership_statuses", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -235,6 +218,60 @@ namespace TajneedApi.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "membership_requests",
+                columns: table => new
+                {
+                    id = table.Column<string>(type: "text", nullable: false),
+                    jamaat_id = table.Column<string>(type: "text", nullable: false),
+                    batch_request_id = table.Column<string>(type: "text", nullable: false),
+                    surname = table.Column<string>(type: "text", nullable: false),
+                    first_name = table.Column<string>(type: "text", nullable: false),
+                    auxiliary_body_id = table.Column<string>(type: "text", nullable: false),
+                    middle_name = table.Column<string>(type: "text", nullable: false),
+                    dob = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    email = table.Column<string>(type: "text", nullable: false),
+                    phone_no = table.Column<string>(type: "text", nullable: false),
+                    sex = table.Column<string>(type: "text", nullable: false),
+                    marital_status = table.Column<string>(type: "text", nullable: false),
+                    address = table.Column<string>(type: "text", nullable: false),
+                    request_status = table.Column<string>(type: "text", nullable: false),
+                    employment_status = table.Column<string>(type: "text", nullable: false),
+                    is_born_member = table.Column<bool>(type: "boolean", nullable: false),
+                    occupation = table.Column<string>(type: "text", nullable: false),
+                    biat_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    nationality_id = table.Column<string>(type: "text", nullable: false),
+                    approval_histories = table.Column<IReadOnlyList<ApprovalMemberRequestHistory>>(type: "jsonb", nullable: false),
+                    disapproval_history = table.Column<DisapprovalMemberRequestHistory>(type: "jsonb", nullable: true),
+                    created_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    created_by = table.Column<string>(type: "text", nullable: false),
+                    last_modified_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
+                    last_modified_by = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_membership_requests", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_membership_requests_auxiliary_bodies_auxiliary_body_id",
+                        column: x => x.auxiliary_body_id,
+                        principalTable: "auxiliary_bodies",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_membership_requests_jamaats_jamaat_id",
+                        column: x => x.jamaat_id,
+                        principalTable: "jamaats",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_membership_requests_nationalities_nationality_id",
+                        column: x => x.nationality_id,
+                        principalTable: "nationalities",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "members",
                 columns: table => new
                 {
@@ -246,16 +283,11 @@ namespace TajneedApi.Infrastructure.Migrations
                     children_nos = table.Column<string>(type: "text", nullable: true),
                     aims_no = table.Column<string>(type: "text", nullable: true),
                     record_flag = table.Column<string>(type: "text", nullable: true),
-                    jamaat_id = table.Column<string>(type: "text", nullable: false),
-                    membership_info = table.Column<MembershipInfo>(type: "jsonb", nullable: false),
-                    membership_status_id = table.Column<string>(type: "text", nullable: false),
+                    MembershipRequestId = table.Column<string>(type: "text", nullable: false),
+                    membership_status = table.Column<string>(type: "text", nullable: false),
                     next_of_kin_phone_no = table.Column<string>(type: "text", nullable: true),
                     next_of_kin_name = table.Column<string>(type: "text", nullable: false),
                     next_of_kin_address = table.Column<string>(type: "text", nullable: true),
-                    is_born_member = table.Column<bool>(type: "boolean", nullable: false),
-                    occupation = table.Column<string>(type: "text", nullable: true),
-                    biat_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    nationality_id = table.Column<string>(type: "text", nullable: false),
                     created_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     created_by = table.Column<string>(type: "text", nullable: false),
                     last_modified_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -266,47 +298,17 @@ namespace TajneedApi.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_members", x => x.id);
                     table.ForeignKey(
-                        name: "FK_members_jamaats_jamaat_id",
-                        column: x => x.jamaat_id,
-                        principalTable: "jamaats",
+                        name: "FK_members_membership_requests_MembershipRequestId",
+                        column: x => x.MembershipRequestId,
+                        principalTable: "membership_requests",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_members_membership_statuses_membership_status_id",
-                        column: x => x.membership_status_id,
-                        principalTable: "membership_statuses",
+                        name: "FK_members_membership_requests_id",
+                        column: x => x.id,
+                        principalTable: "membership_requests",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_members_nationalities_nationality_id",
-                        column: x => x.nationality_id,
-                        principalTable: "nationalities",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "pending_member_requests",
-                columns: table => new
-                {
-                    id = table.Column<string>(type: "text", nullable: false),
-                    jamaat_id = table.Column<string>(type: "text", nullable: false),
-                    requests = table.Column<IReadOnlyList<MembershipInfo>>(type: "jsonb", nullable: false),
-                    created_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    created_by = table.Column<string>(type: "text", nullable: false),
-                    last_modified_on = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    is_deleted = table.Column<bool>(type: "boolean", nullable: false),
-                    last_modified_by = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_pending_member_requests", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_pending_member_requests_jamaats_jamaat_id",
-                        column: x => x.jamaat_id,
-                        principalTable: "jamaats",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -416,24 +418,24 @@ namespace TajneedApi.Infrastructure.Migrations
                 column: "to_jamaat_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_members_jamaat_id",
+                name: "IX_members_MembershipRequestId",
                 table: "members",
+                column: "MembershipRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_membership_requests_auxiliary_body_id",
+                table: "membership_requests",
+                column: "auxiliary_body_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_membership_requests_jamaat_id",
+                table: "membership_requests",
                 column: "jamaat_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_members_membership_status_id",
-                table: "members",
-                column: "membership_status_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_members_nationality_id",
-                table: "members",
+                name: "IX_membership_requests_nationality_id",
+                table: "membership_requests",
                 column: "nationality_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_pending_member_requests_jamaat_id",
-                table: "pending_member_requests",
-                column: "jamaat_id");
         }
 
         /// <inheritdoc />
@@ -441,9 +443,6 @@ namespace TajneedApi.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "audit_trails");
-
-            migrationBuilder.DropTable(
-                name: "auxiliary_bodies");
 
             migrationBuilder.DropTable(
                 name: "cases");
@@ -458,9 +457,6 @@ namespace TajneedApi.Infrastructure.Migrations
                 name: "member_movements");
 
             migrationBuilder.DropTable(
-                name: "pending_member_requests");
-
-            migrationBuilder.DropTable(
                 name: "codes");
 
             migrationBuilder.DropTable(
@@ -473,10 +469,13 @@ namespace TajneedApi.Infrastructure.Migrations
                 name: "positions");
 
             migrationBuilder.DropTable(
-                name: "jamaats");
+                name: "membership_requests");
 
             migrationBuilder.DropTable(
-                name: "membership_statuses");
+                name: "auxiliary_bodies");
+
+            migrationBuilder.DropTable(
+                name: "jamaats");
 
             migrationBuilder.DropTable(
                 name: "nationalities");

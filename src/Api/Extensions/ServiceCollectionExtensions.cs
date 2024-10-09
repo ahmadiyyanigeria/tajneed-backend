@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using TajneedApi.Api.Filters;
+using TajneedApi.Application.Configurations;
 
 namespace TajneedApi.Api.Extensions;
 
@@ -88,5 +89,10 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IMapper, ServiceMapper>();
         return services;
     }
-
+    public static IServiceCollection AddConfigurations(this IServiceCollection serviceCollection,
+        IConfiguration configuration)
+    {
+        serviceCollection.Configure<ApprovalSettingsConfiguration>(configuration.GetSection(ApprovalSettingsConfiguration.SectionName));
+        return serviceCollection;
+    }
 }

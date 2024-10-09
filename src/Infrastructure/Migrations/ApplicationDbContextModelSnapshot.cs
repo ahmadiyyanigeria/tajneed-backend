@@ -529,10 +529,6 @@ namespace TajneedApi.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("aims_no");
 
-                    b.Property<DateTime?>("BiatDate")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("biat_date");
-
                     b.Property<string>("ChandaNo")
                         .IsRequired()
                         .HasColumnType("text")
@@ -555,18 +551,9 @@ namespace TajneedApi.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("father_no");
 
-                    b.Property<bool>("IsBornMember")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_born_member");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted");
-
-                    b.Property<string>("JamaatId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("jamaat_id");
 
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text")
@@ -576,20 +563,14 @@ namespace TajneedApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_modified_on");
 
-                    b.Property<MembershipInfo>("MembershipInfo")
+                    b.Property<string>("MembershipRequestId")
                         .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("membership_info");
+                        .HasColumnType("text");
 
-                    b.Property<string>("MembershipStatusId")
+                    b.Property<string>("MembershipStatus")
                         .IsRequired()
                         .HasColumnType("text")
-                        .HasColumnName("membership_status_id");
-
-                    b.Property<string>("NationalityId")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("nationality_id");
+                        .HasColumnName("membership_status");
 
                     b.Property<string>("NextOfKinAddress")
                         .HasColumnType("text")
@@ -603,10 +584,6 @@ namespace TajneedApi.Infrastructure.Migrations
                     b.Property<string>("NextOfKinPhoneNo")
                         .HasColumnType("text")
                         .HasColumnName("next_of_kin_phone_no");
-
-                    b.Property<string>("Occupation")
-                        .HasColumnType("text")
-                        .HasColumnName("occupation");
 
                     b.Property<string>("RecordFlag")
                         .HasColumnType("text")
@@ -622,11 +599,7 @@ namespace TajneedApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("JamaatId");
-
-                    b.HasIndex("MembershipStatusId");
-
-                    b.HasIndex("NationalityId");
+                    b.HasIndex("MembershipRequestId");
 
                     b.ToTable("members", (string)null);
                 });
@@ -686,11 +659,35 @@ namespace TajneedApi.Infrastructure.Migrations
                     b.ToTable("member_movements", (string)null);
                 });
 
-            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipStatus", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipRequest", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text")
                         .HasColumnName("id");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("address");
+
+                    b.Property<IReadOnlyList<ApprovalMemberRequestHistory>>("ApprovalHistories")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("approval_histories");
+
+                    b.Property<string>("AuxiliaryBodyId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("auxiliary_body_id");
+
+                    b.Property<string>("BatchRequestId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("batch_request_id");
+
+                    b.Property<DateTime?>("BiatDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("biat_date");
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -701,42 +698,32 @@ namespace TajneedApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_on");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<DisapprovalMemberRequestHistory>("DisApprovalHistory")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("disapproval_history");
+
+                    b.Property<DateTime>("Dob")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("dob");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("email");
+
+                    b.Property<string>("EmploymentStatus")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("employment_status");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<bool>("IsBornMember")
                         .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("text")
-                        .HasColumnName("last_modified_by");
-
-                    b.Property<DateTime?>("LastModifiedOn")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("last_modified_on");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("membership_statuses", (string)null);
-                });
-
-            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.PendingMemberRequest", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text")
-                        .HasColumnName("id");
-
-                    b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("created_by");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_on");
+                        .HasColumnName("is_born_member");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean")
@@ -755,21 +742,55 @@ namespace TajneedApi.Infrastructure.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("last_modified_on");
 
+                    b.Property<string>("MaritalStatus")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("marital_status");
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("middle_name");
+
+                    b.Property<string>("NationalityId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("nationality_id");
+
+                    b.Property<string>("Occupation")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("occupation");
+
+                    b.Property<string>("PhoneNo")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("phone_no");
+
                     b.Property<string>("RequestStatus")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("request_status");
 
-                    b.Property<IReadOnlyList<MembershipInfo>>("Requests")
+                    b.Property<string>("Sex")
                         .IsRequired()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("requests");
+                        .HasColumnType("text")
+                        .HasColumnName("sex");
+
+                    b.Property<string>("Surname")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("surname");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AuxiliaryBodyId");
+
                     b.HasIndex("JamaatId");
 
-                    b.ToTable("pending_member_requests", (string)null);
+                    b.HasIndex("NationalityId");
+
+                    b.ToTable("membership_requests", (string)null);
                 });
 
             modelBuilder.Entity("TajneedApi.Domain.Entities.CaseAggregateRoot.Case", b =>
@@ -834,29 +855,19 @@ namespace TajneedApi.Infrastructure.Migrations
 
             modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.Member", b =>
                 {
-                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", "Jamaat")
-                        .WithMany()
-                        .HasForeignKey("JamaatId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipRequest", null)
+                        .WithOne("Member")
+                        .HasForeignKey("TajneedApi.Domain.Entities.MemberAggregateRoot.Member", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipStatus", "MembershipStatus")
+                    b.HasOne("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipRequest", "MembershipRequest")
                         .WithMany()
-                        .HasForeignKey("MembershipStatusId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("MembershipRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Nationality", "Nationality")
-                        .WithMany()
-                        .HasForeignKey("NationalityId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Jamaat");
-
-                    b.Navigation("MembershipStatus");
-
-                    b.Navigation("Nationality");
+                    b.Navigation("MembershipRequest");
                 });
 
             modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MemberMovement", b =>
@@ -878,15 +889,36 @@ namespace TajneedApi.Infrastructure.Migrations
                     b.Navigation("ToJamaat");
                 });
 
-            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.PendingMemberRequest", b =>
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipRequest", b =>
                 {
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.AuxiliaryBody", "AuxiliaryBody")
+                        .WithMany()
+                        .HasForeignKey("AuxiliaryBodyId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Jamaat", "Jamaat")
                         .WithMany()
                         .HasForeignKey("JamaatId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("TajneedApi.Domain.Entities.JamaatAggregateRoot.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("AuxiliaryBody");
+
                     b.Navigation("Jamaat");
+
+                    b.Navigation("Nationality");
+                });
+
+            modelBuilder.Entity("TajneedApi.Domain.Entities.MemberAggregateRoot.MembershipRequest", b =>
+                {
+                    b.Navigation("Member");
                 });
 #pragma warning restore 612, 618
         }

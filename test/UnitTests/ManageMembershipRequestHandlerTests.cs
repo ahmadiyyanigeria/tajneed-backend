@@ -15,6 +15,7 @@ using TajneedApi.Domain.Exceptions;
 using TajneedApi.Domain.ValueObjects;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Domain.Enums;
+using static TajneedApi.Application.Commands.ManageMembershipRequest;
 
 public class ManageMembershipRequestHandlerTests
 {
@@ -35,7 +36,7 @@ public class ManageMembershipRequestHandlerTests
         _mockLogger = new Mock<ILogger<ManageMembershipRequest.Handler>>();
     }
 
-    private ManageMembershipRequest.Handler CreateHandler()
+    private Handler CreateHandler()
     {
         var approvalSettingsConfigurations = Options.Create(new ApprovalSettingsConfiguration
         {
@@ -58,9 +59,9 @@ public class ManageMembershipRequestHandlerTests
     public async Task Handle_UserWithInvalidRole_ThrowsDomainException()
     {
         var handler = CreateHandler();
-        var command = new ManageMembershipRequest.ManageMembershipRequestCommand
+        var command = new ManageMembershipRequestCommand
         {
-            MembershipRequestIds = new List<string> { "req1" }
+            MembershipRequests = [new MembershipRequestViewModel{MembershipRequestId = "req1"}]
         };
 
         var currentUser = new UserDetails { Role = "InvalidRole", Email = "invalid@example.com" };
@@ -77,18 +78,9 @@ public class ManageMembershipRequestHandlerTests
     public async Task Handle_RejectionOfMembershipRequest_UpdatesRequestStatusToRejected()
     {
         var handler = CreateHandler();
-        var command = new ManageMembershipRequest.ManageMembershipRequestCommand
-        {
-            MembershipRequestIds = new List<string> { "req1" },
-            Action = ActionType.Reject
-        };
-
         var currentUser = new UserDetails { Role = "NationalOfficer", Email = "officer@example.com", UserId = "officer", Name = "Test Officer" };
         _mockCurrentUser.Setup(c => c.GetUserDetails()).Returns(currentUser);
-
-        var memberRequests = new List<MembershipRequest>
-    {
-        new MembershipRequest(
+        var memberRequest = new MembershipRequest(
             surname: "Doe",
             firstName: "John",
             nationalityId: "US123456",
@@ -106,8 +98,15 @@ public class ManageMembershipRequestHandlerTests
             batchRequestId: "Batch001",
             jamaatId: "Jamaat001",
             biatDate: new DateTime(2005, 8, 20)
-        )
-    };
+        );
+        var memberRequests = new List<MembershipRequest>
+        {
+            memberRequest
+        };
+        var command = new ManageMembershipRequestCommand
+        {
+            MembershipRequests = [new MembershipRequestViewModel{MembershipRequestId = memberRequest.Id, Action = ActionType.Reject}]
+        };
 
         _mockMemberRequestRepo.Setup(r => r.GetMemberRequestsByIdsAsync(It.IsAny<IList<string>>(), It.IsAny<int>()))
             .ReturnsAsync(memberRequests);
@@ -123,38 +122,7 @@ public class ManageMembershipRequestHandlerTests
     public async Task Handle_UnsupportedActionType_ThrowsDomainException()
     {
         var handler = CreateHandler();
-        var command = new ManageMembershipRequest.ManageMembershipRequestCommand
-        {
-            MembershipRequestIds = new List<string> { "req1" },
-            Action = (ActionType)10
-        };
-
-        var currentUser = new UserDetails { Role = "NationalOfficer", Email = "officer@example.com" };
-        _mockCurrentUser.Setup(c => c.GetUserDetails()).Returns(currentUser);
-
-        var ex = await Assert.ThrowsAsync<DomainException>(() =>
-            handler.Handle(command, CancellationToken.None)
-        );
-
-        Assert.Equal(nameof(ExceptionCodes.UnSupportedActionType), ex.ErrorCode);
-    }
-
-    [Fact]
-    public async Task Handle_ApprovalByFinalApprover_CreatesMembers()
-    {
-        var handler = CreateHandler();
-        var command = new ManageMembershipRequest.ManageMembershipRequestCommand
-        {
-            MembershipRequestIds = new List<string> { "req1" },
-            Action = ActionType.Approve
-        };
-
-        var currentUser = new UserDetails { Role = "NationalOfficer", Email = "officer@example.com", UserId = "officer", Name = "Test Officer" };
-        _mockCurrentUser.Setup(c => c.GetUserDetails()).Returns(currentUser);
-
-        var memberRequests = new List<MembershipRequest>
-    {
-        new MembershipRequest(
+        var memberRequest = new MembershipRequest(
             surname: "Doe",
             firstName: "John",
             nationalityId: "US123456",
@@ -172,8 +140,61 @@ public class ManageMembershipRequestHandlerTests
             batchRequestId: "Batch001",
             jamaatId: "Jamaat001",
             biatDate: new DateTime(2005, 8, 20)
-        )
-    };
+        );
+        var memberRequests = new List<MembershipRequest>
+        {
+            memberRequest
+        };
+        var command = new ManageMembershipRequestCommand
+        {
+            MembershipRequests = [new MembershipRequestViewModel{MembershipRequestId = memberRequest.Id, Action = (ActionType)10}]
+        };
+
+        _mockMemberRequestRepo.Setup(r => r.GetMemberRequestsByIdsAsync(It.IsAny<IList<string>>(), It.IsAny<int>()))
+            .ReturnsAsync(memberRequests);
+        var currentUser = new UserDetails { Role = "NationalOfficer", Email = "officer@example.com" };
+        _mockCurrentUser.Setup(c => c.GetUserDetails()).Returns(currentUser);
+
+        var ex = await Assert.ThrowsAsync<DomainException>(() =>
+            handler.Handle(command, CancellationToken.None)
+        );
+
+        Assert.Equal(nameof(ExceptionCodes.UnSupportedActionType), ex.ErrorCode);
+    }
+
+    [Fact]
+    public async Task Handle_ApprovalByFinalApprover_CreatesMembers()
+    {
+        var handler = CreateHandler();
+        var currentUser = new UserDetails { Role = "NationalOfficer", Email = "officer@example.com", UserId = "officer", Name = "Test Officer" };
+        _mockCurrentUser.Setup(c => c.GetUserDetails()).Returns(currentUser);
+        var memberRequest = new MembershipRequest(
+            surname: "Doe",
+            firstName: "John",
+            nationalityId: "US123456",
+            isBornMember: true,
+            auxiliaryBodyId: "Aux001",
+            middleName: "Edward",
+            dob: new DateTime(1990, 5, 15),
+            email: "john.doe@example.com",
+            phoneNo: "123-456-7890",
+            sex: Sex.Male,
+            maritalStatus: MaritalStatus.Single,
+            address: "123 Main St, Anytown, USA",
+            employmentStatus: EmploymentStatus.Employed,
+            occupation: "Software Developer",
+            batchRequestId: "Batch001",
+            jamaatId: "Jamaat001",
+            biatDate: new DateTime(2005, 8, 20)
+        );
+        var memberRequests = new List<MembershipRequest>
+        {
+            memberRequest
+        };
+        var command = new ManageMembershipRequestCommand
+        {
+            MembershipRequests = [new MembershipRequestViewModel{MembershipRequestId = memberRequest.Id, Action = ActionType.Approve}]
+        };
 
         _mockMemberRequestRepo.Setup(r => r.GetMemberRequestsByIdsAsync(It.IsAny<IList<string>>(), It.IsAny<int>()))
             .ReturnsAsync(memberRequests);
@@ -190,19 +211,12 @@ public class ManageMembershipRequestHandlerTests
     public async Task Handle_PartialApproval_PendingFinalApproval()
     {
         var handler = CreateHandler();
-        var command = new ManageMembershipRequest.ManageMembershipRequestCommand
-        {
-            MembershipRequestIds = new List<string> { "req1" },
-            Action = ActionType.Approve
-
-        };
+        
 
         var currentUser = new UserDetails { Role = "CircuitPresident", Email = "approver@example.com", UserId = "user1", Name = "John Doe" };
         _mockCurrentUser.Setup(c => c.GetUserDetails()).Returns(currentUser);
 
-        var memberRequests = new List<MembershipRequest>
-        {
-            new MembershipRequest(
+        var memberRequest = new MembershipRequest(
             surname: "Doe",
             firstName: "John",
             nationalityId: "US123456",
@@ -220,7 +234,14 @@ public class ManageMembershipRequestHandlerTests
             batchRequestId: "Batch001",
             jamaatId: "Jamaat001",
             biatDate: new DateTime(2005, 8, 20)
-        )
+        );
+        var memberRequests = new List<MembershipRequest>
+        {
+            memberRequest
+        };
+        var command = new ManageMembershipRequestCommand
+        {
+            MembershipRequests = [new MembershipRequestViewModel{MembershipRequestId = memberRequest.Id, Action = ActionType.Approve}]
         };
 
         _mockMemberRequestRepo.Setup(r => r.GetMemberRequestsByIdsAsync(It.IsAny<IList<string>>(), It.IsAny<int>()))

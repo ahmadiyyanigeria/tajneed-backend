@@ -10,7 +10,11 @@ namespace TajneedApi.Application.Commands
     {
         public record ManageMembershipRequestCommand : IRequest<IResult<IList<MembershipRequestResponse>>>
         {
-            public IList<string> MembershipRequestIds { get; init; } = default!;
+            public IList<MembershipRequestViewModel> MembershipRequests { get; init; } = default!;
+        }
+        public record MembershipRequestViewModel
+        {
+            public string MembershipRequestId { get; init; } = default!;
             public ActionType Action { get; init; }
         }
 
@@ -33,69 +37,81 @@ namespace TajneedApi.Application.Commands
                     _logger.LogError("User with email {Email} and role {Role} does not have permission to manage requests", user.Email, user.Role);
                     throw new DomainException($"User with email {user.Email} and role {user.Role} does not have permission to manage requests", ExceptionCodes.AccessDeniedToApproveRequests.ToString(), 403);
                 }
+                var membershipRequestActions = request.MembershipRequests
+                             .ToDictionary(membershipRequest => membershipRequest.MembershipRequestId,
+                                           membershipRequest => membershipRequest.Action);
+                var memberRequests = await _memberRequestRepository.GetMemberRequestsByIdsAsync(membershipRequestActions.Keys.ToList(), userApprovalSettings.Level);
+                var members = new List<Member>();
+                int approvedCount = 0;
+                int rejectedCount = 0;
 
-                var memberRequests = await _memberRequestRepository.GetMemberRequestsByIdsAsync(request.MembershipRequestIds, userApprovalSettings.Level);
-
-                switch (request.Action)
+                foreach (var memberReq in memberRequests)
                 {
-                    case ActionType.Approve:
-                        if (_approvalSettings.Roles.LastOrDefault()?.Level == userApprovalSettings.Level)
-                        {
-                            var members = new List<Member>();
-                            foreach (var memberReq in memberRequests)
+                    var actionType = membershipRequestActions[memberReq.Id];
+                    switch (actionType)
+                    {
+                        case ActionType.Approve:
+                            if (_approvalSettings.Roles.LastOrDefault()?.Level == userApprovalSettings.Level)
                             {
                                 members.Add(new Member(Guid.NewGuid().ToString(), memberReq.Id));
-                                memberReq.AddApprovalHistory(user.UserId, user.Role, user.Name);
-                                memberReq.UpdateRequestStatus(RequestStatus.Approved);
                             }
-                            await _memberRepository.CreateMemberAsync(members);
-                        }
-                        else
-                        {
-                            foreach (var memberReq in memberRequests)
-                            {
-                                memberReq.AddApprovalHistory(user.UserId, user.Role, user.Name);
-                            }
-                        }
-                        break;
-                    case ActionType.Reject:
-                        foreach (var memberReq in memberRequests)
-                        {
+                            memberReq.AddApprovalHistory(user.UserId, user.Role, user.Name);
+                            memberReq.UpdateRequestStatus(RequestStatus.Approved);
+                            approvedCount++;
+                            break;
+
+                        case ActionType.Reject:
                             memberReq.AddDisapprovalHistory(user.UserId, user.Role, user.Name);
                             memberReq.UpdateRequestStatus(RequestStatus.Rejected);
-                        }
-                        break;
-                    default:
-                        throw new DomainException($"Unsupported action type", ExceptionCodes.UnSupportedActionType.ToString(), 403);
+                            rejectedCount++;
+                            break;
+
+                        default:
+                            throw new DomainException($"Unsupported action type", ExceptionCodes.UnSupportedActionType.ToString(), 403);
+                    }
+                }
+                if (members.Count > 0)
+                {
+                    await _memberRepository.CreateMemberAsync(members);
                 }
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 var response = memberRequests.Adapt<IList<MembershipRequestResponse>>();
-                string message;
-                if (request.Action == ActionType.Approve)
+                string message = $"Total requests processed: {approvedCount + rejectedCount}. Approved: {approvedCount}, Rejected: {rejectedCount}.";
+                if (approvedCount > 0 && userApprovalSettings.Level < _approvalSettings.Roles.LastOrDefault()?.Level)
                 {
-                    message = $"Member request has been approved by {user.Name}. {(userApprovalSettings.Level < _approvalSettings.Roles.LastOrDefault()?.Level ? "Member requests pending final approval" : "")}";
-                }
-                else
-                {
-                    message = $"Member request has been rejected.";
+                    message += " Member requests are pending final approval.";
                 }
                 return await Result<IList<MembershipRequestResponse>>.SuccessAsync(response, message);
             }
         }
         public record MembershipRequestResponse(string Id, string Surname, string FirstName, string AuxiliaryBodyId, string MiddleName, string JamaatId, string BatchRequestId, DateTime Dob, string Email, string PhoneNo, Sex Sex, MaritalStatus MaritalStatus, string Address, EmploymentStatus EmploymentStatus, Status Status);
 
-        public class ApproveMemberRequestCommandValidator : AbstractValidator<ManageMembershipRequestCommand>
+        public class ManageMembershipRequestCommandValidator : AbstractValidator<ManageMembershipRequestCommand>
         {
-            public ApproveMemberRequestCommandValidator()
+            public ManageMembershipRequestCommandValidator()
             {
-                RuleFor(x => x.MembershipRequestIds)
-                    .NotNull().WithMessage("MembershipRequestIds cannot be null.")
-                    .Must(x => x != null && x.Any()).WithMessage("MembershipRequestIds must contain at least one item.");
+                RuleFor(x => x.MembershipRequests)
+                    .NotNull().WithMessage("Membership requests cannot be null.")
+                    .NotEmpty().WithMessage("Membership requests cannot be empty.");
 
-                RuleFor(x => x.Action)
-                    .NotNull().WithMessage("Action cannot be null.")
-                    .IsInEnum().WithMessage("Action must be a valid enum value.");
+                // Apply validation for each item in the MembershipRequests list
+                RuleForEach(x => x.MembershipRequests).SetValidator(new MembershipRequestViewModelValidator());
             }
         }
+
+        public class MembershipRequestViewModelValidator : AbstractValidator<MembershipRequestViewModel>
+        {
+            public MembershipRequestViewModelValidator()
+            {
+                RuleFor(x => x.MembershipRequestId)
+                    .NotEmpty().WithMessage("Membership Request ID is required.")
+                    .NotNull().WithMessage("Membership Request ID cannot be null.")
+                    .Must(id => !string.IsNullOrWhiteSpace(id)).WithMessage("Membership Request ID cannot be whitespace.");
+
+                RuleFor(x => x.Action)
+                    .IsInEnum().WithMessage("Invalid action type.");
+            }
+        }
+
     }
 }

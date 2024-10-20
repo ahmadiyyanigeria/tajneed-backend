@@ -22,8 +22,9 @@ public static class ServiceCollectionExtensions
         return serviceCollection
             .AddScoped<ICurrentUser, CurrentUser>()
             .AddScoped<IUnitOfWork, UnitOfWork>()
-            .AddScoped<IMemberRequestRepository, MemberRequestRepository>()
+            .AddScoped<IMembershipRequestRepository, MembershipRequestRepository>()
             .AddScoped<IDatabaseInitializer, DatabaseInitializer>()
+            .AddScoped<IMemberRepository, MemberRepository>()
             .AddScoped<IAuxiliaryBodyRepository, AuxiliaryBodyRepository>();
     }
 }

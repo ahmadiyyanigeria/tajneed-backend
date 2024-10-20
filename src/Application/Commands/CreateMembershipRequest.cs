@@ -3,36 +3,30 @@ using TajneedApi.Application.ServiceHelpers;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Domain.ValueObjects;
 
-namespace TajneedApi.Application.Commands.User;
+namespace TajneedApi.Application.Commands;
 
 public class CreateMemberRequest
 {
-    public record CreateMemberRequestCommand : IRequest<IResult<MemberRequestResponse>>
+    public record CreateMembershipRequestCommand : IRequest<IResult<IList<MembershipRequestResponse>>>
     {
-        public string JamaatId { get; init; } = default!;
-        public IReadOnlyList<CreateMemberRequestDto> Requests { get; init; } = default!;
+        public IReadOnlyList<CreateMembershipRequestDto> Requests { get; init; } = default!;
     }
 
-    public class Handler(IMemberRequestRepository memberRequestRepository, IAuxiliaryBodyRepository auxiliaryBodyRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMemberRequestCommand, IResult<MemberRequestResponse>>
+    public class Handler(IMembershipRequestRepository memberRequestRepository, IAuxiliaryBodyRepository auxiliaryBodyRepository, IUnitOfWork unitOfWork) : IRequestHandler<CreateMembershipRequestCommand, IResult<IList<MembershipRequestResponse>>>
     {
-        private readonly IMemberRequestRepository _memberRequestRepository = memberRequestRepository;
+        private readonly IMembershipRequestRepository _memberRequestRepository = memberRequestRepository;
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly IAuxiliaryBodyRepository _auxiliaryBodyRepository = auxiliaryBodyRepository;
 
-        public async Task<IResult<MemberRequestResponse>> Handle(CreateMemberRequestCommand request, CancellationToken cancellationToken)
+        public async Task<IResult<IList<MembershipRequestResponse>>> Handle(CreateMembershipRequestCommand request, CancellationToken cancellationToken)
         {
-            //TODO: Check if data already exist. How're we confirming if a record already exist
-            var requestExist = await _memberRequestRepository.IsDuplicateMemberRequestAsync(request);
-            if (requestExist)
-                return await Result<MemberRequestResponse>.FailAsync("There is already a pending request from a member with similar information.");
-
-            var memberRequests = request.Requests.Select(x => new MembershipInfo(x.Surname, x.FirstName, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus)).ToList();
-
-            var pendingMemberRequest = new PendingMemberRequest(request.JamaatId, memberRequests);
-            var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(pendingMemberRequest);
+        
+            var batchRequestId = Guid.NewGuid().ToString();
+            var memberRequests = request.Requests.Select(x => new MembershipRequest(x.Surname, x.FirstName, x.NationalityId,x.IsBornMember, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus,x.Occupation,batchRequestId,x.JamaatId,x.BiatDate)).ToList();
+            var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(memberRequests);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            var response = memberRequestResponse.Adapt<MemberRequestResponse>();
-            return await Result<MemberRequestResponse>.SuccessAsync(response, "Member registration request submitted! Awaiting approval from Tajneed office.");
+            var response = memberRequestResponse.Adapt<IList<MembershipRequestResponse>>();
+            return await Result<IList<MembershipRequestResponse>>.SuccessAsync(response, "Member registration request submitted! Awaiting approval from Tajneed office.");
         }
 
         private string GetAuxiliaryBodyId(DateTime dob, Sex sex)
@@ -43,7 +37,7 @@ public class CreateMemberRequest
         }
     }
 
-    public record CreateMemberRequestDto
+    public record CreateMembershipRequestDto
     {
         [DefaultValue("aabdulsalam@gmail.com")]
         public string Email { get; init; } = default!;
@@ -55,33 +49,38 @@ public class CreateMemberRequest
         public string Surname { get; init; } = default!;
         [DefaultValue("+2348164671994")]
         public string PhoneNo { get; init; } = default!;
-        //[DefaultValue("8027038c-5d2e-4368-b0a9-49609dc80a80")]
-        //public string JamaatId { get; init; } = default!;
+        [DefaultValue("8027038c-5d2e-4368-b0a9-49609dc80a80")]
+        public string JamaatId { get; init; } = default!;
         [DefaultValue("6b Zone 2, Lagos Ibadan express way.")]
         public string Address { get; init; } = default!;
+        public bool IsBornMember { get; init; }
+        public string Occupation { get; init; } = default!;
+        public DateTime? BiatDate { get; init ; }
+        public string NationalityId { get; init; } = default!;
         public DateTime Dob { get; init; }
         public Sex Sex { get; init; }
         public MaritalStatus MaritalStatus { get; init; }
         public EmploymentStatus EmploymentStatus { get; init; }
     }
 
-    public record MemberRequestResponse(string Id, string JamaatId, RequestStatus RequestStatus);
+    public record MembershipRequestResponse(string Id, string Surname, string FirstName, string AuxiliaryBodyId, string MiddleName, string JamaatId, string BatchRequestId, DateTime Dob, string Email, string PhoneNo, Sex Sex, MaritalStatus MaritalStatus, string Address, EmploymentStatus EmploymentStatus, Status Status);
 
-    public class CreateMemberRequestCommandValidator : AbstractValidator<CreateMemberRequestCommand>
+    public class CreateMemberRequestCommandValidator : AbstractValidator<CreateMembershipRequestCommand>
     {
         public CreateMemberRequestCommandValidator()
         {
             RuleFor(x => x.Requests).Cascade(CascadeMode.Stop)
                 .NotEmpty().WithMessage("At least one member request is required.");
 
-            RuleFor(x => x.JamaatId)
-            .NotEmpty().WithMessage("Jamaat Id must be selected");
 
             When(p => p.Requests is not null, () =>
             {
                 RuleForEach(x => x.Requests)
                 .ChildRules(p =>
                 {
+                    p.RuleFor(x => x.JamaatId)
+                    .NotEmpty().WithMessage("Jamaat Id must be selected");
+
                     p.RuleFor(x => x.FirstName)
                     .NotEmpty().WithMessage("First Name is required");
 
@@ -102,6 +101,15 @@ public class CreateMemberRequest
                     p.RuleFor(x => x.Dob)
                     .NotEmpty().WithMessage("Date of birth is required")
                     .Must(x => x <= DateTime.Today).WithMessage("Date of birth cannot be earlier than today.");
+
+                    p.RuleFor(x => x.BiatDate)
+                    .NotEmpty().When(x => !x.IsBornMember).WithMessage("Biat Date is required for non-born members.");
+
+                    p.RuleFor(x => x.NationalityId)
+                    .NotEmpty().WithMessage("Nationality is required");
+
+                    p.RuleFor(x => x.Occupation)
+                    .NotEmpty().WithMessage("Occupation is required");
                 });
             });
         }

@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TajneedApi.Application.Contracts;
 using TajneedApi.Application.Repositories;
+using TajneedApi.Infrastructure.Persistence.Exports;
 using TajneedApi.Infrastructure.Persistence.Repositories;
 
 namespace TajneedApi.Infrastructure.Extensions;
@@ -24,6 +26,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IMembershipRequestRepository, MembershipRequestRepository>()
             .AddScoped<IDatabaseInitializer, DatabaseInitializer>()
             .AddScoped<IMemberRepository, MemberRepository>()
+            .AddScoped<IExcelWriter, ExcelWriter>()
             .AddScoped<IAuxiliaryBodyRepository, AuxiliaryBodyRepository>();
     }
 }

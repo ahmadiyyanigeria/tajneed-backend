@@ -1,13 +1,7 @@
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using TajneedApi.Application.Queries;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using Xunit;
 
 public class GetMembersHandlerTests
 {
@@ -18,7 +12,7 @@ public class GetMembersHandlerTests
     {
         // Initialize the mock repository
         _mockMemberRepository = new Mock<IMemberRepository>();
-        
+
         // Initialize the handler with the mock repository
         _handler = new GetMembers.Handler(_mockMemberRepository.Object);
     }
@@ -34,17 +28,17 @@ public class GetMembersHandlerTests
             Page = 1,
             PageSize = 10
         };
-        
+
         var memberList = new List<Member>
         {
             new Member("CN123", "MR123"),
             new Member("CN124", "MR124")
         };
 
-        var paginatedMembers = new PaginatedList<Member>(){ Items = memberList, TotalItems = memberList.Count, Page = 1, PageSize = 10 };
-        
+        var paginatedMembers = new PaginatedList<Member>() { Items = memberList, TotalItems = memberList.Count, Page = 1, PageSize = 10 };
+
         _mockMemberRepository
-            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId))
+            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus))
             .ReturnsAsync(paginatedMembers);
 
         // Act
@@ -53,7 +47,7 @@ public class GetMembersHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Items.Count());
-        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId), Times.Once);
+        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus), Times.Once);
     }
 
     [Fact]
@@ -71,7 +65,7 @@ public class GetMembersHandlerTests
         var emptyPaginatedMembers = new PaginatedList<Member>();
 
         _mockMemberRepository
-            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId))
+            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus))
             .ReturnsAsync(emptyPaginatedMembers);
 
         // Act
@@ -80,7 +74,7 @@ public class GetMembersHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.Empty(result.Items);
-        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId), Times.Once);
+        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus), Times.Once);
     }
 
     [Fact]
@@ -99,11 +93,11 @@ public class GetMembersHandlerTests
             new Member("ChandaNo1", "MR123"),
             new Member("ChandaNo2", "MR124"),
         };
-        
-        var paginatedMembers = new PaginatedList<Member>(){ Items = members, TotalItems = members.Count, Page = 1, PageSize = 10 };
+
+        var paginatedMembers = new PaginatedList<Member>() { Items = members, TotalItems = members.Count, Page = 1, PageSize = 10 };
 
         _mockMemberRepository
-            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId))
+            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus))
             .ReturnsAsync(paginatedMembers);
 
         // Act
@@ -112,7 +106,7 @@ public class GetMembersHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Items.Count());
-        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId), Times.Once);
+        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus), Times.Once);
     }
 
     [Fact]
@@ -126,7 +120,7 @@ public class GetMembersHandlerTests
         };
 
         _mockMemberRepository
-            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId))
+            .Setup(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus))
             .ReturnsAsync((PaginatedList<Member>?)null);
 
         // Act
@@ -134,6 +128,6 @@ public class GetMembersHandlerTests
 
         // Assert
         Assert.Null(result);
-        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId), Times.Once);
+        _mockMemberRepository.Verify(repo => repo.GetMembersAsync(query, query.JamaatId, query.CircuitId, query.AuxiliaryBodyId, query.MembershipStatus), Times.Once);
     }
 }

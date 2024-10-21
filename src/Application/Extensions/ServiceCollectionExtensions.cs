@@ -1,10 +1,7 @@
 using Application.Extensions;
-using FluentValidation;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TajneedApi.Application.Behaviours;
 using TajneedApi.Application.Commands;
-using TajneedApi.Application.Configurations;
 using TajneedApi.Application.Extensions;
 
 namespace TajneedApi.Application.Extensions;
@@ -25,6 +22,6 @@ public static class ServiceCollectionExtensions
     {
         return serviceCollection.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(StringExtensions).Assembly));
     }
-    
+
 
 }

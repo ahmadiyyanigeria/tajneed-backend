@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TajneedApi.Application.Repositories;
+﻿using TajneedApi.Application.Repositories;
 using TajneedApi.Domain.Constants;
 using TajneedApi.Domain.Entities.JamaatAggregateRoot;
-using TajneedApi.Domain.Enums;
 using TajneedApi.Infrastructure.Persistence.Repositories;
 
 namespace TajneedApi.Infrastructure.Extensions;

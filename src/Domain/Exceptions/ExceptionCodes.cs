@@ -4,6 +4,7 @@ public enum ExceptionCodes
 {
     MemberRequestIsNull = 1,
     AccessDeniedToApproveRequests,
-    UnSupportedActionType
+    UnSupportedActionType,
+    DocumentExportListIsNull,
 
 }

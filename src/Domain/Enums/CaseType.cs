@@ -1,9 +1,8 @@
-namespace TajneedApi.Domain.Enums
+namespace TajneedApi.Domain.Enums;
+
+public enum CaseType
 {
-    public enum CaseType
-    {
-        BiodataUpdateCase = 1,
-        DuplicateAccountCase,
-        RelocationCase,
-    }
+    BiodataUpdateCase = 1,
+    DuplicateAccountCase,
+    RelocationCase,
 }

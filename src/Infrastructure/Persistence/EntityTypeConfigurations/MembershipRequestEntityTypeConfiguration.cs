@@ -1,8 +1,4 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.Enums;
 
 namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
@@ -41,7 +37,7 @@ public class MembershipRequestEntityTypeConfiguration : IEntityTypeConfiguration
 
         builder.Property(p => p.LastModifiedBy)
             .HasColumnName("last_modified_by");
-        
+
         builder.Property(m => m.BatchRequestId)
             .IsRequired()
             .HasColumnName("batch_request_id");
@@ -131,7 +127,7 @@ public class MembershipRequestEntityTypeConfiguration : IEntityTypeConfiguration
             .HasColumnName("approval_histories")
             .HasColumnType("jsonb");
 
-        
+
         builder.Property(p => p.DisApprovalHistory)
             .HasColumnName("disapproval_history")
             .HasColumnType("jsonb");

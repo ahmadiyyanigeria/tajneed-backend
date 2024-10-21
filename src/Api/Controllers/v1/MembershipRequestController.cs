@@ -1,9 +1,9 @@
 ﻿
+using TajneedApi.Application.Queries;
 using static TajneedApi.Application.Commands.CreateMemberRequest;
+using static TajneedApi.Application.Commands.ManageMembershipRequest;
 using static TajneedApi.Application.Queries.GetMembershipRequest;
 using static TajneedApi.Application.Queries.GetMembershipRequests;
-using TajneedApi.Application.Queries;
-using static TajneedApi.Application.Commands.ManageMembershipRequest;
 namespace TajneedApi.Api.Controllers.v1;
 
 public class MembershipRequestController : VersionedApiController
@@ -51,5 +51,5 @@ public class MembershipRequestController : VersionedApiController
         var memberRequest = await Mediator.Send(query);
         return Ok(memberRequest);
     }
-    
+
 }

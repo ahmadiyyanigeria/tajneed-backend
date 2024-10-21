@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
+﻿using Npgsql;
 using System.Text;
 
 namespace TajneedApi.Infrastructure.Persistence.Helpers;

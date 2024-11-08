@@ -23,6 +23,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<ICurrentUser, CurrentUser>()
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<IMembershipRequestRepository, MembershipRequestRepository>()
+            .AddScoped<ICaseRepository, CaseRepository>()
             .AddScoped<IDatabaseInitializer, DatabaseInitializer>()
             .AddScoped<IMemberRepository, MemberRepository>()
             .AddScoped<IAuxiliaryBodyRepository, AuxiliaryBodyRepository>();

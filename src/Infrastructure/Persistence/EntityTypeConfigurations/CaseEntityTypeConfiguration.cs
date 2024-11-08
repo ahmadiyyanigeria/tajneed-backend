@@ -75,5 +75,14 @@ public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
             .WithMany()
             .HasForeignKey(c => c.MemberId)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.Property(p => p.ApprovalHistories)
+            .HasColumnName("approval_histories")
+            .HasColumnType("jsonb");
+
+        
+        builder.Property(p => p.DisApprovalHistory)
+            .HasColumnName("disapproval_history")
+            .HasColumnType("jsonb");
     }
 }

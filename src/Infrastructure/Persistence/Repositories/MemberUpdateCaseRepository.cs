@@ -3,11 +3,11 @@ using TajneedApi.Domain.Entities.CaseAggregateRoot;
 
 namespace TajneedApi.Infrastructure.Persistence.Repositories;
 
-public class CaseRepository(ApplicationDbContext context) : ICaseRepository
+public class MemberUpdateCaseRepository(ApplicationDbContext context) : IMemberUpdateCaseRepository
 {
     private readonly ApplicationDbContext _context = context;
 
-    public async Task<Case> CreateCaseAsync(Case @case)
+    public async Task<MemberUpdateCase> CreateCaseAsync(MemberUpdateCase @case)
     {
         await _context.AddRangeAsync(@case);
         return @case;

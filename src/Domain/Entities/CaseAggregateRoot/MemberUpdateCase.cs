@@ -5,14 +5,12 @@ using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Domain.Entities.CaseAggregateRoot;
 
-public class Case(string memberId, Status status, string referenceCode, BiodataUpdateCase? biodataUpdateCase, DuplicateAccountCase? duplicateAccountCase, RelocationCase? relocationCase) : BaseEntity
+public class MemberUpdateCase(string memberId, BiodataUpdateCase? biodataUpdateCase, DuplicateAccountCase? duplicateAccountCase, RelocationCase? relocationCase) : BaseEntity
 {
-    public string Id { get; set; } = Guid.NewGuid().ToString();
-    public string ReferenceCode { get; private set; } = referenceCode;
-    public CaseType CaseType { get; private set; } = default!;
+    public string Id { get; private set; } = Guid.NewGuid().ToString();
     public string MemberId { get; private set; } = memberId;
-    public Member Member { get; private set; } = default!;
-    public Status Status { get; private set; } = status;
+    public Member Member { get;  set; } = default!;
+    public RequestStatus RequestStatus { get; private set; } = RequestStatus.Pending;
     private readonly List<ApprovalMemberUpdateCaseRequestHistory> _approvalHistories = new();
     public BiodataUpdateCase? BiodataUpdateCase { get; private set; } = biodataUpdateCase;
     public RelocationCase? RelocationCase { get; private set; } = relocationCase;
@@ -35,9 +33,9 @@ public class Case(string memberId, Status status, string referenceCode, BiodataU
             DisApprovalHistory = new DisapprovalMemberUpdateCaseRequestHistory(disapprovedById,disapprovedByRole,disapprovedByName);
         }
     }
-    public void UpdateStatus(Status status)
+    public void UpdateStatus(RequestStatus status)
     {
-        Status = status;
+        RequestStatus = status;
     }
 
 }

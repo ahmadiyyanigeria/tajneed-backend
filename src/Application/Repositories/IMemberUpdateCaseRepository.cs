@@ -2,9 +2,9 @@
 
 namespace TajneedApi.Application.Repositories;
 
-public interface ICaseRepository
+public interface IMemberUpdateCaseRepository
 {
-    Task<Case> CreateCaseAsync(Case @case);
+    Task<MemberUpdateCase> CreateCaseAsync(MemberUpdateCase @case);
     
     
 }

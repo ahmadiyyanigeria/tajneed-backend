@@ -6,11 +6,11 @@ using TajneedApi.Domain.Enums;
 
 namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 
-public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
+public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<MemberUpdateCase>
 {
-    public void Configure(EntityTypeBuilder<Case> builder)
+    public void Configure(EntityTypeBuilder<MemberUpdateCase> builder)
     {
-        builder.ToTable("cases");
+        builder.ToTable("member_update_cases");
 
         builder.HasKey(c => c.Id);
 
@@ -23,23 +23,14 @@ public class CaseEntityTypeConfiguration : IEntityTypeConfiguration<Case>
             .IsRequired()
             .HasColumnName("member_id");
 
-        builder.Property(c => c.Status)
-            .IsRequired()
-            .HasColumnName("status");
 
-        builder.Property(c => c.ReferenceCode)
-            .IsRequired()
-            .HasColumnName("reference_code");
 
-        builder.Property(c => c.Status)
+        builder.Property(c => c.RequestStatus)
             .IsRequired()
-            .HasConversion<EnumToStringConverter<Status>>()
-            .HasColumnName("status");
+            .HasConversion<EnumToStringConverter<RequestStatus>>()
+            .HasColumnName("request_status");
 
-        builder.Property(c => c.CaseType)
-            .IsRequired()
-            .HasConversion<EnumToStringConverter<CaseType>>()
-            .HasColumnName("case_type");
+      
 
         builder.Property(c => c.CreatedOn)
             .IsRequired()

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel;
 using TajneedApi.Application.Contracts;
 using TajneedApi.Application.Repositories.Paging;
+using TajneedApi.Domain.Exceptions;
 
 namespace TajneedApi.Application.Queries;
 
@@ -12,21 +14,31 @@ public class ExportMembers
         public string? JamaatId { get; set; }
         public string? CircuitId { get; set; }
         public string? AuxiliaryBodyId { get; set; }
+        public FileType FileType { get; set; } = FileType.Excel;
         public MembershipStatus? MembershipStatus { get; set; }
     }
 
     public class Handler(IMemberRepository memberRepository,
-                        IExcelWriter excelWriter) : IRequestHandler<ExportMembersQuery, FileContentResult>
+                        IExcelWriter excelWriter,
+                         ILogger<Handler> logger) : IRequestHandler<ExportMembersQuery, FileContentResult>
     {
         private readonly IMemberRepository _memberRepository = memberRepository;
         private readonly IExcelWriter _excelWriter = excelWriter;
+        private readonly ILogger<Handler> _logger = logger;
 
         public async Task<FileContentResult> Handle(ExportMembersQuery request, CancellationToken cancellationToken)
         {
             var memberRequests = await _memberRepository.GetMembersAsync(request, request.JamaatId, request.CircuitId);
             var exportDatas = memberRequests.Adapt<PaginatedList<MemberExportData>>();
-            var fileResponse = _excelWriter.GenerateCSV(exportDatas.Items.ToList(), "Members");
-            return fileResponse;
+            if (request.FileType == FileType.CSV)
+                return _excelWriter.GenerateCSV(exportDatas.Items.ToList(), "Members");
+
+            if (request.FileType == FileType.Excel)
+                return _excelWriter.GenerateExcel(exportDatas.Items.ToList(), "Members");
+
+            _logger.LogError("Attempted export with unsupported file format {file typpe}", request.FileType);
+            throw new DomainException($"The export format provided is not part o the supported filetype.", ExceptionCodes.UnSupportedFileExportFormat.ToString(), 403);
+
         }
     }
 

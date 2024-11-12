@@ -18,13 +18,13 @@ public class ExcelWriter : IExcelWriter
         var table = new DataTable("table", "table");
 
         foreach (PropertyDescriptor prop in properties)
-            table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            table.Columns.Add(prop.DisplayName, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
 
         foreach (var item in data)
         {
             var row = table.NewRow();
             foreach (PropertyDescriptor prop in properties)
-                row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                row[prop.DisplayName] = prop.GetValue(item) ?? DBNull.Value;
             table.Rows.Add(row);
         }
 
@@ -58,7 +58,7 @@ public class ExcelWriter : IExcelWriter
         using var streamWriter = new StreamWriter(memoryStream);
 
         foreach (PropertyDescriptor prop in properties)
-            streamWriter.Write(prop.Name + ",");
+            streamWriter.Write(prop.DisplayName + ",");
 
         streamWriter.WriteLine();
         foreach (var item in data)

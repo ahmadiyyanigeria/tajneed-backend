@@ -10,8 +10,8 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddValidators(this IServiceCollection serviceCollection)
     {
         // Set FluentValidator Global Options
-        ValidatorOptions.Global.DisplayNameResolver = (_, member, _) => member.Name.ToCamelCase();
-        ValidatorOptions.Global.PropertyNameResolver = (_, member, _) => member.Name.ToCamelCase();
+        ValidatorOptions.Global.DisplayNameResolver = (_, member, _) => member?.Name?.ToCamelCase();
+        ValidatorOptions.Global.PropertyNameResolver = (_, member, _) => member?.Name?.ToCamelCase();
 
         return serviceCollection
             .AddValidatorsFromAssemblyContaining<CreateMemberRequest.CreateMemberRequestCommandValidator>()

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TajneedApi.Application.Common;
 
 namespace TajneedApi.Application.Contracts;
 

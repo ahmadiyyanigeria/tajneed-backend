@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel;
 using System.Data;
-using TajneedApi.Application.Common;
 using TajneedApi.Application.Contracts;
 using TajneedApi.Domain.Exceptions;
 

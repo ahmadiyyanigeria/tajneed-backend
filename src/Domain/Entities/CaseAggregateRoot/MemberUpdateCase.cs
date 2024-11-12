@@ -1,6 +1,5 @@
 using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.Enums;
 using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Domain.Entities.CaseAggregateRoot;

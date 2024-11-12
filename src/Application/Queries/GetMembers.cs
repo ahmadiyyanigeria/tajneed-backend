@@ -1,5 +1,4 @@
 ﻿using TajneedApi.Application.Repositories.Paging;
-using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
 namespace TajneedApi.Application.Queries;
 public class GetMembers

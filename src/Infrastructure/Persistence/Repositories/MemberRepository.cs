@@ -1,6 +1,5 @@
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
-using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Infrastructure.Extensions;
 using TajneedApi.Infrastructure.Persistence.Helpers;

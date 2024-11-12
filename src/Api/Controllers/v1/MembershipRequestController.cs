@@ -1,9 +1,10 @@
 ﻿
-using TajneedApi.Application.Queries;
 using static TajneedApi.Application.Commands.CreateMemberRequest;
-using static TajneedApi.Application.Commands.ManageMembershipRequest;
 using static TajneedApi.Application.Queries.GetMembershipRequest;
 using static TajneedApi.Application.Queries.GetMembershipRequests;
+using TajneedApi.Application.Queries;
+using static TajneedApi.Application.Commands.ManageMembershipRequest;
+using static TajneedApi.Application.Commands.UpdateMemberRequest;
 namespace TajneedApi.Api.Controllers.v1;
 
 public class MembershipRequestController : VersionedApiController
@@ -51,5 +52,14 @@ public class MembershipRequestController : VersionedApiController
         var memberRequest = await Mediator.Send(query);
         return Ok(memberRequest);
     }
+    [HttpPut]
+    [SwaggerOperation("update member requests.")]
+    public async Task<IActionResult> UpdateMemberRequest([FromBody] UpdateMemberRequestCommand command)
+    {
+        var updateMemberRequest = await Mediator.Send(command);
+        if (!updateMemberRequest.Succeeded)
+            return BadRequest(updateMemberRequest);
 
+        return Ok(updateMemberRequest);
+    }
 }

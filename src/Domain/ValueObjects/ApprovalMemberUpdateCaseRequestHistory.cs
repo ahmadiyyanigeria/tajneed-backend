@@ -1,0 +1,15 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TajneedApi.Domain.ValueObjects
+{
+    public class ApprovalMemberUpdateCaseRequestHistory(string ApprovedById, string ApprovedByRole, string ApprovedByName)
+    {
+        public string ApprovedById { get; private set; } = ApprovedById;
+        public string ApprovedByRole { get; private set; } = ApprovedByRole;
+        public string ApprovedByName { get; private set; } = ApprovedByName;
+        public DateTime ApprovalDate { get; private set; } = DateTime.UtcNow;
+    }
+}

@@ -19,7 +19,7 @@ public class ApplicationDbContext(
 
     public DbSet<AuditTrail> AuditTrails => Set<AuditTrail>();
     public DbSet<AuxiliaryBody> AuxiliaryBodies => Set<AuxiliaryBody>();
-    public DbSet<Case> Cases => Set<Case>();
+    public DbSet<MemberUpdateCase> MemberUpdateCases => Set<MemberUpdateCase>();
     public DbSet<Circuit> Circuits => Set<Circuit>();
     public DbSet<Code> Forms => Set<Code>();
     public DbSet<CodeValue> Produces => Set<CodeValue>();

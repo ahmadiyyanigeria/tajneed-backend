@@ -24,6 +24,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<ICurrentUser, CurrentUser>()
             .AddScoped<IUnitOfWork, UnitOfWork>()
             .AddScoped<IMembershipRequestRepository, MembershipRequestRepository>()
+            .AddScoped<IMemberUpdateCaseRepository, MemberUpdateCaseRepository>()
             .AddScoped<IDatabaseInitializer, DatabaseInitializer>()
             .AddScoped<IMemberRepository, MemberRepository>()
             .AddScoped<IExcelWriter, ExcelWriter>()

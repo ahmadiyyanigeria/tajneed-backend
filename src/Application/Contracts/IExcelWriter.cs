@@ -4,6 +4,6 @@ namespace TajneedApi.Application.Contracts;
 
 public interface IExcelWriter
 {
-    FileContentResult GenerateCSV<T>(IList<T> data, string fileName = "ExportData");
-    FileContentResult GenerateExcel<T>(IList<T> data, string fileName = "ExportData");
+    FileContentResult GenerateCSV<T>(IEnumerable<T> data, string fileName = "ExportData");
+    FileContentResult GenerateExcel<T>(IEnumerable<T> data, string fileName = "ExportData");
 }

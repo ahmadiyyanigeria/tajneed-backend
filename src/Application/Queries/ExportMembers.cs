@@ -34,7 +34,7 @@ public class ExportMembers
                 return _excelWriter.GenerateCSV(exportDatas.Items.ToList(), "Members");
 
             if (request.FileType == FileType.Excel)
-                return _excelWriter.GenerateExcel(exportDatas.Items.ToList(), "Members");
+                return _excelWriter.GenerateExcel(exportDatas.Items, "Members");
 
             _logger.LogError("Attempted export with unsupported file format {file typpe}", request.FileType);
             throw new DomainException($"The export format provided is not part o the supported filetype.", ExceptionCodes.UnSupportedFileExportFormat.ToString(), 403);

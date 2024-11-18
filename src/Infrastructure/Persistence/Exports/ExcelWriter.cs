@@ -9,7 +9,7 @@ namespace TajneedApi.Infrastructure.Persistence.Exports;
 
 public class ExcelWriter : IExcelWriter
 {
-    public FileContentResult GenerateExcel<T>(IList<T> data, string fileName = "ExportData")
+    public FileContentResult GenerateExcel<T>(IEnumerable<T> data, string fileName = "ExportData")
     {
         if (data == null || !data.Any())
             throw new DomainException($"Cannot generate Excel file for empty list.", ExceptionCodes.DocumentExportListIsNull.ToString(), 403);
@@ -48,7 +48,7 @@ public class ExcelWriter : IExcelWriter
         };
     }
 
-    public FileContentResult GenerateCSV<T>(IList<T> data, string fileName = "ExportData")
+    public FileContentResult GenerateCSV<T>(IEnumerable<T> data, string fileName = "ExportData")
     {
         if (data == null || !data.Any())
             throw new DomainException($"Cannot generate CSV file for empty list.", ExceptionCodes.DocumentExportListIsNull.ToString(), 403);

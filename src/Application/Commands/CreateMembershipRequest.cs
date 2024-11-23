@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using TajneedApi.Application.ServiceHelpers;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Application.Commands;
 
@@ -20,9 +19,9 @@ public class CreateMemberRequest
 
         public async Task<IResult<IList<MembershipRequestResponse>>> Handle(CreateMembershipRequestCommand request, CancellationToken cancellationToken)
         {
-        
+
             var batchRequestId = Guid.NewGuid().ToString();
-            var memberRequests = request.Requests.Select(x => new MembershipRequest(x.Surname, x.FirstName, x.NationalityId,x.IsBornMember, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus,x.Occupation,batchRequestId,x.JamaatId,x.BiatDate)).ToList();
+            var memberRequests = request.Requests.Select(x => new MembershipRequest(x.Surname, x.FirstName, x.NationalityId, x.IsBornMember, GetAuxiliaryBodyId(x.Dob, x.Sex), x.MiddleName, x.Dob, x.Email, x.PhoneNo, x.Sex, x.MaritalStatus, x.Address, x.EmploymentStatus, x.Occupation, batchRequestId, x.JamaatId, x.BiatDate)).ToList();
             var memberRequestResponse = await _memberRequestRepository.CreateMemberRequestAsync(memberRequests);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             var response = memberRequestResponse.Adapt<IList<MembershipRequestResponse>>();
@@ -55,7 +54,7 @@ public class CreateMemberRequest
         public string Address { get; init; } = default!;
         public bool IsBornMember { get; init; }
         public string Occupation { get; init; } = default!;
-        public DateTime? BiatDate { get; init ; }
+        public DateTime? BiatDate { get; init; }
         public string NationalityId { get; init; } = default!;
         public DateTime Dob { get; init; }
         public Sex Sex { get; init; }

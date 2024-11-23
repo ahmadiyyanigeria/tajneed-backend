@@ -1,8 +1,5 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.Enums;
 
 namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;
 

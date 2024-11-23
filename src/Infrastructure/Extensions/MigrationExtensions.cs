@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using TajneedApi.Application.Repositories;
@@ -16,7 +15,7 @@ public static class MigrationExtensions
             using var serviceScope = applicationBuilder.ApplicationServices.CreateScope();
             var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
             Log.Logger.Information("Checking and Applying any pending migration.");
-           
+
             await context.Database.MigrateAsync();
             if (!context.Jamaats.Any())
             {

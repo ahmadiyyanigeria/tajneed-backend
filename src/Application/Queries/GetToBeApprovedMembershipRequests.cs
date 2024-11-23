@@ -1,8 +1,7 @@
-﻿﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TajneedApi.Application.Configurations;
 using TajneedApi.Application.Repositories.Paging;
-using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Domain.Exceptions;
 
 namespace TajneedApi.Application.Queries;
@@ -24,10 +23,10 @@ public class GetToBeApprovedMembershipRequests
         public async Task<PaginatedList<IGrouping<string, MembershipRequestResponse>>> Handle(GetToBeApprovedMembershipRequestsQuery request, CancellationToken cancellationToken)
         {
             var user = _currentUser.GetUserDetails();
-            var userApprovalSettings = _approvalSettings.Roles.FirstOrDefault(a => String.Equals(a.RoleName,user.Role, StringComparison.OrdinalIgnoreCase));
-            if(userApprovalSettings == null)
+            var userApprovalSettings = _approvalSettings.Roles.FirstOrDefault(a => String.Equals(a.RoleName, user.Role, StringComparison.OrdinalIgnoreCase));
+            if (userApprovalSettings == null)
             {
-                _logger.LogError("User with email {Email} and role {Role} does not have permission to approve requests", user.Email,user.Role);
+                _logger.LogError("User with email {Email} and role {Role} does not have permission to approve requests", user.Email, user.Role);
                 throw new DomainException($"User with email {user.Email} and role {user.Role} does not have permission to approve requests", ExceptionCodes.AccessDeniedToApproveRequests.ToString(), 403);
             }
             var memberRequests = await _memberRequestRepository.GetToBeApprovedMembershipRequestsAsync(request, userApprovalSettings.Level, request.JamaatId, request.CircuitId);

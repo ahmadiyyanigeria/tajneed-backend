@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using TajneedApi.Domain.Entities.CodeAggregateRoot;
 
 namespace TajneedApi.Infrastructure.Persistence.EntityTypeConfigurations;

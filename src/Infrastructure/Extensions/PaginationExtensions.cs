@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TajneedApi.Application.Repositories.Paging;
+﻿using TajneedApi.Application.Repositories.Paging;
 
 namespace TajneedApi.Infrastructure.Extensions;
 

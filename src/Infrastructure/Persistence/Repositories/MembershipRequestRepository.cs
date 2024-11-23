@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TajneedApi.Application.Repositories;
+﻿using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.Enums;
 using TajneedApi.Infrastructure.Extensions;
 using TajneedApi.Infrastructure.Persistence.Helpers;
 

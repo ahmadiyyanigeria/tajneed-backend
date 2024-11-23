@@ -1,13 +1,6 @@
-using System.Threading;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Moq;
-using TajneedApi.Application.Commands;
 using TajneedApi.Application.Repositories;
 using TajneedApi.Domain.Entities.CaseAggregateRoot;
-using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Domain.ValueObjects;
-using Xunit;
 using static TajneedApi.Application.Commands.UpdateMemberRequest;
 
 namespace TajneedApi.Application.Tests.Commands

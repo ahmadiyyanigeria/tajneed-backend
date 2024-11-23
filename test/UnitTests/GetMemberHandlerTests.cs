@@ -1,18 +1,8 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using FluentAssertions;
-using Moq;
 using TajneedApi.Application.Queries;
 using TajneedApi.Application.Repositories;
-using TajneedApi.Application.ServiceHelpers;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
-using TajneedApi.Domain.Enums;
-using TajneedApi.Domain.Exceptions;
-using TajneedApi.Domain.ValueObjects;
-using Xunit;
 
-namespace TajneedApi.UnitTests.Queries
+namespace TajneedApi.UnitTests
 {
     public class GetMemberQueryHandlerTests
     {
@@ -44,13 +34,13 @@ namespace TajneedApi.UnitTests.Queries
                 recordFlag: "ACTIVE",
                 fatherNo: "Father123",
                 childrenNos: "Child1, Child2",
-                nextOfKinPhoneNo: "555-1234"               
+                nextOfKinPhoneNo: "555-1234"
             )
             {
                 MembershipRequest = new MembershipRequest("Doe", "John", "NationalityId", false, "AuxId", "Middle", DateTime.UtcNow.AddYears(-20), "email@example.com", "1234567890", Sex.Male, MaritalStatus.Single, "Address", EmploymentStatus.Employed, "", "BatchRequestId", "JamaatId", DateTime.UtcNow),
 
             };
-            
+
             _memberRepositoryMock.Setup(m => m.GetMemberAsync(It.IsAny<string>()))
                 .ReturnsAsync(member);
 

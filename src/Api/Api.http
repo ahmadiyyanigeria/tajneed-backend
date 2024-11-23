@@ -1,6 +1,108 @@
-@Api_HostAddress = http://localhost:5047
+@Api_HostAddress = https://localhost:7012
 
 GET {{Api_HostAddress}}/weatherforecast/
 Accept: application/json
+
+###
+
+GET {{Api_HostAddress}}/api/v{version:apiVersion}/member
+
+###
+
+GET {{Api_HostAddress}}/api/v{version:apiVersion}/member/string
+
+###
+
+GET {{Api_HostAddress}}/api/v{version:apiVersion}/member/ExportMembers
+
+###
+
+POST {{Api_HostAddress}}/api/v{version:apiVersion}/membershiprequest
+Content-Type: application/json
+
+{
+  //CreateMembershipRequestCommand
+}
+
+###
+
+PUT {{Api_HostAddress}}/api/v{version:apiVersion}/membershiprequest
+Content-Type: application/json
+
+{
+  //UpdateMemberRequestCommand
+}
+
+###
+
+GET {{Api_HostAddress}}/api/v{version:apiVersion}/membershiprequest
+
+###
+
+GET {{Api_HostAddress}}/api/v{version:apiVersion}/membershiprequest/string
+
+###
+
+GET {{Api_HostAddress}}/api/v{version:apiVersion}/membershiprequest/get-to-be-approved-requests
+
+###
+
+POST {{Api_HostAddress}}/api/v{version:apiVersion}/membershiprequest/manage-request
+Content-Type: application/json
+
+{
+  //ManageMembershipRequestCommand
+}
+
+###
+
+GET {{Api_HostAddress}}/api/v{version}/Member
+
+###
+
+GET {{Api_HostAddress}}/api/v{version}/Member/string
+
+###
+
+GET {{Api_HostAddress}}/api/v{version}/Member/ExportMembers
+
+###
+
+POST {{Api_HostAddress}}/api/v{version}/MembershipRequest
+Content-Type: application/json
+
+{
+  //CreateMembershipRequestCommand
+}
+
+###
+
+PUT {{Api_HostAddress}}/api/v{version}/MembershipRequest
+Content-Type: application/json
+
+{
+  //UpdateMemberRequestCommand
+}
+
+###
+
+GET {{Api_HostAddress}}/api/v{version}/MembershipRequest
+
+###
+
+GET {{Api_HostAddress}}/api/v{version}/MembershipRequest/string
+
+###
+
+GET {{Api_HostAddress}}/api/v{version}/MembershipRequest/get-to-be-approved-requests
+
+###
+
+POST {{Api_HostAddress}}/api/v{version}/MembershipRequest/manage-request
+Content-Type: application/json
+
+{
+  //ManageMembershipRequestCommand
+}
 
 ###

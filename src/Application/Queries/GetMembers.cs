@@ -7,7 +7,8 @@ public class GetMembers
     {
         public string? JamaatId { get; set; } = default;
         public string? CircuitId { get; set; } = default;
-        public RequestStatus? RequestStatus { get; set; } = default;
+        public string? AuxiliaryBodyId { get; set; } = default;
+        public MembershipStatus? MembershipStatus { get; set; }
     }
 
     public class Handler(IMemberRepository memberRepository) : IRequestHandler<GetMembersQuery, PaginatedList<MemberResponse>>
@@ -16,7 +17,7 @@ public class GetMembers
 
         public async Task<PaginatedList<MemberResponse>> Handle(GetMembersQuery request, CancellationToken cancellationToken)
         {
-            var memberRequests = await _memberRepository.GetMembersAsync(request, request.JamaatId, request.CircuitId);
+            var memberRequests = await _memberRepository.GetMembersAsync(request, request.JamaatId, request.CircuitId, request.AuxiliaryBodyId, request.MembershipStatus);
             return memberRequests.Adapt<PaginatedList<MemberResponse>>();
         }
     }
@@ -34,7 +35,7 @@ public class GetMembers
         string? Occupation,
         string? NextOfKinPhoneNo,
         string? NextOfKinAddress,
-        DateTime? BiatDate    
+        DateTime? BiatDate
     );
 
 }

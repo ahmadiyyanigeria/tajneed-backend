@@ -1,11 +1,10 @@
 using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
 using TajneedApi.Domain.Entities.JamaatAggregateRoot;
-using TajneedApi.Domain.Enums;
 using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 
-public class MembershipRequest(string surname, string firstName,string nationalityId, bool isBornMember, string auxiliaryBodyId, string middleName, DateTime dob, string email, string phoneNo, Sex sex, MaritalStatus maritalStatus, string address, EmploymentStatus employmentStatus, string occupation, string batchRequestId, string jamaatId, DateTime? biatDate) : BaseEntity
+public class MembershipRequest(string surname, string firstName, string nationalityId, bool isBornMember, string auxiliaryBodyId, string middleName, DateTime dob, string email, string phoneNo, Sex sex, MaritalStatus maritalStatus, string address, EmploymentStatus employmentStatus, string occupation, string batchRequestId, string jamaatId, DateTime? biatDate) : BaseEntity
 {
     public string JamaatId { get; private set; } = jamaatId;
     public Jamaat Jamaat { get; private set; } = default!;
@@ -37,7 +36,7 @@ public class MembershipRequest(string surname, string firstName,string nationali
     {
         if (string.IsNullOrWhiteSpace(approvedById) || string.IsNullOrWhiteSpace(approvedByRole) || string.IsNullOrWhiteSpace(approvedByName))
         {
-            var approvalHistory = new ApprovalMemberRequestHistory(approvedById,approvedByRole,approvedByName);
+            var approvalHistory = new ApprovalMemberRequestHistory(approvedById, approvedByRole, approvedByName);
             _approvalHistories.Add(approvalHistory);
         }
 
@@ -46,7 +45,7 @@ public class MembershipRequest(string surname, string firstName,string nationali
     {
         if (string.IsNullOrWhiteSpace(disapprovedById) || string.IsNullOrWhiteSpace(disapprovedByRole) || string.IsNullOrWhiteSpace(disapprovedByName))
         {
-            DisApprovalHistory = new DisapprovalMemberRequestHistory(disapprovedById,disapprovedByRole,disapprovedByName);
+            DisApprovalHistory = new DisapprovalMemberRequestHistory(disapprovedById, disapprovedByRole, disapprovedByName);
         }
     }
     public void UpdateRequestStatus(RequestStatus requestStatus)

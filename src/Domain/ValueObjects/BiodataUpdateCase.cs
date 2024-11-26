@@ -9,7 +9,7 @@ string surName, string firstName, string middleName, DateTime dob, string addres
 EmploymentStatus employmentStatus, string jamaatId, MaritalStatus maritalStatus, string membershipStatusId, string title,
 bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string? notes = null,
 string? spouseNo = null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null,
-string? occupation = null, DateTime? biatDate = null) : BaseEntity
+string? occupation = null, DateTime? biatDate = null)
 {
     public string SurName { get; private set; } = surName;
     public string FirstName { get; private set; } = firstName;

@@ -1,4 +1,5 @@
 using TajneedApi.Domain.Entities.AuditTrailAggregateRoot;
+using TajneedApi.Domain.ValueObjects;
 
 namespace TajneedApi.Domain.Entities.MemberAggregateRoot;
 
@@ -19,5 +20,26 @@ public class Member
     public string? NextOfKinPhoneNo { get; set; } = nextOfKinPhoneNo;
     public string? NextOfKinName { get; set; } = nextOfKinName;
     public string? NextOfKinAddress { get; set; } = nextOfKinAddress;
+
+    public Member Update (BiodataUpdateCase? biodataUpdateCase)
+    {
+        if(biodataUpdateCase != null)
+        {
+            MembershipRequest.Update(biodataUpdateCase);
+
+            if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.ChildrenNos))
+            ChildrenNos = biodataUpdateCase.ChildrenNos;
+
+            if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.FatherNo))
+            FatherNo = biodataUpdateCase.FatherNo;
+
+            if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.SpouseNo))
+            SpouseNo = biodataUpdateCase.SpouseNo;
+
+        }
+        return this;
+    }
+
+
 
 }

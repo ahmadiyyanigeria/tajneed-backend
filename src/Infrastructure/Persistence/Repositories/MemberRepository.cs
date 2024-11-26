@@ -1,5 +1,6 @@
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
+using TajneedApi.Domain.Entities.CaseAggregateRoot;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Infrastructure.Extensions;
 using TajneedApi.Infrastructure.Persistence.Helpers;
@@ -13,6 +14,12 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
     public async Task<IList<Member>> CreateMemberAsync(IList<Member> members)
     {
         await _context.Members.AddRangeAsync(members);
+        return members;
+    }
+
+    public IList<Member> UpdateMembersAsync(IList<Member> members)
+    {
+        _context.Members.UpdateRange(members);
         return members;
     }
 
@@ -45,6 +52,10 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
 
         query = query.OrderByDescending(r => r.LastModifiedOn);
         return await query.ToPaginatedList(pageRequest.Page, pageRequest.PageSize, pageRequest.UsePaging);
+    }
+    public async Task<IList<Member>> GetMembersByIdsAsync(IList<string> ids)
+    {
+        return await _context.Members.Where(a => ids.Contains(a.Id)).ToListAsync();
     }
 
 }

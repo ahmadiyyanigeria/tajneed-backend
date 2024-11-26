@@ -3,7 +3,7 @@ using TajneedApi.Domain.Entities.JamaatAggregateRoot;
 
 namespace TajneedApi.Domain.ValueObjects;
 
-public class RelocationCase(string oldJamaatId, string newJamaatId, string? notes = null) : BaseEntity
+public class RelocationCase(string oldJamaatId, string newJamaatId, string? notes = null)
 {
     public string OldJamaatId { get; private set; } = oldJamaatId;
     public Jamaat OldJamaat { get; private set; } = default!;

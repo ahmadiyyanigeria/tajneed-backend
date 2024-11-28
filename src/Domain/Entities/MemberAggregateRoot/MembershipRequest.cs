@@ -53,4 +53,63 @@ public class MembershipRequest(string surname, string firstName, string national
         RequestStatus = requestStatus;
     }
 
+    public MembershipRequest UpdateBiodata(BiodataUpdateCase? biodataUpdateCase)
+    {
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.SurName))
+            Surname = biodataUpdateCase.SurName;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.FirstName))
+            FirstName = biodataUpdateCase.FirstName;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.MiddleName))
+            MiddleName = biodataUpdateCase.MiddleName;
+
+        if (biodataUpdateCase?.Dob != null)
+            Dob = biodataUpdateCase.Dob;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.Email))
+            Email = biodataUpdateCase.Email;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.PhoneNumber))
+            PhoneNo = biodataUpdateCase.PhoneNumber;
+
+        if (biodataUpdateCase?.Sex != null)
+            Sex = biodataUpdateCase.Sex;
+
+        if (biodataUpdateCase?.MaritalStatus != null)
+            MaritalStatus = biodataUpdateCase.MaritalStatus;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.Address))
+            Address = biodataUpdateCase.Address;
+
+        if (biodataUpdateCase?.EmploymentStatus != null)
+            EmploymentStatus = biodataUpdateCase.EmploymentStatus;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.Occupation))
+            Occupation = biodataUpdateCase.Occupation;
+
+        if (biodataUpdateCase?.BiatDate != null)
+            BiatDate = biodataUpdateCase.BiatDate;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.NationalityId))
+            NationalityId = biodataUpdateCase.NationalityId;
+
+        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.Address))
+            Address = biodataUpdateCase.Address;
+
+        if (biodataUpdateCase?.IsBornMember != null)
+            IsBornMember = biodataUpdateCase.IsBornMember;
+        
+        return this;
+
+    }
+    public MembershipRequest UpdateLocation(RelocationCase? relocationCase)
+    {
+        if (!string.IsNullOrWhiteSpace(relocationCase?.NewJamaatId))
+            JamaatId = relocationCase.NewJamaatId;
+
+        return this;
+    }
+   
+
 }

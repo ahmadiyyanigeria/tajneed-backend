@@ -1,5 +1,6 @@
 using TajneedApi.Application.Repositories;
 using TajneedApi.Application.Repositories.Paging;
+using TajneedApi.Domain.Entities.CaseAggregateRoot;
 using TajneedApi.Domain.Entities.MemberAggregateRoot;
 using TajneedApi.Infrastructure.Extensions;
 using TajneedApi.Infrastructure.Persistence.Helpers;
@@ -16,6 +17,12 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
         return members;
     }
 
+    public IList<Member> UpdateMembersAsync(IList<Member> members)
+    {
+        _context.Members.UpdateRange(members);
+        return members;
+    }
+
     public async Task<Member?> GetMemberAsync(string id)
     {
         return await _context.Members.Include(a => a.MembershipRequest).Where(a => a.Id.Equals(id)).FirstOrDefaultAsync();
@@ -23,7 +30,9 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
 
     public async Task<PaginatedList<Member>> GetMembersAsync(PageRequest pageRequest, string? jamaatId = null, string? circuitId = null, string? auxiliaryBodyId = null, MembershipStatus? membershipStatus = null)
     {
-        var query = _context.Members.Include(a => a.MembershipRequest)
+        var query = _context.Members
+            .Include(a => a.MembershipRequest)
+            .AsSplitQuery()
             .AsNoTracking()
             .Where(x => !membershipStatus.HasValue || x.MembershipStatus == membershipStatus)
             .Where(x => string.IsNullOrWhiteSpace(auxiliaryBodyId) || x.MembershipRequest.AuxiliaryBodyId == auxiliaryBodyId);
@@ -46,5 +55,13 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
         query = query.OrderByDescending(r => r.LastModifiedOn);
         return await query.ToPaginatedList(pageRequest.Page, pageRequest.PageSize, pageRequest.UsePaging);
     }
+    public async Task<IList<Member>> GetMembersByIdsAsync(IList<string> ids)
+    {
+        return await _context.Members.Where(a => ids.Contains(a.Id)).ToListAsync();
+    }
 
+    public void Delete(Member member)
+    {
+        _context.Remove(member);
+    }
 }

@@ -48,7 +48,7 @@ public class ExcelWriter : IExcelWriter
         };
     }
 
-    public FileContentResult GenerateCSV<T>(IEnumerable<T> data, string fileName = "ExportData")
+    public async Task<FileContentResult> GenerateCSVAsync<T>(IEnumerable<T> data, string fileName = "ExportData")
     {
         if (data == null || !data.Any())
             throw new DomainException($"Cannot generate CSV file for empty list.", ExceptionCodes.DocumentExportListIsNull.ToString(), 403);
@@ -58,20 +58,20 @@ public class ExcelWriter : IExcelWriter
         using var streamWriter = new StreamWriter(memoryStream);
 
         foreach (PropertyDescriptor prop in properties)
-            streamWriter.Write(prop.DisplayName + ",");
+            await streamWriter.WriteAsync(prop.DisplayName + ",");
 
-        streamWriter.WriteLine();
+        await streamWriter.WriteLineAsync();
         foreach (var item in data)
         {
             foreach (PropertyDescriptor prop in properties)
             {
                 string value = prop.GetValue(item)?.ToString() ?? string.Empty;
-                streamWriter.Write(value + ",");
+                await streamWriter.WriteAsync(value + ",");
             }
-            streamWriter.WriteLine();
+            await streamWriter.WriteLineAsync();
         }
 
-        streamWriter.Flush();
+        await streamWriter.FlushAsync();
         memoryStream.Seek(0, SeekOrigin.Begin);
 
         byte[] resultBytes = memoryStream.ToArray();

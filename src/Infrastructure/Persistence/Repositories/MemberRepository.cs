@@ -30,7 +30,9 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
 
     public async Task<PaginatedList<Member>> GetMembersAsync(PageRequest pageRequest, string? jamaatId = null, string? circuitId = null, string? auxiliaryBodyId = null, MembershipStatus? membershipStatus = null)
     {
-        var query = _context.Members.Include(a => a.MembershipRequest)
+        var query = _context.Members
+            .Include(a => a.MembershipRequest)
+            .AsSplitQuery()
             .AsNoTracking()
             .Where(x => !membershipStatus.HasValue || x.MembershipStatus == membershipStatus)
             .Where(x => string.IsNullOrWhiteSpace(auxiliaryBodyId) || x.MembershipRequest.AuxiliaryBodyId == auxiliaryBodyId);

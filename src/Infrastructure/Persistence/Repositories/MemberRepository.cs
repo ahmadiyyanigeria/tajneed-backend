@@ -58,4 +58,8 @@ public class MemberRepository(ApplicationDbContext context) : IMemberRepository
         return await _context.Members.Where(a => ids.Contains(a.Id)).ToListAsync();
     }
 
+    public void Delete(Member member)
+    {
+        _context.Remove(member);
+    }
 }

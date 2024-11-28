@@ -7,5 +7,6 @@ public enum ExceptionCodes
     UnSupportedActionType,
     UnSupportedFileExportFormat,
     DocumentExportListIsNull,
-    MemberAssociatedWithUpdateCaseNotFound
+    MemberAssociatedWithUpdateCaseNotFound,
+    MemberMismatchWithPrimaryAccount
 }

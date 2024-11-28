@@ -53,7 +53,7 @@ public class MembershipRequest(string surname, string firstName, string national
         RequestStatus = requestStatus;
     }
 
-    public MembershipRequest Update(BiodataUpdateCase? biodataUpdateCase)
+    public MembershipRequest UpdateBiodata(BiodataUpdateCase? biodataUpdateCase)
     {
         if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.SurName))
             Surname = biodataUpdateCase.SurName;
@@ -94,9 +94,6 @@ public class MembershipRequest(string surname, string firstName, string national
         if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.NationalityId))
             NationalityId = biodataUpdateCase.NationalityId;
 
-        if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.JamaatId))
-            JamaatId = biodataUpdateCase.JamaatId;
-
         if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.Address))
             Address = biodataUpdateCase.Address;
 
@@ -106,5 +103,13 @@ public class MembershipRequest(string surname, string firstName, string national
         return this;
 
     }
+    public MembershipRequest UpdateLocation(RelocationCase? relocationCase)
+    {
+        if (!string.IsNullOrWhiteSpace(relocationCase?.NewJamaatId))
+            JamaatId = relocationCase.NewJamaatId;
+
+        return this;
+    }
+   
 
 }

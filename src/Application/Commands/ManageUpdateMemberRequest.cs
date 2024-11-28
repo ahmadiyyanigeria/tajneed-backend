@@ -45,6 +45,16 @@ public class ManageUpdateMemberRequest
             var memberIds = request.UpdateMemberRequests.Select(a => a.MemberId).ToList();
             var updateCases = await _memberUpdateCaseRepository.GetMemberUpdateCasesByIdsAsync(updateMemberCasesRequestActions.Keys.ToList(), userApprovalSettings.Level);
             var members = await _memberRepository.GetMembersByIdsAsync(memberIds);
+            var duplicateMembersIds = new List<string>();
+            if (updateCases.Count > 0 && updateCases.Any(a => a.DuplicateAccountCase != null))
+            {
+                var updateCasesWithDuplicateAccount = updateCases.Where(a => a.DuplicateAccountCase != null);
+                foreach (var @case in updateCasesWithDuplicateAccount)
+                {
+                    duplicateMembersIds.Add(@case.DuplicateAccountCase.OtherAccounts);
+                }
+            }
+            var duplicateMembersAccount = await _memberRepository.GetMembersByIdsAsync(duplicateMembersIds);
             int approvedCount = 0;
             int rejectedCount = 0;
 
@@ -57,12 +67,38 @@ public class ManageUpdateMemberRequest
                         if (_approvalSettings.Roles.LastOrDefault()?.Level == userApprovalSettings.Level)
                         {
                             var member = members.FirstOrDefault(a => a.Id == @case.MemberId);
+                            
                             if (member == null)
                             {
                                 _logger.LogError("Member Id {MemberId} associated with the update case member request with id {UpdateCaseId} cannot be found", @case.MemberId, @case.Id);
                                 throw new DomainException($"Member Id {@case.MemberId} associated with the update case member request with id {@case.Id} cannot be found", ExceptionCodes.MemberAssociatedWithUpdateCaseNotFound.ToString(), 404);
                             }
-                            member.Update(@case.BiodataUpdateCase);
+
+                            if (@case.DuplicateAccountCase != null)
+                            {
+                                var duplicateAccount = duplicateMembersAccount.FirstOrDefault(a => a.Id == @case.DuplicateAccountCase.OtherAccounts);
+                                if (duplicateAccount == null)
+                                {
+                                    _logger.LogError("Duplicate account with Id {OtherAccountId} linked to update case Id {UpdateCaseId} for member Id {MemberId} cannot be found.", @case.DuplicateAccountCase.OtherAccounts, @case.Id, @case.MemberId);                                    
+                                    throw new DomainException($"Duplicate account with Id '{@case.DuplicateAccountCase.OtherAccounts}' linked to update case Id '{@case.Id}' for member Id '{@case.MemberId}' cannot be found.", ExceptionCodes.MemberAssociatedWithUpdateCaseNotFound.ToString(), 404);                            
+                                }
+                                else if (@case.MemberId != @case.DuplicateAccountCase.PrimaryAccount)
+                                {
+                                    _logger.LogError("Mismatch: Member Id {MemberId} does not match the PrimaryAccount {PrimaryAccount} for update case id {UpdateCaseId}.", @case.MemberId, @case.DuplicateAccountCase.PrimaryAccount, @case.Id);
+                                    throw new DomainException($"Member Id {@case.MemberId} does not match the PrimaryAccount {@case.DuplicateAccountCase.PrimaryAccount} for update case id {@case.Id}.", ExceptionCodes.MemberMismatchWithPrimaryAccount.ToString(), 400);
+                                }
+                                _memberRepository.Delete(duplicateAccount);
+                            }
+
+                            if (@case.BiodataUpdateCase != null)
+                            {
+                                member.UpdateBiodata(@case.BiodataUpdateCase);
+                            }
+
+                            if (@case.RelocationCase != null)
+                            {
+                                member.UpdateLocation(@case.RelocationCase);
+                            }
                         }
                         @case.AddApprovalHistory(user.UserId, user.Role, user.Name);
                         @case.UpdateStatus(RequestStatus.Approved);
@@ -92,9 +128,9 @@ public class ManageUpdateMemberRequest
     }
     public record UpdateMemberRequestResponse(string Id, string MemberId, Status Status);
 
-    public class ManageMembershipRequestCommandValidator : AbstractValidator<ManageUpdateMemberRequestCommand>
+    public class ManageUpdateMemberRequestCommandValidator : AbstractValidator<ManageUpdateMemberRequestCommand>
     {
-        public ManageMembershipRequestCommandValidator()
+        public ManageUpdateMemberRequestCommandValidator()
         {
             RuleFor(x => x.UpdateMemberRequests)
                 .NotNull().WithMessage("Update requests cannot be null.")

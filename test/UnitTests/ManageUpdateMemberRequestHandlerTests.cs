@@ -176,7 +176,6 @@ public class ManageUpdateMemberRequestHandlerTests
             email: "johndoe@example.com",
             phoneNumber: "1234567890",
             employmentStatus: EmploymentStatus.Employed,
-            jamaatId: "J001",
             maritalStatus: MaritalStatus.Single,
             membershipStatusId: "MS001",
             title: "Mr.",
@@ -196,7 +195,7 @@ public class ManageUpdateMemberRequestHandlerTests
         );
 
         var duplicateAccountCase = new DuplicateAccountCase(
-            primaryAccount: "PA001",
+            primaryAccount: "4fb32efd-2b92-4308-81be-b879447d80fa",
             otherAccounts: "PA002,PA003",
             notes: "Duplicate accounts detected"
         );
@@ -224,6 +223,7 @@ public class ManageUpdateMemberRequestHandlerTests
             new("ChandaNo2", "MR124"),
         };
         members.First().Id = "4fb32efd-2b92-4308-81be-b879447d80fa";
+        members.Last().Id = "PA002,PA003";
         members.First().MembershipRequest = new MembershipRequest(
             surname: "Doe",
             firstName: "John",

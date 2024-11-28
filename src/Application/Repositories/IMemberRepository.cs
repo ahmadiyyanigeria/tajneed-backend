@@ -10,5 +10,7 @@ public interface IMemberRepository
     Task<PaginatedList<Member>> GetMembersAsync(PageRequest pageRequest, string? jamaatId = null, string? circuitId = null, string? auxiliaryBodyId = null, MembershipStatus? membershipStatus = null);
     Task<IList<Member>> GetMembersByIdsAsync(IList<string> ids);
     IList<Member> UpdateMembersAsync(IList<Member> members);
+    void Delete(Member member);
+
 
 }

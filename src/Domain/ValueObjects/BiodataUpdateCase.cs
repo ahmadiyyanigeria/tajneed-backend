@@ -6,7 +6,7 @@ namespace TajneedApi.Domain.ValueObjects;
 
 public class BiodataUpdateCase(
 string surName, string firstName, string middleName, DateTime dob, string address, string email, string phoneNumber,
-EmploymentStatus employmentStatus, string jamaatId, MaritalStatus maritalStatus, string membershipStatusId, string title,
+EmploymentStatus employmentStatus, MaritalStatus maritalStatus, string membershipStatusId, string title,
 bool isBornMember, string nationalityId, string householdMemberId, Sex sex, string maidenName, string? notes = null,
 string? spouseNo = null, string? fatherNo = null, string? childrenNos = null, string? biometricId = null, string? nextOfKinPhoneNo = null,
 string? occupation = null, DateTime? biatDate = null)
@@ -22,8 +22,6 @@ string? occupation = null, DateTime? biatDate = null)
     public string Email { get; private set; } = email;
     public string PhoneNumber { get; private set; } = phoneNumber;
     public EmploymentStatus EmploymentStatus { get; private set; } = employmentStatus;
-    public string JamaatId { get; private set; } = jamaatId;
-    public Jamaat Jamaat { get; private set; } = default!;
     public string? Notes { get; private set; } = notes;
     public string? SpouseNo { get; private set; } = spouseNo;
     public string? FatherNo { get; private set; } = fatherNo;

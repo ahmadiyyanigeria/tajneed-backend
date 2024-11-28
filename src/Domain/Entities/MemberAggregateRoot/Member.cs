@@ -21,11 +21,11 @@ public class Member
     public string? NextOfKinName { get; set; } = nextOfKinName;
     public string? NextOfKinAddress { get; set; } = nextOfKinAddress;
 
-    public Member Update (BiodataUpdateCase? biodataUpdateCase)
+    public Member UpdateBiodata (BiodataUpdateCase? biodataUpdateCase = null, RelocationCase? relocationCase = null)
     {
-        if(biodataUpdateCase != null)
+        if (biodataUpdateCase != null)
         {
-            MembershipRequest.Update(biodataUpdateCase);
+            MembershipRequest.UpdateBiodata(biodataUpdateCase);
 
             if (!string.IsNullOrWhiteSpace(biodataUpdateCase?.ChildrenNos))
             ChildrenNos = biodataUpdateCase.ChildrenNos;
@@ -37,9 +37,17 @@ public class Member
             SpouseNo = biodataUpdateCase.SpouseNo;
 
         }
+
+        return this;
+        
+    }
+    public Member UpdateLocation (RelocationCase? relocationCase)
+    {
+        if (relocationCase != null)
+        {
+            MembershipRequest.UpdateLocation(relocationCase);
+        }
         return this;
     }
-
-
 
 }

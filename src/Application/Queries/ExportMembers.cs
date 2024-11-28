@@ -31,7 +31,7 @@ public class ExportMembers
             var memberRequests = await _memberRepository.GetMembersAsync(request, request.JamaatId, request.CircuitId);
             var exportDatas = memberRequests.Adapt<PaginatedList<MemberExportData>>();
             if (request.FileType == FileType.CSV)
-                return _excelWriter.GenerateCSV(exportDatas.Items.ToList(), "Members");
+                return await _excelWriter.GenerateCSVAsync(exportDatas.Items.ToList(), "Members");
 
             if (request.FileType == FileType.Excel)
                 return _excelWriter.GenerateExcel(exportDatas.Items, "Members");
